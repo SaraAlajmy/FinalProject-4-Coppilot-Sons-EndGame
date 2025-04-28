@@ -18,6 +18,9 @@ public class UserController {
         this.userService = userService;
     }
 
+
+    // TODO: when adding get userbyid endpoint remember it returns null if user not found
+
     @PutMapping("/update/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
         try {
