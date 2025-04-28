@@ -16,9 +16,6 @@ public class User {
     @Embedded
     private NotificationSettings notificationSettings = new NotificationSettings();
 
-    @ElementCollection
-    private List<String> inboxMessages = new ArrayList<>();
-
     @ManyToMany
     private Set<User> blockedUsers = new HashSet<>();
 
@@ -30,12 +27,11 @@ public class User {
         this.passwordHash = passwordHash;
     }
 
-    public User(Long id, String username, String passwordHash, NotificationSettings notificationSettings, List<String> inboxMessages, Set<User> blockedUsers) {
+    public User(Long id, String username, String passwordHash, NotificationSettings notificationSettings, Set<User> blockedUsers) {
         this.id = id;
         this.username = username;
         this.passwordHash = passwordHash;
         this.notificationSettings = notificationSettings;
-        this.inboxMessages = inboxMessages;
         this.blockedUsers = blockedUsers;
     }
 
@@ -53,14 +49,6 @@ public class User {
 
     public void setNotificationSettings(NotificationSettings notificationSettings) {
         this.notificationSettings = notificationSettings;
-    }
-
-    public List<String> getInboxMessages() {
-        return inboxMessages;
-    }
-
-    public void setInboxMessages(List<String> inboxMessages) {
-        this.inboxMessages = inboxMessages;
     }
 
     public Set<User> getBlockedUsers() {
