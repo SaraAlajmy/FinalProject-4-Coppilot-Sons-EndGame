@@ -38,6 +38,25 @@ public class ManagementController {
         }
     }
 
+    @PutMapping("/mute/{userId}")
+    public String muteNotifications(@PathVariable Long userId) {
+        try {
+            managementService.muteNotifications(userId);
+            return "Notifications muted successfully";
+        } catch (Exception e) {
+            return "Error muting notifications: " + e.getMessage();
+        }
+    }
+
+    @PutMapping("/unmute/{userId}")
+    public String unmuteNotifications(@PathVariable Long userId) {
+        try {
+            managementService.unmuteNotifications(userId);
+            return "Notifications unmuted successfully";
+        } catch (Exception e) {
+            return "Error unmuting notifications: " + e.getMessage();
+        }
+    }
 
 
 }

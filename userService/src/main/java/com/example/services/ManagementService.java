@@ -51,4 +51,19 @@ public class ManagementService {
         }
     }
 
+    public void muteNotifications(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        user.getNotificationSettings().setMuteNotifications(true);
+        userRepository.save(user);
+    }
+
+    public void unmuteNotifications(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        user.getNotificationSettings().setMuteNotifications(false);
+        userRepository.save(user);
+    }
+
+
 }
