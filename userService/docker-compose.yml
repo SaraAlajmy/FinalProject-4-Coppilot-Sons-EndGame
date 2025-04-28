@@ -1,0 +1,40 @@
+
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    environment:
+      POSTGRES_DB: user_service_db
+      POSTGRES_USER: user_service_user
+      POSTGRES_PASSWORD: copitol&sons
+    ports:
+      - "5000:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin_password
+    ports:
+      - "80:80"
+    depends_on:
+      - postgres
+
+
+  app:
+    build: .
+    container_name: springboot-app
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+
+
+
+volumes:
+  postgres-data:
