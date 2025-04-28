@@ -12,6 +12,7 @@
     <modules>
         <module>chat-service</module>
         <module>groupChatService</module>
+        <module>userService</module>
         <!-- Add userService here if it becomes a Maven project later -->
     </modules>
 </project>
