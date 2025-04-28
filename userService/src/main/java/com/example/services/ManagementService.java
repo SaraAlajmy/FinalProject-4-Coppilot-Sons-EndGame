@@ -1,5 +1,6 @@
 package com.example.services;
 
+import com.example.models.NotificationSettings;
 import com.example.models.User;
 import com.example.repositories.UserRepository;
 import org.slf4j.Logger;
@@ -65,5 +66,37 @@ public class ManagementService {
         userRepository.save(user);
     }
 
+    public void updateNotificationSettings(Long userId, NotificationSettings updateDTO) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
+        NotificationSettings settings = user.getNotificationSettings();
+
+        if (updateDTO.getMuteNotifications() != null) {
+            settings.setMuteNotifications(updateDTO.getMuteNotifications());
+        }
+        if (updateDTO.getDirectMessageEmail() != null) {
+            settings.setDirectMessageEmail(updateDTO.getDirectMessageEmail());
+        }
+        if (updateDTO.getDirectMessageInbox() != null) {
+            settings.setDirectMessageInbox(updateDTO.getDirectMessageInbox());
+        }
+        if (updateDTO.getGroupMessageEmail() != null) {
+            settings.setGroupMessageEmail(updateDTO.getGroupMessageEmail());
+        }
+        if (updateDTO.getGroupMessageInbox() != null) {
+            settings.setGroupMessageInbox(updateDTO.getGroupMessageInbox());
+        }
+        if (updateDTO.getGroupMentionEmail() != null) {
+            settings.setGroupMentionEmail(updateDTO.getGroupMentionEmail());
+        }
+        if (updateDTO.getGroupMentionInbox() != null) {
+            settings.setGroupMentionInbox(updateDTO.getGroupMentionInbox());
+        }
+
+        userRepository.save(user);
+    }
 }
+
+
+
