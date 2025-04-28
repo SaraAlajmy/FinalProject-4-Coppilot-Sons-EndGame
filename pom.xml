@@ -4,7 +4,7 @@
                              http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.example</groupId> <!-- You can replace this with your own package -->
+    <groupId>com.example</groupId> 
     <artifactId>FinalProject-4-Copilot</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -13,6 +13,5 @@
         <module>chat-service</module>
         <module>groupChatService</module>
         <module>userService</module>
-        <!-- Add userService here if it becomes a Maven project later -->
     </modules>
 </project>
