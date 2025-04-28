@@ -7,11 +7,14 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
+@Table(name = "users")
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false, unique = true)
     private String username;
-    private String passwordHash;
+    private String password;
 
     @Embedded
     private NotificationSettings notificationSettings = new NotificationSettings();
@@ -24,13 +27,13 @@ public class User {
 
     public User(String username, String passwordHash) {
         this.username = username;
-        this.passwordHash = passwordHash;
+        this.password = passwordHash;
     }
 
     public User(Long id, String username, String passwordHash, NotificationSettings notificationSettings, Set<User> blockedUsers) {
         this.id = id;
         this.username = username;
-        this.passwordHash = passwordHash;
+        this.password = passwordHash;
         this.notificationSettings = notificationSettings;
         this.blockedUsers = blockedUsers;
     }
@@ -51,12 +54,12 @@ public class User {
         this.username = username;
     }
 
-    public String getPasswordHash() {
-        return passwordHash;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
+    public void setPassword(String passwordHash) {
+        this.password= passwordHash;
     }
 
     public NotificationSettings getNotificationSettings() {

@@ -6,9 +6,9 @@ services:
     image: postgres:13
     container_name: postgres
     environment:
-      POSTGRES_DB: user_service_db
-      POSTGRES_USER: user_service_user
-      POSTGRES_PASSWORD: copitol&sons
+      POSTGRES_DB: your_postgres_db
+      POSTGRES_USER: your_pg_username
+      POSTGRES_PASSWORD: your_pg_password
     ports:
       - "5000:5432"
     volumes:
@@ -31,6 +31,10 @@ services:
     container_name: springboot-app
     depends_on:
       - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/your_postgres_db
+      SPRING_DATASOURCE_USERNAME: your_pg_username
+      SPRING_DATASOURCE_PASSWORD: your_pg_password
     ports:
       - "8080:8080"
 

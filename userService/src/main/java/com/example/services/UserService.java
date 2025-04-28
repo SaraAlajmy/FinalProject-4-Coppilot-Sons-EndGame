@@ -5,6 +5,10 @@ import com.example.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,26 +16,32 @@ import java.util.List;
 @Service
 public class UserService {
 
-    private final UserRepository UserRepository;
+    private final UserRepository userRepository;
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+    @Autowired
+    private JWTService jwtService;
+
+    @Autowired
+    AuthenticationManager authManager;
+
 
     @Autowired
     public UserService(UserRepository userRepository) {
-        UserRepository = userRepository;
+        this.userRepository = userRepository;
     }
 
-    public User addUser(User user) {
-        try {
-            return UserRepository.save(user);
-        } catch (Exception e) {
-            logger.error("Error adding user: {}", e.getMessage());
-            throw e;
-        }
-    }
+//    public User addUser(User user) {
+//        try {
+//            return UserRepository.save(user);
+//        } catch (Exception e) {
+//            logger.error("Error adding user: {}", e.getMessage());
+//            throw e;
+//        }
+//    }
 
     public List<User> getAllUsers() {
         try {
-            return UserRepository.findAll();
+            return userRepository.findAll();
         } catch (Exception e) {
             logger.error("Error retrieving all users: {}", e.getMessage());
             throw e;
@@ -40,7 +50,7 @@ public class UserService {
 
     public User getUserById(Long id) {
         try {
-            return UserRepository.findById(id).orElse(null);
+            return userRepository.findById(id).orElse(null);
         } catch (Exception e) {
             logger.error("Error retrieving user by ID: {}", e.getMessage());
             throw e;
@@ -48,25 +58,42 @@ public class UserService {
     }
 
     public User updateUser(Long id, User user) {
-        User existingUser = UserRepository.findById(id).orElseThrow(() -> {
+        User existingUser = userRepository.findById(id).orElseThrow(() -> {
             logger.error("User with ID {} not found", id);
             return new RuntimeException("User not found");
         });
 
         existingUser.setUsername(user.getUsername() != null ? user.getUsername() : existingUser.getUsername());
-        existingUser.setPasswordHash(user.getPasswordHash() != null ? user.getPasswordHash() : existingUser.getPasswordHash());
+        existingUser.setPassword(user.getPassword() != null ? user.getPassword() : existingUser.getPassword());
         existingUser.setNotificationSettings(user.getNotificationSettings() != null ? user.getNotificationSettings() : existingUser.getNotificationSettings());
 
-        return UserRepository.save(existingUser);
+        return userRepository.save(existingUser);
     }
 
     public void deleteUser(Long id) {
         try {
-            UserRepository.deleteById(id);
+            userRepository.deleteById(id);
             logger.info("User with ID {} deleted successfully", id);
         } catch (Exception e) {
             logger.error("Error deleting trip: {}", e.getMessage());
             throw e;
+        }
+    }
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
+
+    public User register(User user) {
+        user.setPassword(encoder.encode(user.getPassword()));
+        userRepository .save(user);
+        return user;
+    }
+
+    public String verify(User user) {
+        Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+        if (authentication.isAuthenticated()) {
+            return jwtService.generateToken(user.getUsername());
+        } else {
+            logger.error("User is not verified");
+            return "fail";
         }
     }
 }
