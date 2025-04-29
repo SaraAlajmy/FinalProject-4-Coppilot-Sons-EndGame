@@ -11,6 +11,7 @@
         <option value="$PROJECT_DIR$/groupChatService/pom.xml" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/service-registry/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

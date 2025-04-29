@@ -1,31 +1,24 @@
-spring:
-  cloud:
-    gateway:
-      routes:
-        - id: group-chat-service
-          uri: lb://GROUP-CHAT-SERVICE
-          predicates:
-            - Path=/group-chat/**
-          filters:
-            - AuthenticationFilter
-
-
-        - id: chat-service
-          uri: lb://CHAT-SERVICE
-          predicates:
-            - Path=/chat/**
-          filters:
-            - AuthenticationFilter
-
-        - id: user-service
-          uri: lb://USER-SERVICE
-          predicates:
-            - Path=/auth/**
-
-  application:
-    name: Gateway-Service
-
-eureka:
-  client:
-    service-url:
-      defaultZone : http://localhost:8761/eureka/
+#spring:
+#  application:
+#    name: api-gateway
+#  main:
+#    web-application-type: reactive
+#  cloud:
+#    spring:
+#      cloud:
+#        gateway:
+#          routes:
+#            - id: user-service
+#              uri: http://localhost:8080
+#              predicates:
+#                - Path=/user/**
+#                - Path=/auth/**
+#
+#            - id: product-service
+#              uri: http://localhost:8082
+#              predicates:
+#                - Path=/products/**
+#
+#server:
+#  port: 8086
+#

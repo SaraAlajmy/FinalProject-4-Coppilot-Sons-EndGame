@@ -13,5 +13,6 @@
         <module>chat-service</module>
         <module>groupChatService</module>
         <module>userService</module>
+
     </modules>
 </project>
