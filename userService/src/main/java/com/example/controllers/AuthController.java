@@ -38,6 +38,7 @@ public class AuthController {
     @PostMapping("/validateToken")
     public ResponseEntity<?>  validateToken(@RequestHeader("Authorization") String token) {
         try {
+            System.out.print("whnakhod eh wkam wlih");
             Map<String, Object> claims = userService.validateToken(token);
             return ResponseEntity.ok(claims);
         } catch (RuntimeException e) {

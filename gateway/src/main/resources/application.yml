@@ -1,24 +1,29 @@
-#spring:
-#  application:
-#    name: api-gateway
-#  main:
-#    web-application-type: reactive
-#  cloud:
-#    spring:
-#      cloud:
-#        gateway:
-#          routes:
-#            - id: user-service
-#              uri: http://localhost:8080
-#              predicates:
-#                - Path=/user/**
-#                - Path=/auth/**
-#
-#            - id: product-service
-#              uri: http://localhost:8082
-#              predicates:
-#                - Path=/products/**
-#
-#server:
-#  port: 8086
-#
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    spring:
+      cloud:
+        gateway:
+      routes:
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/user/**
+            - Path=/auth/**
+          filters:
+              - AuthenticationFilter
+
+        - id: chat-service
+          uri: lb://chat-service
+          predicates:
+            - Path=/chat/**
+#    need to be updated with the rest also for each service it has
+#  to have euroko client in its pom.xml file to be
+#  noticied by the
+#registery
+
+
+feign:
+  hystrix:
+    enabled: true
