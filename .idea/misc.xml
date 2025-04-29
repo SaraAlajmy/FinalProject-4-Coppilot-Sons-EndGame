@@ -8,6 +8,7 @@
         <option value="$USER_HOME$/Downloads/finalProjectEndGame/userService/pom.xml" />
         <option value="$PROJECT_DIR$/userService/pom.xml" />
         <option value="$USER_HOME$/Downloads/groupChatService/groupChatService/pom.xml" />
+        <option value="$PROJECT_DIR$/notification-service/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
