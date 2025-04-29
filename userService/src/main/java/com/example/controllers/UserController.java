@@ -34,15 +34,6 @@ public class UserController {
             return "Error deleting user: " + e.getMessage();
         }
     }
-    @PostMapping("/register")
-    public User register(@RequestBody User user){
-        return userService.register(user);
+    //delete all users
 
-
-    }
-    @PostMapping("/login")
-    public String login(@RequestBody User user) {
-        return userService.verify(user);
-
-    }
 }

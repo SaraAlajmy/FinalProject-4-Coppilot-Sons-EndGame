@@ -5,13 +5,21 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/chat-service/pom.xml" />
+        <option value="$USER_HOME$/Downloads/finalProjectEndGame/userService/pom.xml" />
+        <option value="$PROJECT_DIR$/userService/pom.xml" />
+        <option value="$USER_HOME$/Downloads/groupChatService/groupChatService/pom.xml" />
         <option value="$PROJECT_DIR$/groupChatService/pom.xml" />
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/userService/pom.xml" />
+        <option value="$PROJECT_DIR$/gateway/pom.xml" />
       </list>
     </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$USER_HOME$/Downloads/groupChatService/groupChatService/pom.xml" />
+      </set>
+    </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_X" default="true" project-jdk-name="23" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_23" default="true" project-jdk-name="23" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>

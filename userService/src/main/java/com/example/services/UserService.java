@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserService {
@@ -20,6 +21,7 @@ public class UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
     @Autowired
     private JWTService jwtService;
+
 
     @Autowired
     AuthenticationManager authManager;
@@ -30,14 +32,14 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-//    public User addUser(User user) {
-//        try {
-//            return UserRepository.save(user);
-//        } catch (Exception e) {
-//            logger.error("Error adding user: {}", e.getMessage());
-//            throw e;
-//        }
-//    }
+    public User addUser(User user) {
+        try {
+            return userRepository.save(user);
+        } catch (Exception e) {
+            logger.error("Error adding user: {}", e.getMessage());
+            throw e;
+        }
+    }
 
     public List<User> getAllUsers() {
         try {
@@ -79,6 +81,16 @@ public class UserService {
             throw e;
         }
     }
+
+    public User getUserByUsername(String username) {
+        try {
+            return userRepository.findByUsername(username);
+        } catch (Exception e) {
+            logger.error("Error retrieving user by username: {}", e.getMessage());
+            throw e;
+        }
+    }
+
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
     public User register(User user) {
@@ -87,13 +99,30 @@ public class UserService {
         return user;
     }
 
-    public String verify(User user) {
+    public String verify(User user,Boolean isRefresh) {
         Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
         if (authentication.isAuthenticated()) {
-            return jwtService.generateToken(user.getUsername());
+            user= userRepository.findByUsername(user.getUsername());
+            System.out.print(user.getUsername()+user.getId());
+            return jwtService.generateToken(user.getUsername(),user.getId());
         } else {
             logger.error("User is not verified");
             return "fail";
         }
+
     }
+    public String changePassword(User user,String newPassword) {
+        user.setPassword(encoder.encode(newPassword));
+        userRepository.save(user);
+        return "Password changed successfully";
+    }
+
+    public Map<String, Object> validateToken(String token) {
+        return jwtService.validateAndExtractClaims(token);
+    }
+
+
+
+
+
 }
