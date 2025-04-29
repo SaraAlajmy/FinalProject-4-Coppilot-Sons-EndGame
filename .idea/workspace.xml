@@ -5,27 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="897e0d13-6a27-48a8-afc0-23b1e6282013" name="Changes" comment="add temprory docker">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gateway/src/main/java/com/example/gateway/config/AppConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gateway/src/main/java/com/example/gateway/filter/AuthenticationFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gateway/src/main/java/com/example/gateway/filter/RouteValidator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gateway/src/main/resources/application.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/userService/src/main/java/com/example/services/JwtGenerationStrategy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/userService/src/main/java/com/example/services/JwtRefreshStrategy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/userService/src/main/java/com/example/services/LoginStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userService/src/main/java/com/example/models/LoginRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userService/src/main/java/com/example/services/loginStrategies/LoginStrategy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userService/src/main/java/com/example/services/loginStrategies/PhoneLoginStrategy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userService/src/main/java/com/example/services/loginStrategies/UsernameLoginStrategy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat-service/src/test/java/com/example/chat_service/ChatServiceApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/src/test/java/com/example/chat_service/ChatServiceApplicationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userService/src/main/java/com/example/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/userService/src/main/java/com/example/config/SecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/userService/src/main/java/com/example/controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/userService/src/main/java/com/example/controllers/AuthController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/userService/src/main/java/com/example/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/userService/src/main/java/com/example/controllers/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userService/src/main/java/com/example/models/UserPrincipal.java" beforeDir="false" afterPath="$PROJECT_DIR$/userService/src/main/java/com/example/config/UserPrincipal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userService/src/main/java/com/example/services/JWTService.java" beforeDir="false" afterPath="$PROJECT_DIR$/userService/src/main/java/com/example/services/JWTService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userService/src/main/java/com/example/services/MyUserDetailsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/userService/src/main/java/com/example/config/MyUserDetailsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userService/src/main/java/com/example/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/userService/src/main/java/com/example/models/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userService/src/main/java/com/example/repositories/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/userService/src/main/java/com/example/repositories/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userService/src/main/java/com/example/services/JwtGenerationStrategy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/userService/src/main/java/com/example/services/JwtRefreshStrategy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/userService/src/main/java/com/example/services/LoginStrategy.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/userService/src/main/java/com/example/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/userService/src/main/java/com/example/services/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userService/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/userService/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,6 +134,17 @@
     </task>
     <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add temprory docker" />

@@ -15,6 +15,8 @@ public class User {
     @Column(nullable = false, unique = true)
     private String username;
     private String password;
+    @Column(nullable = false, unique = true)
+    private String phoneNumber;
 
     @Embedded
     private NotificationSettings notificationSettings = new NotificationSettings();
@@ -25,15 +27,16 @@ public class User {
     public User() {
     }
 
-    public User(String username, String passwordHash) {
+    private User(String username, String phoneNumber, String password) {
         this.username = username;
-        this.password = passwordHash;
+        this.phoneNumber = phoneNumber;
+        this.password = password;
     }
 
-    public User(Long id, String username, String passwordHash, NotificationSettings notificationSettings, Set<User> blockedUsers) {
+    public User(Long id, String username, String password, NotificationSettings notificationSettings, Set<User> blockedUsers) {
         this.id = id;
         this.username = username;
-        this.password = passwordHash;
+        this.password = password;
         this.notificationSettings = notificationSettings;
         this.blockedUsers = blockedUsers;
     }
@@ -76,6 +79,12 @@ public class User {
 
     public void setBlockedUsers(Set<User> blockedUsers) {
         this.blockedUsers = blockedUsers;
+    }
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
 }

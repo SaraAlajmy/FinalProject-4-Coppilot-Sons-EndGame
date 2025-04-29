@@ -35,5 +35,16 @@ public class UserController {
         }
     }
     //delete all users
+    @DeleteMapping("/deleteAll")
+    public String deleteAllUsers() {
+        try {
+            userService.deleteAllUsers();
+            return "All users deleted successfully";
+        } catch (Exception e) {
+            return "Error deleting users: " + e.getMessage();
+        }
+    }
+
+
 
 }

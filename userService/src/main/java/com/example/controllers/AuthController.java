@@ -1,7 +1,10 @@
 package com.example.controllers;
 
+import com.example.models.LoginRequest;
 import com.example.models.User;
 import com.example.services.UserService;
+import com.example.services.loginStrategies.LoginStrategy;
+import com.example.services.loginStrategies.PhoneLoginStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,15 +24,17 @@ public class AuthController {
 
     }
     @PostMapping("/login")
-    public String login(@RequestBody User user) {
-        return userService.verify(user,false);
-
+    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+        String identifier = request.getIdentifier();
+        String password = request.getPassword();
+        String loginType = request.getType();  // either "username" or "phone"
+        LoginStrategy strategy;
+        String token = userService.verify(identifier, password, loginType);
+        return "fail".equals(token) ?
+                ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials") :
+                ResponseEntity.ok(token);
     }
-    @PostMapping("/refreshToken")
-    public String refreshToken(@RequestBody User user) {
-        return userService.verify(user,true);
 
-    }
     @PostMapping("/validateToken")
     public ResponseEntity<?>  validateToken(@RequestHeader("Authorization") String token) {
         try {

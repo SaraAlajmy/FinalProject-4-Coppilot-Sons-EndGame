@@ -2,6 +2,9 @@ package com.example.services;
 
 import com.example.models.User;
 import com.example.repositories.UserRepository;
+import com.example.services.loginStrategies.LoginStrategy;
+import com.example.services.loginStrategies.PhoneLoginStrategy;
+import com.example.services.loginStrategies.UsernameLoginStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,11 +102,17 @@ public class UserService {
         return user;
     }
 
-    public String verify(User user,Boolean isRefresh) {
-        Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+    public String verify(String identifier, String password, String loginType) {
+      LoginStrategy strategy= loginType.equals("phone")? new PhoneLoginStrategy(userRepository): new UsernameLoginStrategy(userRepository);
+        User user = strategy.loadUser(identifier);
+
+        if (user == null ) {
+            logger.error("User not found or password mismatch");
+            return "fail";
+        }
+
+        Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), password));
         if (authentication.isAuthenticated()) {
-            user= userRepository.findByUsername(user.getUsername());
-            System.out.print(user.getUsername()+user.getId());
             return jwtService.generateToken(user.getUsername(),user.getId());
         } else {
             logger.error("User is not verified");
@@ -121,6 +130,16 @@ public class UserService {
         return jwtService.validateAndExtractClaims(token);
     }
 
+    //for sake of helping in testing
+    public void deleteAllUsers() {
+        try {
+            userRepository.deleteAll();
+            logger.info("All users deleted successfully");
+        } catch (Exception e) {
+            logger.error("Error deleting all users: {}", e.getMessage());
+            throw e;
+        }
+    }
 
 
 
