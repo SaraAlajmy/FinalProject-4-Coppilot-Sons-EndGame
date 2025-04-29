@@ -84,8 +84,7 @@ public class UserService {
         existingUser.setPassword(user.getPassword() != null ? user.getPassword() : existingUser.getPassword());
         existingUser.setNotificationSettings(user.getNotificationSettings() != null ? user.getNotificationSettings() : existingUser.getNotificationSettings());
 
-        return userRepository.save(existingUser);
-        User updated = UserRepository.save(existingUser);
+        User updated = userRepository.save(existingUser);
         logger.info("User with ID {} updated successfully", id);
         return updated;
     }
