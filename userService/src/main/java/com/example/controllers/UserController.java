@@ -3,6 +3,8 @@ package com.example.controllers;
 import com.example.models.User;
 import com.example.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,22 +18,25 @@ public class UserController {
         this.userService = userService;
     }
 
+
+    // TODO: when adding get userbyid endpoint remember it returns null if user not found
+
     @PutMapping("/update/{id}")
-    public User updateUser(@PathVariable Long id, @RequestBody User user) {
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
         try {
-            return userService.updateUser(id, user);
+            return ResponseEntity.ok(userService.updateUser(id, user));
         } catch (Exception e) {
-            return null;
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 
     @DeleteMapping("/delete/{id}")
-    public String deleteUser(@PathVariable Long id) {
+    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
         try {
             userService.deleteUser(id);
-            return "User deleted successfully";
+            return ResponseEntity.ok("User deleted successfully");
         } catch (Exception e) {
-            return "Error deleting user: " + e.getMessage();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting user: " + e.getMessage());
         }
     }
     //delete all users

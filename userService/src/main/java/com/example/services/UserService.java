@@ -37,7 +37,9 @@ public class UserService {
 
     public User addUser(User user) {
         try {
-            return userRepository.save(user);
+            User addedUser = userRepository.save(user);
+            logger.info("User added successfully: {}", addedUser);
+            return addedUser;
         } catch (Exception e) {
             logger.error("Error adding user: {}", e.getMessage());
             throw e;
@@ -46,7 +48,10 @@ public class UserService {
 
     public List<User> getAllUsers() {
         try {
-            return userRepository.findAll();
+            List<User> users = userRepository.findAll();
+            logger.info("Retrieved all users successfully");
+            return users;
+
         } catch (Exception e) {
             logger.error("Error retrieving all users: {}", e.getMessage());
             throw e;
@@ -55,7 +60,14 @@ public class UserService {
 
     public User getUserById(Long id) {
         try {
-            return userRepository.findById(id).orElse(null);
+            User user =  userRepository.findById(id).orElse(null);
+            if (user == null) {
+                logger.warn("User with ID {} not found", id);
+                return null;
+            }
+            logger.info("Retrieved user by ID {} successfully", id);
+            return user;
+
         } catch (Exception e) {
             logger.error("Error retrieving user by ID: {}", e.getMessage());
             throw e;
@@ -73,6 +85,9 @@ public class UserService {
         existingUser.setNotificationSettings(user.getNotificationSettings() != null ? user.getNotificationSettings() : existingUser.getNotificationSettings());
 
         return userRepository.save(existingUser);
+        User updated = UserRepository.save(existingUser);
+        logger.info("User with ID {} updated successfully", id);
+        return updated;
     }
 
     public void deleteUser(Long id) {
