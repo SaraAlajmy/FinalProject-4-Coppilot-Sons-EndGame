@@ -44,10 +44,7 @@ public class UserController {
             return "Error deleting users: " + e.getMessage();
         }
     }
-    @GetMapping("/hello")
-    public String hello() {
-        return "Hello, World!";
-    }
+
 
 
 

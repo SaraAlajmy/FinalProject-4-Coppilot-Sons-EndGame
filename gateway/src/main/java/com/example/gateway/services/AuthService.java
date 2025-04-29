@@ -1,4 +1,4 @@
-package com.example.gateway;
+package com.example.gateway.services;
 
 import com.example.gateway.clients.AuthClient;
 import org.springframework.http.ResponseEntity;
@@ -9,9 +9,9 @@ import reactor.core.scheduler.Schedulers;
 import java.util.Map;
 
 @Service
-public class LService {
+public class AuthService {
     AuthClient authClient;
-    public LService(AuthClient authClient) {
+    public AuthService(AuthClient authClient) {
         this.authClient = authClient;
     }
     public Mono<ResponseEntity<Map<String, Object>>> validateToken(String token) {

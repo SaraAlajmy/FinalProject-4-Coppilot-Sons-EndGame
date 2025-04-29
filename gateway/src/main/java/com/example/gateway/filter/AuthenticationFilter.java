@@ -1,36 +1,47 @@
 package com.example.gateway.filter;
 
-import com.example.gateway.LService;
+import com.example.gateway.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Component
 public class AuthenticationFilter implements GlobalFilter {
 
     @Autowired
     @Lazy
-    private LService lService;
+    private AuthService authService;
+    private static final Set<String> WHITELIST = Set.of(
+            "/auth/login",
+            "/auth/register",
+            "/auth/validateToken"
+    );
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+        String path = exchange.getRequest().getURI().getPath();
+
+        // Skip authentication if path is whitelisted
+        if (WHITELIST.contains(path)) {
+            return chain.filter(exchange);
+        }
         String token = extractToken(exchange);
         if (token == null) {
             exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
             return exchange.getResponse().setComplete();
         }
 
-        return lService.validateToken(token)
+        return authService.validateToken(token)
                 .flatMap(response -> {
                     Map<String, Object> body = response.getBody();
                     if (body == null || !body.containsKey("userId")) {

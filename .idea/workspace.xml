@@ -4,19 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="897e0d13-6a27-48a8-afc0-23b1e6282013" name="Changes" comment="add temprory docker">
+    <list default="true" id="897e0d13-6a27-48a8-afc0-23b1e6282013" name="Changes" comment="if login register passs without validation">
       <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/example/chat_service/Chatcontroller.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gateway/src/main/java/com/example/gateway/LService.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/gateway/src/main/java/com/example/gateway/config/FeignConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/chat-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-service/src/main/java/com/example/chat_service/Chatcontroller.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/chat-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/example/gateway/GatewayApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/java/com/example/gateway/GatewayApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/example/gateway/LService.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/java/com/example/gateway/services/AuthService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/example/gateway/clients/AuthClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/java/com/example/gateway/clients/AuthClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/example/gateway/config/AppConfig.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/example/gateway/filter/AuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/java/com/example/gateway/filter/AuthenticationFilter.java" afterDir="false" />
@@ -120,7 +120,7 @@
       <module name="gateway" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.example.gateway.*" />
+          <option name="PATTERN" value="com.example.gateway.services.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -209,7 +209,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add temprory docker" />
-    <option name="LAST_COMMIT_MESSAGE" value="add temprory docker" />
+    <MESSAGE value="if login register passs without validation" />
+    <option name="LAST_COMMIT_MESSAGE" value="if login register passs without validation" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
