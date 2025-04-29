@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: notification-service
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      username: root
+      password: example
+      authentication-database: admin
+      database: notification-db
+
+server:
+  port: 8082 # TODO: Change this when other services are ready
