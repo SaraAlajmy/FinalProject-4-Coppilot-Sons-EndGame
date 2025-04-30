@@ -1,5 +1,7 @@
 package com.example.groupChatService.controllers;
 
+import com.example.groupChatService.dto.GroupChatRequest;
+import com.example.groupChatService.dto.GroupUpdateRequest;
 import com.example.groupChatService.models.GroupChat;
 import com.example.groupChatService.services.GroupChatService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +42,24 @@ public class GroupChatController {
             return groupChatService.deleteGroupChat(id);
         } catch (Exception e) {
             return "Error deleting group chat by ID: " + e.getMessage();
+        }
+    }
+    @PostMapping("/addGroupChat")
+    public GroupChat addGroupChat(@RequestBody GroupChatRequest groupChatRequest){
+        try {
+            return groupChatService.addGroupChat(groupChatRequest);
+        } catch (Exception e) {
+            System.out.println("Error adding group chat: " + e.getMessage());
+            return null;
+        }
+    }
+    @PutMapping("/update/{id}")
+    public GroupChat updateGroupChat(@PathVariable String id,@RequestBody GroupUpdateRequest groupUpdateRequest){
+        try{
+            return groupChatService.updateGroupChat(id,groupUpdateRequest);
+        }catch (Exception e) {
+            System.out.println("Error updating group chat: " + e.getMessage());
+            return null;
         }
     }
 }

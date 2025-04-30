@@ -13,6 +13,7 @@ public class GroupChat {
     private String name;
     private String description;
     private String emoji;
+    private String creatorId;
     private List<String> members;
     private List<String> admins;
     private boolean adminOnlyMessages;
@@ -41,6 +42,10 @@ public class GroupChat {
         return admins;
     }
 
+    public String getCreatorId() {
+        return creatorId;
+    }
+
     public boolean isAdminOnlyMessages() {
         return adminOnlyMessages;
     }
@@ -49,6 +54,7 @@ public class GroupChat {
         this.name = groupChatBuilder.name;
         this.description = groupChatBuilder.description;
         this.emoji = groupChatBuilder.emoji;
+        this.creatorId = groupChatBuilder.creatorId;
         this.members = groupChatBuilder.members;
         this.admins = groupChatBuilder.admins;
         this.adminOnlyMessages = groupChatBuilder.adminOnlyMessages;
@@ -56,10 +62,9 @@ public class GroupChat {
     }
 
     public groupChatBuilder toBuilder() {
-        return new groupChatBuilder(this.name, new ArrayList<String>(this.admins))
+        return new groupChatBuilder(this.name, this.creatorId,new ArrayList<String>(this.admins),new ArrayList<>(this.members))
                 .setDescription(this.description)
                 .setEmoji(this.emoji)
-                .setMembers(this.members != null ? new ArrayList<String>(this.members) : null)
                 .setAdminOnlyMessages(this.adminOnlyMessages);
     }
 
@@ -70,15 +75,17 @@ public class GroupChat {
         private List<String> members;
         private List<String> admins;
         private boolean adminOnlyMessages;
+        private String creatorId;
 
-        public groupChatBuilder(String name,List<String> admins) {
+        public groupChatBuilder(String name,String creatorId,List<String> admins, List<String> members) {
             this.name = name;
+            this.creatorId = creatorId;
             this.admins = new ArrayList<String>(admins);
+            this.members = new ArrayList<String>(members);
         }
 
-        public groupChatBuilder setName(String name, List<String> admins) {
+        public groupChatBuilder setName(String name) {
             this.name = name;
-            this.admins = admins;
             return this;
         }
 
