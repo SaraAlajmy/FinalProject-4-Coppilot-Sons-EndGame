@@ -22,20 +22,21 @@ public class NotificationDataFactory {
         List<Notification> notifications = new ArrayList<>();
 
         for (int i = 0; i < count; i++) {
-            Notification notification;
-            int type = i % 3;
-
-            notification = switch (type) {
-                case 0 -> createDirectMessageNotification();
-                case 1 -> createGroupMessageNotification();
-                case 2 -> createGroupMentionNotification();
-                default -> createDirectMessageNotification();
-            };
-
-            notifications.add(notification);
+            notifications.add(createRandomNotification());
         }
 
         return notifications;
+    }
+
+    public Notification createRandomNotification() {
+        int type = faker.number().numberBetween(0, 3);
+
+        return switch (type) {
+            case 0 -> createDirectMessageNotification();
+            case 1 -> createGroupMessageNotification();
+            case 2 -> createGroupMentionNotification();
+            default -> createDirectMessageNotification();
+        };
     }
 
     /**
