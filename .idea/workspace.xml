@@ -5,12 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="efb3c0f2-6abe-4a2b-b48a-0eec624f15e0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/controllers/groupChat.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/models/groupChat.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/models/groupMessage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/repositories/groupMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/controllers/GroupChatController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/controllers/GroupMessageController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/repositories/GroupChatRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/services/GroupChatService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/services/GroupMessageService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/controllers/groupChat.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/models/groupChat.java" beforeDir="false" afterPath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/models/GroupChat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/models/groupMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/models/GroupMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/repositories/groupMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/repositories/GroupMessageRepo.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,6 +53,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "jdk.selected.JAVA_MODULE": "23",
     "last_opened_file_path": "E:/Semster 10/Scalable/FinalProject-4-Coppilot-Sons-EndGame/groupChatService/src/main/java/com/example/groupChatService",
     "project.structure.last.edited": "Modules",
