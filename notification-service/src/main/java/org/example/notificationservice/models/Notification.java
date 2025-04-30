@@ -27,6 +27,7 @@ public abstract class Notification {
     @Id
     private String id;
     private String recipientUserId;
+    private String recipientEmail;
     private LocalDateTime timestamp;
     private boolean isRead;
     private String type;
