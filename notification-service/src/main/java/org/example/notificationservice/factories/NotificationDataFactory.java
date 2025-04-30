@@ -57,6 +57,7 @@ public class NotificationDataFactory {
                                             "msg_" + UUID.randomUUID().toString().substring(0, 8))
                                         .messageText(faker.lorem().paragraph())
                                         .messageTimestamp(randomDateTime())
+                                        .chatId("chat_" + faker.number().randomNumber(4, false))
                                         .build();
     }
 
