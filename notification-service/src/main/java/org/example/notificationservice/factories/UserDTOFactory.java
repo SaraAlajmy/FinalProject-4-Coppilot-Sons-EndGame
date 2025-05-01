@@ -10,9 +10,8 @@ public class UserDTOFactory {
 
     public UserDTO createUserDTO(String userId) {
         return new UserDTO(
-                userId,
-                faker.name().fullName(), // User's name
-                faker.internet().emailAddress() // User's email
+            userId,
+            faker.internet().emailAddress()
         );
     }
 

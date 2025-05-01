@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public abstract class MessageNotification extends Notification {
     private String senderUserId;
-    private String senderName;
+    private String senderUserName;
     private String messageId;
     private String messageText;
     private LocalDateTime messageTimestamp;
