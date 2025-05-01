@@ -5,12 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="efb3c0f2-6abe-4a2b-b48a-0eec624f15e0" name="Changes" comment="Add most of CRUD Operations">
-      <change afterPath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/dto/GroupChatRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/dto/GroupUpdateRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/dto/SendMessageRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/controllers/GroupChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/controllers/GroupChatController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/models/GroupChat.java" beforeDir="false" afterPath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/models/GroupChat.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/services/GroupChatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/services/GroupChatService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/groupChatService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/groupChatService/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/controllers/GroupMessageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/controllers/GroupMessageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/models/GroupMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/models/GroupMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/services/GroupMessageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/services/GroupMessageService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,8 +35,7 @@
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
-        <option name="mavenHome" value="Use Maven wrapper" />
-        <option name="useMavenConfig" value="true" />
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
       </MavenGeneralSettings>
     </option>
   </component>
@@ -46,11 +46,21 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.GroupChatServiceApplication.executor": "Run",
+    "git-widget-placeholder": "zahra/sendMessages",
     "jdk.selected.JAVA_MODULE": "23",
     "last_opened_file_path": "E:/Semster 10/Scalable/FinalProject-4-Coppilot-Sons-EndGame/groupChatService/src/main/java/com/example/groupChatService",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2"
@@ -61,7 +71,7 @@
       <recent name="E:\Semster 10\Scalable\FinalProject-4-Coppilot-Sons-EndGame\groupChatService\src\main\java\com\example\groupChatService" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.ChatServiceApplication">
+  <component name="RunManager" selected="Spring Boot.GroupChatServiceApplication">
     <configuration name="ChatServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.chat_service.ChatServiceApplication" />
       <module name="chatService" />
@@ -88,8 +98,23 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="GroupChatServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="groupChatService" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.groupChatService.GroupChatServiceApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.groupChatService.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.GroupChatServiceApplication" />
         <item itemvalue="Application.ChatServiceApplication" />
         <item itemvalue="Application.GroupChatServiceApplication" />
       </list>

@@ -1,5 +1,6 @@
 package com.example.groupChatService.controllers;
 
+import com.example.groupChatService.dto.SendMessageRequest;
 import com.example.groupChatService.models.GroupMessage;
 import com.example.groupChatService.services.GroupMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +69,15 @@ public class GroupMessageController {
             groupMessageService.deleteGroupMessage(id);
         } catch (Exception e) {
             System.out.println("Error deleting group message: " + e.getMessage());
+        }
+    }
+    @PostMapping("/send")
+    public GroupMessage sendMessage(@RequestBody SendMessageRequest request) {
+        try {
+            return groupMessageService.sendMessage(request);
+        } catch (Exception e) {
+            System.out.println("Error sending group message: " + e.getMessage());
+            return null;
         }
     }
 
