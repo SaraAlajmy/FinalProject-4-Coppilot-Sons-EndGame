@@ -4,13 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="897e0d13-6a27-48a8-afc0-23b1e6282013" name="Changes" comment="ADD create notification in NotificationService">
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/controllers/NotificationController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/services/NotificationQueryService.java" afterDir="false" />
+    <list default="true" id="897e0d13-6a27-48a8-afc0-23b1e6282013" name="Changes" comment="test: add endpoints to test strategy and chain design patterns">
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/controllers/NotificationSettingsController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/models/UserNotificationSettings.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/repositories/UserNotificationSettingsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/services/NotificationSettingsService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/controllers/DebugController.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/controllers/DebugController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/repositories/NotificationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/repositories/NotificationRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/services/NotificationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/services/NotificationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/models/NotificationStrategyType.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/models/NotificationStrategyType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/models/NotificationType.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/models/NotificationType.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,7 +28,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="notification-service/feat/design-patterns" />
+        <entry key="$PROJECT_DIR$" value="notification-service/feat/add-models" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -38,17 +39,6 @@
     &quot;assignee&quot;: &quot;Dareenfadel&quot;
   }
 }</component>
-  <component name="GitHubPullRequestState"><![CDATA[{
-  "prStates": [
-    {
-      "id": {
-        "id": "PR_kwDOOb2a986UgsYG",
-        "number": 7
-      },
-      "lastSeen": 1746031620740
-    }
-  ]
-}]]></component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/SaraAlajmy/FinalProject-4-Coppilot-Sons-EndGame.git&quot;,
@@ -86,7 +76,6 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.NotificationServiceApplication.executor": "Run",
     "Docker.docker-compose.yml.mongo-express: Compose Deployment.executor": "Run",
     "Docker.docker-compose.yml.mongo: Compose Deployment.executor": "Run",
     "Docker.docker-compose.yml: Compose Deployment.executor": "Run",
@@ -101,7 +90,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Spring Boot.NotificationServiceApplication.executor": "Run",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "notification-service/feat/notification-management",
+    "git-widget-placeholder": "#7 on notification-service/feat/design-patterns",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/mathewhany/Code/guc/acl/acl-final-project",
@@ -130,7 +119,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.NotificationRepositoryTest">
     <configuration name="NotificationRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="notification-service" />
       <extension name="coverage">
@@ -161,41 +150,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="chatService" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="chatService" />
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
-      <module name="chatService" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="ChatServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="chatService" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.chat_service.ChatServiceApplication" />
@@ -218,18 +172,6 @@
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
-    </configuration>
-    <configuration default="true" type="Tox" factoryName="Tox">
-      <module name="chatService" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <method v="2" />
     </configuration>
     <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
       <deployment type="docker-compose.yml">
@@ -298,7 +240,7 @@
       <option name="presentableId" value="Default" />
       <updated>1745777293244</updated>
       <workItem from="1745950471484" duration="11079000" />
-      <workItem from="1746013755264" duration="7152000" />
+      <workItem from="1746013755264" duration="13207000" />
     </task>
     <task id="LOCAL-00001" summary="feat: initialize notification-service module">
       <option name="closed" value="true" />
@@ -340,15 +282,47 @@
       <option name="project" value="LOCAL" />
       <updated>1745960299606</updated>
     </task>
-    <task id="LOCAL-00006" summary="ADD create notification in NotificationService">
+    <task id="LOCAL-00006" summary="feat: add notification strategy structure">
       <option name="closed" value="true" />
-      <created>1746054398327</created>
+      <created>1746021767724</created>
       <option name="number" value="00006" />
       <option name="presentableId" value="LOCAL-00006" />
       <option name="project" value="LOCAL" />
-      <updated>1746054398327</updated>
+      <updated>1746021767724</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="feat: add notification strategy structure">
+      <option name="closed" value="true" />
+      <created>1746021796702</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1746021796702</updated>
+    </task>
+    <task id="LOCAL-00008" summary="feat: add chain of responsibility structure">
+      <option name="closed" value="true" />
+      <created>1746021841767</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1746021841767</updated>
+    </task>
+    <task id="LOCAL-00009" summary="feat: add recipient email to notification &amp; email service structure">
+      <option name="closed" value="true" />
+      <created>1746021884121</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1746021884121</updated>
+    </task>
+    <task id="LOCAL-00010" summary="test: add endpoints to test strategy and chain design patterns">
+      <option name="closed" value="true" />
+      <created>1746021920402</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1746021920402</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -357,7 +331,11 @@
     <MESSAGE value="feat: add a notification seeder and helpers to generate sample data" />
     <MESSAGE value="feat: add docker-compose to launch mongo and connect notification-service" />
     <MESSAGE value="feat: remove notification controller used to testing" />
-    <MESSAGE value="ADD create notification in NotificationService" />
-    <option name="LAST_COMMIT_MESSAGE" value="ADD create notification in NotificationService" />
+    <MESSAGE value="feat: add" />
+    <MESSAGE value="feat: add notification strategy structure" />
+    <MESSAGE value="feat: add chain of responsibility structure" />
+    <MESSAGE value="feat: add recipient email to notification &amp; email service structure" />
+    <MESSAGE value="test: add endpoints to test strategy and chain design patterns" />
+    <option name="LAST_COMMIT_MESSAGE" value="test: add endpoints to test strategy and chain design patterns" />
   </component>
 </project>
