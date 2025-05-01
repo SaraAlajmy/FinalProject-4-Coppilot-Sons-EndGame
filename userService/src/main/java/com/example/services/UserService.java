@@ -82,7 +82,6 @@ public class UserService {
 
         existingUser.setUsername(user.getUsername() != null ? user.getUsername() : existingUser.getUsername());
         existingUser.setPassword(user.getPassword() != null ? user.getPassword() : existingUser.getPassword());
-        existingUser.setNotificationSettings(user.getNotificationSettings() != null ? user.getNotificationSettings() : existingUser.getNotificationSettings());
 
         User updated = userRepository.save(existingUser);
         logger.info("User with ID {} updated successfully", id);

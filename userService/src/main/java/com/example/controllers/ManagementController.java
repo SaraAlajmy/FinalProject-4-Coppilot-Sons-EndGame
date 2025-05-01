@@ -1,6 +1,5 @@
 package com.example.controllers;
 
-import com.example.models.NotificationSettings;
 import com.example.services.ManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

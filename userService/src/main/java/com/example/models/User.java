@@ -1,9 +1,7 @@
 package com.example.models;
 
 import jakarta.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -17,9 +15,6 @@ public class User {
     private String password;
     @Column(nullable = false, unique = true)
     private String phoneNumber;
-
-    @Embedded
-    private NotificationSettings notificationSettings = new NotificationSettings();
 
     @ManyToMany
     private Set<User> blockedUsers = new HashSet<>();
@@ -36,11 +31,10 @@ public class User {
         this.password = password;
     }
 
-    public User(Long id, String username, String password, NotificationSettings notificationSettings, Set<User> blockedUsers) {
+    public User(Long id, String username, String password, Set<User> blockedUsers) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.notificationSettings = notificationSettings;
         this.blockedUsers = blockedUsers;
     }
 
@@ -66,14 +60,6 @@ public class User {
 
     public void setPassword(String passwordHash) {
         this.password= passwordHash;
-    }
-
-    public NotificationSettings getNotificationSettings() {
-        return notificationSettings;
-    }
-
-    public void setNotificationSettings(NotificationSettings notificationSettings) {
-        this.notificationSettings = notificationSettings;
     }
 
     public Set<User> getBlockedUsers() {

@@ -1,6 +1,5 @@
 package com.example.services;
 
-import com.example.models.NotificationSettings;
 import com.example.models.User;
 import com.example.repositories.UserRepository;
 import org.slf4j.Logger;
