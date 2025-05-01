@@ -4,24 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="897e0d13-6a27-48a8-afc0-23b1e6282013" name="Changes" comment="feat: remove notification controller used to testing">
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/controllers/DebugController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/models/NotificationStrategyType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/services/EmailService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/services/NotificationDeliveryService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/strategies/NotificationStrategy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/strategies/email/EmailNotificationChainConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/strategies/email/EmailNotificationStrategy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/strategies/email/stages/EmailNotificationChain.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/strategies/email/stages/LoadConfigStage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/strategies/email/stages/LoadEmailBodyTemplateStage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/strategies/email/stages/LoadEmailSubjectTemplateStage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/strategies/email/stages/ReplaceEmailBodyPlaceholdersStage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/strategies/email/stages/ReplaceEmailSubjectPlaceholdersStage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/strategies/email/stages/SendEmailStage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/strategies/inbox/InboxNotificationStrategy.java" afterDir="false" />
+    <list default="true" id="897e0d13-6a27-48a8-afc0-23b1e6282013" name="Changes" comment="feat: add notification settings">
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/config/EmailSubjectTemplatesConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/resources/templates/email-bodies/direct_message.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/resources/templates/email-bodies/group_mention.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/resources/templates/email-bodies/group_message.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/resources/templates/email-subjects.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/models/Notification.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/models/Notification.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/factories/NotificationDataFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/factories/NotificationDataFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/services/EmailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/services/EmailService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/strategies/email/stages/EmailNotificationChain.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/strategies/email/stages/EmailNotificationChain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/strategies/email/stages/LoadEmailBodyTemplateStage.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/strategies/email/stages/LoadEmailBodyTemplateStage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/strategies/email/stages/LoadEmailSubjectTemplateStage.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/strategies/email/stages/LoadEmailSubjectTemplateStage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/strategies/email/stages/ReplaceEmailBodyPlaceholdersStage.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/strategies/email/stages/ReplaceEmailBodyPlaceholdersStage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/strategies/email/stages/ReplaceEmailSubjectPlaceholdersStage.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/strategies/email/stages/ReplaceEmailSubjectPlaceholdersStage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/strategies/email/stages/SendEmailStage.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/strategies/email/stages/SendEmailStage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +36,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="notification-service/feat/notification-settings" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -100,10 +98,10 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Spring Boot.NotificationServiceApplication.executor": "Run",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "notification-service/feat/add-models",
+    "git-widget-placeholder": "#10 on notification-service/feat/email-service",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/mathewhany/Code/guc/acl/acl-final-project",
+    "last_opened_file_path": "/Users/mathewhany/Code/guc/acl/acl-final-project/notification-service/src/main/resources/templates/email-bodies",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
@@ -250,7 +248,7 @@
       <option name="presentableId" value="Default" />
       <updated>1745777293244</updated>
       <workItem from="1745950471484" duration="11079000" />
-      <workItem from="1746013755264" duration="7152000" />
+      <workItem from="1746013755264" duration="13207000" />
     </task>
     <task id="LOCAL-00001" summary="feat: initialize notification-service module">
       <option name="closed" value="true" />
@@ -292,7 +290,47 @@
       <option name="project" value="LOCAL" />
       <updated>1745960299606</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="feat: add notification strategy structure">
+      <option name="closed" value="true" />
+      <created>1746021767724</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1746021767724</updated>
+    </task>
+    <task id="LOCAL-00007" summary="feat: add notification strategy structure">
+      <option name="closed" value="true" />
+      <created>1746021796702</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1746021796702</updated>
+    </task>
+    <task id="LOCAL-00008" summary="feat: add chain of responsibility structure">
+      <option name="closed" value="true" />
+      <created>1746021841767</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1746021841767</updated>
+    </task>
+    <task id="LOCAL-00009" summary="feat: add recipient email to notification &amp; email service structure">
+      <option name="closed" value="true" />
+      <created>1746021884121</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1746021884121</updated>
+    </task>
+    <task id="LOCAL-00010" summary="test: add endpoints to test strategy and chain design patterns">
+      <option name="closed" value="true" />
+      <created>1746021920402</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1746021920402</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -301,6 +339,12 @@
     <MESSAGE value="feat: add a notification seeder and helpers to generate sample data" />
     <MESSAGE value="feat: add docker-compose to launch mongo and connect notification-service" />
     <MESSAGE value="feat: remove notification controller used to testing" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: remove notification controller used to testing" />
+    <MESSAGE value="feat: add" />
+    <MESSAGE value="feat: add notification strategy structure" />
+    <MESSAGE value="feat: add chain of responsibility structure" />
+    <MESSAGE value="feat: add recipient email to notification &amp; email service structure" />
+    <MESSAGE value="test: add endpoints to test strategy and chain design patterns" />
+    <MESSAGE value="feat: add notification settings" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add notification settings" />
   </component>
 </project>
