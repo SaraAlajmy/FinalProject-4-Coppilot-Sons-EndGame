@@ -12,7 +12,7 @@ public interface MessageRepository extends MongoRepository<Message, String> {
 
     List<Message> findByChatIdAndIsDeletedFalse(String chatId);
 
-    List<Message> findByChatIdAndIsDeletedFalseAndCreatedAtBetween(
+    List<Message> findByReceiverIdAndIsDeletedFalseAndCreatedAtBetween(
             String chatId, LocalDateTime startDate, LocalDateTime endDate
     );
 
