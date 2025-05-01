@@ -38,15 +38,5 @@ public class ManagementController {
         }
     }
 
-    @GetMapping("/isBlocked/{blockerId}/{blockedId}")
-    public ResponseEntity<?> isBlocked(@PathVariable Long blockerId, @PathVariable Long blockedId){
-        try{
-            boolean isBlocked = managementService.isBlocked(blockerId, blockedId);
-            return new ResponseEntity<>(isBlocked, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Error checking block status: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
 
 }

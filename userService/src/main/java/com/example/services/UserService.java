@@ -192,6 +192,20 @@ public class UserService {
 
     }
 
+    public boolean isBlocked(Long userBlockingId, Long userToCheckId) {
+        try {
+            User userBlocking = getUserById(userBlockingId);
+            User userToCheck = getUserById(userToCheckId);
+            if (userBlocking.getBlockedUsers() != null) {
+                return userBlocking.getBlockedUsers().contains(userToCheck);
+            }
+            return false;
+        } catch (Exception e) {
+            logger.error("Error checking block status: {}", e.getMessage());
+            throw e;
+        }
+    }
+
 
 
 }
