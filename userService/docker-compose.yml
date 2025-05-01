@@ -37,7 +37,7 @@ services:
       - "80:80"
     depends_on:
       - postgres
-
+      - redis_cache
 
   app:
     build: .
