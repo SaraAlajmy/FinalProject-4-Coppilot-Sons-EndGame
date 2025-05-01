@@ -6,6 +6,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Document(collection = "groupMessage")
 public class GroupMessage {
@@ -15,10 +16,10 @@ public class GroupMessage {
     private String senderId;
     private String content;
     @CreatedDate
-    private Instant createdAt;   // <-- set automatically when inserting
+    private LocalDateTime createdAt;   // <-- set automatically when inserting
 
     @LastModifiedDate
-    private Instant updatedAt;   // <-- set automatically when updating
+    private LocalDateTime updatedAt;   // <-- set automatically when updating
     private boolean archived;
 
     public GroupMessage(String groupId, String senderId, String content) {
@@ -56,21 +57,15 @@ public class GroupMessage {
         this.content = content;
     }
 
-    public Instant getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
-    }
 
-    public Instant getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Instant updatedAt) {
-        this.updatedAt = updatedAt;
-    }
 
     public boolean isArchived() {
         return archived;
