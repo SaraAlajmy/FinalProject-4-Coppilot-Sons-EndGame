@@ -1,7 +1,9 @@
 package com.example.chat_service.services;
 
+import com.example.chat_service.dto.MessageRequestDTO;
 import com.example.chat_service.models.Message;
 import com.example.chat_service.repositories.MessageRepository;
+import org.springframework.amqp.rabbit.listener.MessageAckListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,8 @@ import java.util.List;
 @Service
 public class RealMessageService implements MessageService {
     MessageRepository messageRepository;
+    NotificationObserver notificationObserver;
+
 
     @Autowired
     public RealMessageService(MessageRepository messageRepository) {
@@ -18,10 +22,19 @@ public class RealMessageService implements MessageService {
     }
 
     @Override
-    public void sendMessage(String senderId, String receiverId, String content) {
+    public void sendMessage(MessageRequestDTO dto, String senderUserName) {
         //TODO: use chat service to get chatId
-        String chatId = senderId + "_" + receiverId;
-        messageRepository.save(new Message(chatId,senderId, receiverId, content));
+        String chatId = dto.getChatId();
+        Message message = new Message(
+                chatId,
+                dto.getSenderId(),
+                senderUserName,
+                dto.getReceiverId(),
+                dto.getContent()
+        );
+
+        messageRepository.save(message);
+        notificationObserver.createNotification(message);
     }
 
     @Override

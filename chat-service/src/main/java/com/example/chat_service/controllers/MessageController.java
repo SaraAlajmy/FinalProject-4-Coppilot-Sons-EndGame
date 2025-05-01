@@ -19,8 +19,8 @@ public class MessageController {
     private MessageServiceProxy messageService;
 
     @PostMapping("/send")
-    public void sendMessage(@RequestBody MessageRequestDTO dto, @RequestHeader("userId") String userId) {
-        messageService.sendMessage(dto.getSenderId(), dto.getReceiverId(), dto.getContent());
+    public void sendMessage(@RequestBody MessageRequestDTO dto, @RequestHeader("userId") String userId , @RequestHeader("userName") String userName) {
+        messageService.sendMessage(dto , userName);
     }
 
     @DeleteMapping("/{messageId}")

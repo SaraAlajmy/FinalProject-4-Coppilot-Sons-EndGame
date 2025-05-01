@@ -1,13 +1,14 @@
 package com.example.chat_service.services;
 
 
+import com.example.chat_service.dto.MessageRequestDTO;
 import com.example.chat_service.models.Message;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 public interface MessageService {
-    void sendMessage(String senderId, String receiverId, String content);
+    void sendMessage(MessageRequestDTO dto, String senderUserName);
 
     void deleteMessage(String messageId);
 

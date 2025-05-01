@@ -1,6 +1,7 @@
 package com.example.chat_service.services;
 
 import com.example.chat_service.clients.UserClient;
+import com.example.chat_service.dto.MessageRequestDTO;
 import com.example.chat_service.models.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,13 +22,13 @@ public class MessageServiceProxy implements MessageService {
     }
 
     @Override
-    public void sendMessage(String senderId, String receiverId, String content) {
+    public void sendMessage(MessageRequestDTO dto ,String senderUserName) {
 
-        if(userClient.isBlocked(senderId, receiverId)) {
+        if(userClient.isBlocked(dto.getSenderId(), dto.getReceiverId())) {
             throw new RuntimeException("Sender is blocked by the receiver");
         }
 
-        realMessageService.sendMessage(senderId, receiverId, content);
+        realMessageService.sendMessage(dto, senderUserName);
     }
 
     @Override
