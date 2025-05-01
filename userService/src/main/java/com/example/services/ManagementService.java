@@ -54,66 +54,22 @@ public class ManagementService {
         }
     }
 
-    public void muteNotifications(Long userId) {
+    public boolean isBlocked(Long userBlockingId, Long userToCheckId) {
         try {
-            User user = userRepository.findById(userId)
-                    .orElseThrow(() -> new RuntimeException("User not found"));
-            user.getNotificationSettings().setMuteNotifications(true);
-            userRepository.save(user);
-            logger.info("User {} muted notifications", userId);
-        } catch(Exception e) {
-            logger.error("Error muting notifications: {}", e.getMessage());
-            throw e;
-        }
-    }
-
-    public void unmuteNotifications(Long userId) {
-        try {
-            User user = userRepository.findById(userId)
-                    .orElseThrow(() -> new RuntimeException("User not found"));
-            user.getNotificationSettings().setMuteNotifications(false);
-            userRepository.save(user);
-        } catch(Exception e) {
-            logger.error("Error unmuting notifications: {}", e.getMessage());
-            throw e;
-        }
-    }
-
-    public void updateNotificationSettings(Long userId, NotificationSettings updateDTO) {
-        try {
-            User user = userRepository.findById(userId)
-                    .orElseThrow(() -> new RuntimeException("User not found"));
-
-            NotificationSettings settings = user.getNotificationSettings();
-
-            if (updateDTO.getMuteNotifications() != null) {
-                settings.setMuteNotifications(updateDTO.getMuteNotifications());
+            User userBlocking = userService.getUserById(userBlockingId);
+            User userToCheck = userService.getUserById(userToCheckId);
+            if (userBlocking.getBlockedUsers() != null) {
+                return userBlocking.getBlockedUsers().contains(userToCheck);
             }
-            if (updateDTO.getDirectMessageEmail() != null) {
-                settings.setDirectMessageEmail(updateDTO.getDirectMessageEmail());
-            }
-            if (updateDTO.getDirectMessageInbox() != null) {
-                settings.setDirectMessageInbox(updateDTO.getDirectMessageInbox());
-            }
-            if (updateDTO.getGroupMessageEmail() != null) {
-                settings.setGroupMessageEmail(updateDTO.getGroupMessageEmail());
-            }
-            if (updateDTO.getGroupMessageInbox() != null) {
-                settings.setGroupMessageInbox(updateDTO.getGroupMessageInbox());
-            }
-            if (updateDTO.getGroupMentionEmail() != null) {
-                settings.setGroupMentionEmail(updateDTO.getGroupMentionEmail());
-            }
-            if (updateDTO.getGroupMentionInbox() != null) {
-                settings.setGroupMentionInbox(updateDTO.getGroupMentionInbox());
-            }
-
-            userRepository.save(user);
+            return false;
         } catch (Exception e) {
-            logger.error("Error updating notification settings: {}", e.getMessage());
+            logger.error("Error checking block status: {}", e.getMessage());
             throw e;
         }
     }
+
+
+
 }
 
 
