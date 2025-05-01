@@ -4,24 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="897e0d13-6a27-48a8-afc0-23b1e6282013" name="Changes" comment="feat: remove notification controller used to testing">
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/controllers/DebugController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/models/NotificationStrategyType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/services/EmailService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/services/NotificationDeliveryService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/strategies/NotificationStrategy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/strategies/email/EmailNotificationChainConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/strategies/email/EmailNotificationStrategy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/strategies/email/stages/EmailNotificationChain.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/strategies/email/stages/LoadConfigStage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/strategies/email/stages/LoadEmailBodyTemplateStage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/strategies/email/stages/LoadEmailSubjectTemplateStage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/strategies/email/stages/ReplaceEmailBodyPlaceholdersStage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/strategies/email/stages/ReplaceEmailSubjectPlaceholdersStage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/strategies/email/stages/SendEmailStage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/strategies/inbox/InboxNotificationStrategy.java" afterDir="false" />
+    <list default="true" id="897e0d13-6a27-48a8-afc0-23b1e6282013" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/example/chat_service/rabbitmq/ChatProducer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/example/chat_service/rabbitmq/RabbitMQConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/resources/application.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/models/Notification.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/models/Notification.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-service/src/main/java/com/example/chat_service/services/MessageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/example/chat_service/services/MessageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-service/src/main/resources/application.properties" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,17 +41,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/SaraAlajmy/FinalProject-4-Coppilot-Sons-EndGame.git&quot;,
-    &quot;accountId&quot;: &quot;aef7ef8b-308e-408c-91f1-8ccb01261406&quot;
-  },
-  &quot;recentNewPullRequestHead&quot;: {
-    &quot;server&quot;: {
-      &quot;useHttp&quot;: false,
-      &quot;host&quot;: &quot;github.com&quot;,
-      &quot;port&quot;: null,
-      &quot;suffix&quot;: null
-    },
-    &quot;owner&quot;: &quot;SaraAlajmy&quot;,
-    &quot;repository&quot;: &quot;FinalProject-4-Coppilot-Sons-EndGame&quot;
+    &quot;accountId&quot;: &quot;a5edc5c4-15ec-4401-8b4f-e4d62cf7145b&quot;
   }
 }</component>
   <component name="KubernetesApiPersistence">{}</component>
@@ -84,39 +63,39 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Docker.docker-compose.yml.mongo-express: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.mongo: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml: Compose Deployment.executor": "Run",
-    "JUnit.NotificationRepositoryTest.executor": "Run",
-    "JUnit.NotificationSerializationTest.executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.NotificationServiceApplication.executor": "Run",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "notification-service/feat/add-models",
-    "junie.onboarding.icon.badge.shown": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/mathewhany/Code/guc/acl/acl-final-project",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "run.configurations.included.in.services": "true",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Docker.docker-compose.yml.mongo-express: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.mongo: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.NotificationRepositoryTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.NotificationSerializationTest.executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.NotificationServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;ahmed-chat-service&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Asus/Desktop/myProjects/FinalProject-4-Coppilot-Sons-EndGame&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="org.example.notificationservice.strategies.email.stages" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Asus\Desktop\myProjects\FinalProject-4-Coppilot-Sons-EndGame\chat-service\src\main\resources" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="org.example.notificationservice.strategies.email.stages" />
+      <recent name="com.example.chat_service.rabbitmq" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -234,13 +213,6 @@
       </list>
     </recent_temporary>
   </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.23774.435" />
-      </set>
-    </attachedChunks>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -249,58 +221,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1745777293244</updated>
-      <workItem from="1745950471484" duration="11079000" />
-      <workItem from="1746013755264" duration="7152000" />
+      <workItem from="1745950471484" duration="9334000" />
     </task>
-    <task id="LOCAL-00001" summary="feat: initialize notification-service module">
-      <option name="closed" value="true" />
-      <created>1745960185504</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1745960185504</updated>
-    </task>
-    <task id="LOCAL-00002" summary="feat: add notification models">
-      <option name="closed" value="true" />
-      <created>1745960209979</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1745960209979</updated>
-    </task>
-    <task id="LOCAL-00003" summary="feat: add a notification seeder and helpers to generate sample data">
-      <option name="closed" value="true" />
-      <created>1745960240354</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1745960240354</updated>
-    </task>
-    <task id="LOCAL-00004" summary="feat: add docker-compose to launch mongo and connect notification-service">
-      <option name="closed" value="true" />
-      <created>1745960262119</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1745960262119</updated>
-    </task>
-    <task id="LOCAL-00005" summary="feat: remove notification controller used to testing">
-      <option name="closed" value="true" />
-      <created>1745960299606</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1745960299606</updated>
-    </task>
-    <option name="localTasksCounter" value="6" />
     <servers />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: initialize notification-service module" />
-    <MESSAGE value="feat: add notification models" />
-    <MESSAGE value="feat: add a notification seeder and helpers to generate sample data" />
-    <MESSAGE value="feat: add docker-compose to launch mongo and connect notification-service" />
-    <MESSAGE value="feat: remove notification controller used to testing" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: remove notification controller used to testing" />
   </component>
 </project>
