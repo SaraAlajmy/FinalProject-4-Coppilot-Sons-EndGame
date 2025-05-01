@@ -44,10 +44,13 @@ services:
     container_name: springboot-app
     depends_on:
       - postgres
+      - redis_cache
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/your_postgres_db
       SPRING_DATASOURCE_USERNAME: your_pg_username
       SPRING_DATASOURCE_PASSWORD: your_pg_password
+      SPRING_DATA_REDIS_HOST: redis_cache
+      SPRING_DATA_REDIS_PORT: 6379
     ports:
       - "8080:8080"
 

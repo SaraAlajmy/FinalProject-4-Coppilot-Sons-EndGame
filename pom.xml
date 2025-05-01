@@ -14,5 +14,6 @@
         <module>groupChatService</module>
         <module>userService</module>
         <module>gateway</module>
+        <module>service-registry</module>
     </modules>
 </project>
