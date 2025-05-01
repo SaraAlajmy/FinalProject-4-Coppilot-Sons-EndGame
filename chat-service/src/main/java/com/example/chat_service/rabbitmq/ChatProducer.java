@@ -13,11 +13,11 @@ public class ChatProducer {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    public void sendMessage(Message message) {
+    public void sendMessage(Map<String,Object> data) {
         rabbitTemplate.convertAndSend(
                 RabbitMQConfig.EXCHANGE,
                 RabbitMQConfig.MESSAGE_ROUTING_KEY,
-                message
+                data
         );
     }
 
