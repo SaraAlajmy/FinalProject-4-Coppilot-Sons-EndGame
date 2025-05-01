@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.example.notificationservice.factories.NotificationDataFactory;
 import org.example.notificationservice.models.Notification;
 import org.example.notificationservice.services.NotificationDeliveryService;
+import org.example.notificationservice.services.NotificationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class DebugController {
     private NotificationDataFactory notificationDataFactory;
     private NotificationDeliveryService notificationDeliveryService;
-
+    private NotificationService notificationService;
     @PostMapping("/send-sample-notification")
     public ResponseEntity<Void> sendNotification(
         @RequestParam String strategyType
@@ -32,5 +33,14 @@ public class DebugController {
         } else {
             return ResponseEntity.status(500).build();
         }
+    }
+    @PostMapping("/createSampleNotification")
+    public ResponseEntity<Void> createSampleNotification(@RequestBody  Notification notification) {
+        if(notificationService.createNotification(notification))
+            return ResponseEntity.ok().build();
+        else
+            return ResponseEntity.status(500).build();
+
+
     }
 }
