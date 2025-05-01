@@ -33,17 +33,24 @@
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
         </processorPath>
-        <module name="chatService" />
+        <module name="api-gateway" />
         <module name="gateway" />
         <module name="service-registry" />
       </profile>
+      <profile name="Annotation profile for chatService" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
+        </processorPath>
+        <module name="chatService" />
+      </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="groupChatService" target="23" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="api-gateway" options="-parameters" />
       <module name="chatService" options="-parameters" />
       <module name="gateway" options="-parameters" />
       <module name="groupChatService" options="-parameters" />

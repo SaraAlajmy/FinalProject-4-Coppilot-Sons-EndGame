@@ -18,6 +18,13 @@ spring:
           uri: lb://chat-service
           predicates:
             - Path=/chat/**
+  data:
+    redis:
+      host: localhost
+      port: 6379
+  cache: 
+    type: redis
+
 #    need to be updated with the rest also for each service it has
 #  to have euroko client in its pom.xml file to be
 #  noticied by the
@@ -27,3 +34,4 @@ spring:
 feign:
   hystrix:
     enabled: true
+
