@@ -20,7 +20,7 @@ spring:
             - Path=/chat/**
   data:
     redis:
-      host: localhost
+      host: redis_cache
       port: 6379
   cache: 
     type: redis

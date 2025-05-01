@@ -24,6 +24,9 @@ public class User {
     @ManyToMany
     private Set<User> blockedUsers = new HashSet<>();
 
+    private String refreshToken;
+
+
     public User() {
     }
 
@@ -85,6 +88,12 @@ public class User {
     }
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
     }
 
 }

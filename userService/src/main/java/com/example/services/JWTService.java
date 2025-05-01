@@ -22,21 +22,15 @@ public class JWTService {
 
     @Value("${jwt.secret}")
     private String secretKey;
-    private static final long ACCESS_TOKEN_VALIDITY = 1000 * 60 * 60 * 30;  // 30 minutes
-    private static final long REFRESH_TOKEN_VALIDITY = 1000 * 60 * 60 * 24 * 30L;  // 30 days
+    private static final long ACCESS_TOKEN_VALIDITY = 1000 * 60 * 60 * 5;  // 5 minutes
+    private static final long REFRESH_TOKEN_VALIDITY = 1000 * 60 * 60 * 24 * 6L;  // 6 days
 
-    public JWTService() {
-        // Generate a secret key for JWT signing
-//
-//        Key key = Keys.secretKeyFor(io.jsonwebtoken.SignatureAlgorithm.HS256);
-//        secretKey = Base64.getEncoder().encodeToString(key.getEncoded());
-}
+    public JWTService() {}
 
     public String generateToken(String username, Long id) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", id);
         claims.put("username", username);
-        System.out.println("feh claims"+claims);
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(username)
@@ -83,7 +77,7 @@ public class JWTService {
         return extractAllClaims(token).get("userId", String.class);
     }
 
-    private boolean isTokenExpired(String token) {
+    public boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 
@@ -110,6 +104,7 @@ public class JWTService {
             throw new RuntimeException(e.getMessage());
         }
     }
+
 
 
 

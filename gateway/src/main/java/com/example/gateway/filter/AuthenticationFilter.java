@@ -24,7 +24,9 @@ public class AuthenticationFilter implements GlobalFilter {
     private static final Set<String> WHITELIST = Set.of(
             "/auth/login",
             "/auth/register",
-            "/auth/validateToken"
+            "/auth/validateToken",
+            "/auth/refresh"
+
     );
 
     @Override

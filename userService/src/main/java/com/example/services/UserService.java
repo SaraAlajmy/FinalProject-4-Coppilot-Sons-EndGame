@@ -116,21 +116,27 @@ public class UserService {
         return user;
     }
 
-    public String verify(String identifier, String password, String loginType) {
+    public Map<String,String> verify(String identifier, String password, String loginType) {
       LoginStrategy strategy= loginType.equals("phone")? new PhoneLoginStrategy(userRepository): new UsernameLoginStrategy(userRepository);
         User user = strategy.loadUser(identifier);
 
         if (user == null ) {
             logger.error("User not found or password mismatch");
-            return "fail";
+            return null;
         }
 
         Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), password));
         if (authentication.isAuthenticated()) {
-            return jwtService.generateToken(user.getUsername(),user.getId());
+            String newAccessToken = jwtService.generateToken(user.getUsername(), user.getId());
+            String newRefreshToken = jwtService.generateRefreshToken(user.getUsername());
+            user.setRefreshToken(newRefreshToken);
+            userRepository.save(user);
+            return Map.of(
+                    "accessToken", newAccessToken,
+                    "refreshToken", newRefreshToken);
         } else {
             logger.error("User is not verified");
-            return "fail";
+            return null;
         }
 
     }
@@ -144,6 +150,36 @@ public class UserService {
         return jwtService.validateAndExtractClaims(token);
     }
 
+
+    public Map<String, String> refreshToken(String incomingToken) {
+        User user = userRepository.findByRefreshToken(incomingToken);
+        if (user == null|| jwtService.isTokenExpired(incomingToken)) {
+            logger.error("User not found or token expired");
+            throw new RuntimeException("User not found or token expired");
+        }
+
+        String newAccessToken = jwtService.generateToken(user.getUsername(), user.getId());
+        String newRefreshToken = jwtService.generateRefreshToken(user.getUsername());
+        user.setRefreshToken(newRefreshToken);
+        userRepository.save(user);
+        logger.info("Tokens refreshed successfully");
+        return Map.of(
+                "accessToken", newAccessToken,
+                "refreshToken", newRefreshToken
+        );
+    }
+
+    public void logout(String userId) {
+       User user = userRepository.findById(Long.valueOf(userId)).orElse(null);
+        if (user != null) {
+            user.setRefreshToken(null);
+            userRepository.save(user);
+            logger.info("User logged out successfully");
+        } else {
+            logger.error("User not found");
+            throw new RuntimeException("User not found");
+        }
+    }
     //for sake of helping in testing
     public void deleteAllUsers() {
         try {
@@ -153,8 +189,8 @@ public class UserService {
             logger.error("Error deleting all users: {}", e.getMessage());
             throw e;
         }
-    }
 
+    }
 
 
 
