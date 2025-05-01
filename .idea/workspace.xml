@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="897e0d13-6a27-48a8-afc0-23b1e6282013" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/example/chat_service/rabbitmq/ChatProducer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/example/chat_service/rabbitmq/RabbitMQConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat-service/src/main/java/com/example/chat_service/services/MessageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/example/chat_service/services/MessageService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat-service/src/main/resources/application.properties" beforeDir="false" />
-    </list>
+    <list default="true" id="897e0d13-6a27-48a8-afc0-23b1e6282013" name="Changes" comment="ADD create notification in NotificationService" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,7 +20,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="notification-service/feat/design-patterns" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -38,10 +31,31 @@
     &quot;assignee&quot;: &quot;Dareenfadel&quot;
   }
 }</component>
+  <component name="GitHubPullRequestState">{
+  &quot;prStates&quot;: [
+    {
+      &quot;id&quot;: {
+        &quot;id&quot;: &quot;PR_kwDOOb2a986UgsYG&quot;,
+        &quot;number&quot;: 7
+      },
+      &quot;lastSeen&quot;: 1746031620740
+    }
+  ]
+}</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/SaraAlajmy/FinalProject-4-Coppilot-Sons-EndGame.git&quot;,
     &quot;accountId&quot;: &quot;a5edc5c4-15ec-4401-8b4f-e4d62cf7145b&quot;
+  },
+  &quot;recentNewPullRequestHead&quot;: {
+    &quot;server&quot;: {
+      &quot;useHttp&quot;: false,
+      &quot;host&quot;: &quot;github.com&quot;,
+      &quot;port&quot;: null,
+      &quot;suffix&quot;: null
+    },
+    &quot;owner&quot;: &quot;SaraAlajmy&quot;,
+    &quot;repository&quot;: &quot;FinalProject-4-Coppilot-Sons-EndGame&quot;
   }
 }</component>
   <component name="KubernetesApiPersistence">{}</component>
@@ -63,39 +77,41 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Docker.docker-compose.yml.mongo-express: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker-compose.yml.mongo: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker-compose.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.NotificationRepositoryTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.NotificationSerializationTest.executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Spring Boot.NotificationServiceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;ahmed-chat-service&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Asus/Desktop/myProjects/FinalProject-4-Coppilot-Sons-EndGame&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.NotificationServiceApplication.executor": "Run",
+    "Docker.docker-compose.yml.mongo-express: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yml.mongo: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yml: Compose Deployment.executor": "Run",
+    "JUnit.NotificationRepositoryTest.executor": "Run",
+    "JUnit.NotificationSerializationTest.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.NotificationServiceApplication.executor": "Run",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "ahmed-chat-service",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/mathewhany/Code/guc/acl/acl-final-project",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "run.configurations.included.in.services": "true",
+    "settings.editor.selected.configurable": "reference.projectsettings.compiler.annotationProcessors"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Asus\Desktop\myProjects\FinalProject-4-Coppilot-Sons-EndGame\chat-service\src\main\resources" />
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="org.example.notificationservice.strategies.email.stages" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.example.chat_service.rabbitmq" />
+      <recent name="com.example.chat_service.controllers" />
+      <recent name="org.example.notificationservice.strategies.email.stages" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -108,7 +124,41 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.NotificationRepositoryTest">
+  <component name="RunManager" selected="Docker.docker-compose.yml.mongo-express: Compose Deployment">
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="chatService" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="Tox" factoryName="Tox">
+      <module name="chatService" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <method v="2" />
+    </configuration>
     <configuration name="NotificationRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="notification-service" />
       <extension name="coverage">
@@ -135,6 +185,19 @@
       <option name="PACKAGE_NAME" value="org.example.notificationservice.models" />
       <option name="MAIN_CLASS_NAME" value="org.example.notificationservice.models.NotificationSerializationTest" />
       <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="chatService" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="chatService" />
+      <option name="filePath" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -221,8 +284,67 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1745777293244</updated>
-      <workItem from="1745950471484" duration="9334000" />
+      <workItem from="1745950471484" duration="11079000" />
+      <workItem from="1746013755264" duration="7152000" />
     </task>
+    <task id="LOCAL-00001" summary="feat: initialize notification-service module">
+      <option name="closed" value="true" />
+      <created>1745960185504</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1745960185504</updated>
+    </task>
+    <task id="LOCAL-00002" summary="feat: add notification models">
+      <option name="closed" value="true" />
+      <created>1745960209979</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1745960209979</updated>
+    </task>
+    <task id="LOCAL-00003" summary="feat: add a notification seeder and helpers to generate sample data">
+      <option name="closed" value="true" />
+      <created>1745960240354</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1745960240354</updated>
+    </task>
+    <task id="LOCAL-00004" summary="feat: add docker-compose to launch mongo and connect notification-service">
+      <option name="closed" value="true" />
+      <created>1745960262119</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1745960262119</updated>
+    </task>
+    <task id="LOCAL-00005" summary="feat: remove notification controller used to testing">
+      <option name="closed" value="true" />
+      <created>1745960299606</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1745960299606</updated>
+    </task>
+    <task id="LOCAL-00006" summary="ADD create notification in NotificationService">
+      <option name="closed" value="true" />
+      <created>1746054398327</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1746054398327</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat: initialize notification-service module" />
+    <MESSAGE value="feat: add notification models" />
+    <MESSAGE value="feat: add a notification seeder and helpers to generate sample data" />
+    <MESSAGE value="feat: add docker-compose to launch mongo and connect notification-service" />
+    <MESSAGE value="feat: remove notification controller used to testing" />
+    <MESSAGE value="ADD create notification in NotificationService" />
+    <option name="LAST_COMMIT_MESSAGE" value="ADD create notification in NotificationService" />
   </component>
 </project>
