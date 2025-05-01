@@ -21,6 +21,6 @@ public interface MessageService {
 
     List<Message> getFavoriteMessages(String senderId);
 
-    List<Message> filterByDate(String chatId, LocalDateTime startDate, LocalDateTime endDate);
+    List<Message> filterByDate(String userId, LocalDateTime startDate, LocalDateTime endDate);
 
 }

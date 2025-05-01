@@ -54,15 +54,15 @@ public class MessageServiceProxy implements MessageService {
     }
 
     @Override
-    public List<Message> filterByDate(String chatId, LocalDateTime startDate, LocalDateTime endDate) {
-        return realMessageService.filterByDate(chatId, startDate, endDate);
+    public List<Message> filterByDate(String userId, LocalDateTime startDate, LocalDateTime endDate) {
+        return realMessageService.filterByDate(userId, startDate, endDate);
     }
 
 
 
     @Override
-    public List<Message> getFavoriteMessages(String senderId) {
-        return realMessageService.getFavoriteMessages(senderId);
+    public List<Message> getFavoriteMessages(String userId) {
+        return realMessageService.getFavoriteMessages(userId);
     }
 
 
