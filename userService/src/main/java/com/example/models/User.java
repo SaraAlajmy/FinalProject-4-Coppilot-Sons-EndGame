@@ -15,6 +15,8 @@ public class User {
     private String password;
     @Column(nullable = false, unique = true)
     private String phoneNumber;
+    @Column(nullable = false)
+    private String email;
 
     @ManyToMany
     private Set<User> blockedUsers = new HashSet<>();
@@ -25,16 +27,19 @@ public class User {
     public User() {
     }
 
-    private User(String username, String phoneNumber, String password) {
+    private User(String username, String phoneNumber, String password, String email) {
         this.username = username;
         this.phoneNumber = phoneNumber;
         this.password = password;
+        this.email = email;
     }
 
-    public User(Long id, String username, String password, Set<User> blockedUsers) {
+    public User(Long id, String username, String phoneNumber, String password, String email, Set<User> blockedUsers) {
         this.id = id;
         this.username = username;
+        this.phoneNumber = phoneNumber;
         this.password = password;
+        this.email = email;
         this.blockedUsers = blockedUsers;
     }
 
@@ -69,12 +74,23 @@ public class User {
     public void setBlockedUsers(Set<User> blockedUsers) {
         this.blockedUsers = blockedUsers;
     }
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
+
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getRefreshToken() {
         return refreshToken;
     }

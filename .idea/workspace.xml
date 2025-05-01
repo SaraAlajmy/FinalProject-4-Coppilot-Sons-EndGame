@@ -6,12 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="897e0d13-6a27-48a8-afc0-23b1e6282013" name="Changes" comment="if login register passs without validation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userService/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/userService/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userService/src/main/java/com/example/controllers/ManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/userService/src/main/java/com/example/controllers/ManagementController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/userService/src/main/java/com/example/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/userService/src/main/java/com/example/controllers/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userService/src/main/java/com/example/models/NotificationSettings.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/userService/src/main/java/com/example/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/userService/src/main/java/com/example/models/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userService/src/main/java/com/example/services/ManagementService.java" beforeDir="false" afterPath="$PROJECT_DIR$/userService/src/main/java/com/example/services/ManagementService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/userService/src/main/java/com/example/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/userService/src/main/java/com/example/services/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

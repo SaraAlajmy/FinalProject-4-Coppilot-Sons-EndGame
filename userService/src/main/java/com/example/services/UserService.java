@@ -111,7 +111,7 @@ public class UserService {
 
     public User register(User user) {
         user.setPassword(encoder.encode(user.getPassword()));
-        userRepository .save(user);
+        userRepository.save(user);
         return user;
     }
 
@@ -205,6 +205,14 @@ public class UserService {
         }
     }
 
-
+    public String getUserEmail(Long userId){
+        User user = userRepository.findById(userId).orElse(null);
+        if (user != null) {
+            return user.getEmail();
+        } else {
+            logger.error("User not found");
+            throw new RuntimeException("User not found");
+        }
+    }
 
 }
