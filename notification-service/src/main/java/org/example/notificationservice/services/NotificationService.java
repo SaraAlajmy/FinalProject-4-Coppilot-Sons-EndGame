@@ -6,6 +6,7 @@ import org.example.notificationservice.factories.UserDTOFactory;
 import org.example.notificationservice.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.time.LocalDateTime;
 
 @Service
 @Slf4j
@@ -26,21 +27,29 @@ public class NotificationService {
     //TODO: Change to listen to the notification queue
     public boolean createNotification(Notification notification) {
         NotificationSettingsDTO userNotificationSetting = notificationSettingsDTOFactory.createNotificationSettingsDTO();
-
         if (userNotificationSetting.getMuteNotifications()) {
             return true;
         }
         //TODO: GET the user Info from the UserClient when user-service is ready
         UserDTO receiver = userDTOFactory.createUserDTO(notification.getRecipientUserId());
         notification.setRecipientEmail(receiver.getEmail());
+        if (notification instanceof MessageNotification) {
+            String senderName = getSenderName(((MessageNotification) notification).getSenderUserId());
+            ((MessageNotification) notification).setSenderName(senderName);
+        }
+        notification.setTimestamp(LocalDateTime.now());
+
 
         return switch (notification.getType()) {
             case NotificationType.DIRECT_MESSAGE ->
-                    handleMessageNotification((DirectMessageNotification) notification, userNotificationSetting);
+                    sendNotification( notification,userNotificationSetting.getDirectMessageEmail(),
+                            userNotificationSetting.getDirectMessageInbox());
             case NotificationType.GROUP_MESSAGE ->
-                    handleGroupMessageNotification((GroupMessageNotification) notification, userNotificationSetting);
+                    sendNotification( notification, userNotificationSetting.getGroupMessageEmail(),
+                            userNotificationSetting.getGroupMessageInbox());
             case NotificationType.GROUP_MENTION ->
-                    handleGroupMentionNotification((GroupMentionNotification) notification, userNotificationSetting);
+                    sendNotification(notification, userNotificationSetting.getGroupMentionEmail(),
+                            userNotificationSetting.getGroupMentionInbox());
             default -> false;
         };
     }
@@ -49,63 +58,20 @@ public class NotificationService {
         return userDTOFactory.createUserDTO(senderId).getName();
 
     }
-    private boolean handleMessageNotification(DirectMessageNotification directMessageNotification, NotificationSettingsDTO userNotificationSetting) {
+    private boolean sendNotification(Notification notification, boolean shouldSendByEmail, boolean shouldSendToInbox) {
         boolean success=true;
-        directMessageNotification.setSenderName(getSenderName(directMessageNotification.getSenderUserId()));
-        if (userNotificationSetting.getDirectMessageEmail()) {
+        if (shouldSendByEmail) {
             if(!notificationDeliveryService.deliverNotificationUsingStrategy(
-                    directMessageNotification, NotificationStrategyType.EMAIL)) {
+                    notification, NotificationStrategyType.EMAIL)) {
                 success = false;
-                log.error("Failed to deliver Direct Message Notification by Email for recipient {}", directMessageNotification.getRecipientUserId());
+                log.error("Failed to deliver Notification by Email for recipient {}", notification.getRecipientUserId());
             }
         }
-        if (userNotificationSetting.getDirectMessageInbox()) {
+        if (shouldSendToInbox) {
             if(!notificationDeliveryService.deliverNotificationUsingStrategy(
-                    directMessageNotification, NotificationStrategyType.INBOX)) {
+                    notification, NotificationStrategyType.INBOX)) {
                 success = false;
-                log.error("Failed to deliver Direct Message Notification in Inbox for recipient {}", directMessageNotification.getRecipientUserId());
-
-            }
-        }
-        return success;
-    }
-
-    private boolean handleGroupMessageNotification(GroupMessageNotification groupMessageNotification, NotificationSettingsDTO userNotificationSetting) {
-        boolean success=true;
-        groupMessageNotification.setSenderName(getSenderName(groupMessageNotification.getSenderUserId()));
-        if (userNotificationSetting.getGroupMessageEmail()) {
-           if(!notificationDeliveryService.deliverNotificationUsingStrategy(
-                    groupMessageNotification, NotificationStrategyType.EMAIL)) {
-                success = false;
-               log.error("Failed to deliver Group Message Notification by Email for recipient {}", groupMessageNotification.getRecipientUserId());
-
-           }
-        }
-        if (userNotificationSetting.getGroupMessageInbox()) {
-            if(!notificationDeliveryService.deliverNotificationUsingStrategy(
-                    groupMessageNotification, NotificationStrategyType.INBOX)){
-                success = false;
-                log.error("Failed to deliver Group Message Notification in Inbox for recipient {}", groupMessageNotification.getRecipientUserId());
-            }
-        }
-        return success;
-    }
-
-    private boolean handleGroupMentionNotification(GroupMentionNotification groupMentionNotification, NotificationSettingsDTO userNotificationSetting) {
-        boolean success=true;
-        groupMentionNotification.setSenderName(getSenderName(groupMentionNotification.getSenderUserId()));
-        if (userNotificationSetting.getGroupMentionEmail()) {
-            if(!notificationDeliveryService.deliverNotificationUsingStrategy(
-                    groupMentionNotification, NotificationStrategyType.EMAIL)) {
-                success = false;
-                log.error("Failed to deliver Group Mention Notification by Email for recipient {}", groupMentionNotification.getRecipientUserId());
-            }
-        }
-        if (userNotificationSetting.getGroupMentionInbox()) {
-            if(!notificationDeliveryService.deliverNotificationUsingStrategy(
-                    groupMentionNotification, NotificationStrategyType.INBOX)){
-                success = false;
-                log.error("Failed to deliver Group Mention Notification in Inbox for recipient {}", groupMentionNotification.getRecipientUserId());
+                log.error("Failed to deliver Notification in Inbox for recipient {}", notification.getRecipientUserId());
 
             }
         }
