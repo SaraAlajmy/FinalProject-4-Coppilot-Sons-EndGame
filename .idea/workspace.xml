@@ -5,8 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="897e0d13-6a27-48a8-afc0-23b1e6282013" name="Changes" comment="if login register passs without validation">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/example/gateway/filter/AuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/java/com/example/gateway/filter/AuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/example/gateway/services/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/java/com/example/gateway/services/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/resources/application.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/userService/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/userService/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userService/src/main/java/com/example/controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/userService/src/main/java/com/example/controllers/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userService/src/main/java/com/example/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/userService/src/main/java/com/example/controllers/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userService/src/main/java/com/example/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/userService/src/main/java/com/example/models/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userService/src/main/java/com/example/repositories/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/userService/src/main/java/com/example/repositories/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userService/src/main/java/com/example/services/JWTService.java" beforeDir="false" afterPath="$PROJECT_DIR$/userService/src/main/java/com/example/services/JWTService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userService/src/main/java/com/example/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/userService/src/main/java/com/example/services/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,10 +52,6 @@
     &quot;accountId&quot;: &quot;3e08b774-8ed9-4261-aea3-b2e38bada83b&quot;
   }
 }</component>
-  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
-  <component name="KubernetesApiProvider"><![CDATA[{
-  "isMigrated": true
-}]]></component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -67,15 +73,11 @@
     "Application.GatewayApplication.executor": "Run",
     "Application.ServiceRegistryApplication.executor": "Run",
     "Application.UserServiceApplication.executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
+    "Docker.userService.redis insight: Compose Deployment.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.GatewayApplication.executor": "Run",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "userService",
+    "git-widget-placeholder": "Merging userService",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/hp/Documents/FinalProject-4-Coppilot-Sons-EndGame/service-registry",
     "node.js.detected.package.eslint": "true",
@@ -86,7 +88,6 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "run.configurations.included.in.services": "true",
     "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
     "vue.rearranger.settings.migration": "true"
   }
@@ -97,16 +98,7 @@
       <recent name="C:\Users\hp\Documents\FinalProject-4-Coppilot-Sons-EndGame\userService\src" />
     </key>
   </component>
-  <component name="RunDashboard">
-    <option name="configurationTypes">
-      <set>
-        <option value="MicronautRunConfigurationType" />
-        <option value="QuarkusRunConfigurationType" />
-        <option value="SpringBootApplicationConfigurationType" />
-      </set>
-    </option>
-  </component>
-  <component name="RunManager" selected="Docker.userService: Compose Deployment">
+  <component name="RunManager" selected="Docker.userService.redis insight: Compose Deployment">
     <configuration name="ChatServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.chat_service.ChatServiceApplication" />
       <module name="chatService" />
@@ -186,25 +178,18 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GroupChatServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="groupChatService" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.groupChatService.GroupChatServiceApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
+    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml" />
+      <method v="2" />
     </configuration>
-    <configuration name="UserServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="userService" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.UserServiceApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="userService: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml">
+    <configuration name="userService.redis insight: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
       <deployment type="docker-compose.yml">
         <settings>
+          <option name="services">
+            <list>
+              <option value="redis insight" />
+            </list>
+          </option>
           <option name="sourceFilePath" value="userService/docker-compose.yml" />
         </settings>
       </deployment>
@@ -212,8 +197,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.GatewayApplication" />
         <item itemvalue="Application.UserServiceApplication" />
+        <item itemvalue="Docker.userService.redis insight: Compose Deployment" />
+        <item itemvalue="Application.GatewayApplication" />
         <item itemvalue="Application.ChatServiceApplication" />
         <item itemvalue="Application.ServiceRegistryApplication" />
       </list>
@@ -236,7 +222,7 @@
       <option name="presentableId" value="Default" />
       <updated>1745777293244</updated>
       <workItem from="1746019152671" duration="7173000" />
-      <workItem from="1746076902378" duration="14688000" />
+      <workItem from="1746076902378" duration="9736000" />
     </task>
     <task id="LOCAL-00001" summary="add temprory docker">
       <option name="closed" value="true" />
@@ -267,5 +253,30 @@
     <MESSAGE value="add temprory docker" />
     <MESSAGE value="if login register passs without validation" />
     <option name="LAST_COMMIT_MESSAGE" value="if login register passs without validation" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/userService/src/main/java/com/example/services/UserService.java</url>
+          <line>34</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/userService/src/main/java/com/example/services/JWTService.java</url>
+          <line>84</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/userService/src/main/java/com/example/services/JWTService.java</url>
+          <line>67</line>
+          <properties class="com.example.services.JWTService" method="extractAllClaims">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

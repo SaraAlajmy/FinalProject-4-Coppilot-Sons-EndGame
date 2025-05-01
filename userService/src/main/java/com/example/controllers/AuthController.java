@@ -29,8 +29,8 @@ public class AuthController {
         String password = request.getPassword();
         String loginType = request.getType();  // either "username" or "phone"
         LoginStrategy strategy;
-        String token = userService.verify(identifier, password, loginType);
-        return "fail".equals(token) ?
+        Map<String,String> token = userService.verify(identifier, password, loginType);
+        return token ==null?
                 ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials") :
                 ResponseEntity.ok(token);
     }
@@ -43,7 +43,24 @@ public class AuthController {
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
+    }
 
+    @PostMapping("/refresh")
+    public ResponseEntity<?> refreshToken(@RequestBody Map<String, String> request) {
+           Map<String,String> token= userService.refreshToken(request.get("refreshToken"));
+        return token ==null?
+                ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials") :
+                ResponseEntity.ok(token);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(@RequestHeader String userId) {
+        try {
+            userService.logout(userId);
+            return ResponseEntity.ok("Logged out successfully");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }
     }
 
 
