@@ -27,8 +27,6 @@ public class Message {
 
     private boolean isFavorite = false;
 
-    private boolean isArchived = false;
-
     private boolean isDeleted = false;
 
     private LocalDateTime createdAt;
@@ -42,7 +40,6 @@ public class Message {
         this.receiverId = receiverId;
         this.content = content;
         this.isFavorite = false;
-        this.isArchived = false;
         this.isDeleted = false;
     }
 

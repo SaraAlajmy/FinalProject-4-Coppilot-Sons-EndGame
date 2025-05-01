@@ -16,11 +16,7 @@ public interface MessageRepository extends MongoRepository<Message, String> {
             String chatId, LocalDateTime startDate, LocalDateTime endDate
     );
 
-    List<Message> findByChatIdAndIsArchivedTrueAndIsDeletedFalse(String chatId);
-
     List<Message> findBySenderIdAndIsFavoriteTrueAndIsDeletedFalse(String senderId);
 
-    List<Message> findBySenderIdAndIsArchivedTrueAndIsDeletedFalse(String senderId);
 
-    List<Message> findByReceiverIdAndIsFavoriteTrueAndIsDeletedFalse(String receiverId);
 }

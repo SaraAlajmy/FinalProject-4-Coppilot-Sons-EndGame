@@ -1,17 +1,26 @@
 package com.example.chat_service.services;
 
-import com.example.chat_service.repositories.MessageRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-@Component
-public class MessageService {
-    MessageRepository messageRepository;
+import com.example.chat_service.models.Message;
 
-    @Autowired
-    public MessageService(MessageRepository messageRepository) {
-        this.messageRepository = messageRepository;
-    }
+import java.time.LocalDateTime;
+import java.util.List;
 
+public interface MessageService {
+    void sendMessage(String senderId, String receiverId, String content);
+
+    void deleteMessage(String messageId);
+
+
+    void markAsFavorite(String messageId);
+
+    void unmarkAsFavorite(String messageId);
+
+    List<Message> getMessages(String chatId);
+
+
+    List<Message> getFavoriteMessages(String senderId);
+
+    List<Message> filterByDate(String chatId, LocalDateTime startDate, LocalDateTime endDate);
 
 }
