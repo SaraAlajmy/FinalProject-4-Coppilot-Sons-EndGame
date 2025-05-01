@@ -80,15 +80,9 @@ public class GroupMessageController {
     }
 
     @PostMapping("/send")
-    public ResponseEntity<GroupMessage> sendMessage(@RequestBody SendMessageRequest request) {
-        try {
-            GroupMessage message = groupMessageService.sendMessage(request);
-            return ResponseEntity.ok(message);
-        } catch (Exception e) {
-            System.out.println("Error sending a group message: " + e.getMessage());
-            return ResponseEntity.badRequest().body(null);
-
-        }
+    public GroupMessage sendMessage(@RequestBody SendMessageRequest request) {
+        return groupMessageService.sendMessage(request); 
     }
+    
 
 }

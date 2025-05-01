@@ -7,7 +7,6 @@ import org.springframework.data.mongodb.config.EnableMongoAuditing;
 @SpringBootApplication
 @EnableMongoAuditing
 public class GroupChatServiceApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(GroupChatServiceApplication.class, args);
 	}

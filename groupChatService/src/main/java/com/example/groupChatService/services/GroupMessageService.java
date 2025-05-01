@@ -7,7 +7,9 @@ import com.example.groupChatService.repositories.GroupMessageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.groupChatService.dto.SendMessageRequest;
+import com.example.groupChatService.annotations.AdminOnly;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -47,18 +49,25 @@ public class GroupMessageService {
         return "Group message with id: " + id + " deleted successfully";
     }
 
+    @AdminOnly
     public GroupMessage sendMessage(SendMessageRequest request) {
         GroupChat group = groupChatRepo.findById(request.getGroupId())
                 .orElseThrow(() -> new RuntimeException("Group not found"));
-
+    
         if (!group.getMembers().contains(request.getSenderId())) {
             throw new RuntimeException("Sender is not a member of the group");
         }
-
-        if (group.isAdminOnlyMessages() && !group.getAdmins().contains(request.getSenderId())) {
-            throw new RuntimeException("Only admins can send messages in this group");
+            try {
+            Method method = this.getClass().getMethod("sendMessage", SendMessageRequest.class);
+            if (method.isAnnotationPresent(AdminOnly.class)) {
+                if (group.isAdminOnlyMessages() && !group.getAdmins().contains(request.getSenderId())) {
+                    throw new RuntimeException("Access denied: Only admins can send messages in this group");
+                }
+            }
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException("Reflection error: " + e.getMessage());
         }
-
+    
         // Mention logic
         List<String> mentionedUserIds = extractMentions(request.getContent());
         for (String mentioned : mentionedUserIds) {
@@ -66,10 +75,11 @@ public class GroupMessageService {
                 throw new RuntimeException("Mentioned user @" + mentioned + " is not in the group");
             }
         }
-
+    
         GroupMessage message = new GroupMessage(request.getGroupId(), request.getSenderId(), request.getContent());
         return groupMessageRepo.save(message);
     }
+    
 
     private List<String> extractMentions(String content) {
         List<String> mentions = new ArrayList<>();
