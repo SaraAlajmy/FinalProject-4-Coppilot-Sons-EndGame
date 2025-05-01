@@ -26,3 +26,6 @@ spring:
 
 server:
   port: 8082  # TODO: Change this when other services are ready
+
+debug:
+  notification_recipient_email: "mathew.hanybb@gmail.com"

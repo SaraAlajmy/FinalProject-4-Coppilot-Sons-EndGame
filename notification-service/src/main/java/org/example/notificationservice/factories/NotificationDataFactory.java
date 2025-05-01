@@ -2,6 +2,7 @@ package org.example.notificationservice.factories;
 
 import com.github.javafaker.Faker;
 import org.example.notificationservice.models.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -15,6 +16,8 @@ import java.util.concurrent.TimeUnit;
 public class NotificationDataFactory {
     private final Faker faker = new Faker();
 
+    @Value("${debug.notification_recipient_email}")
+    private String recipientEmail = "example@example.com";
     /**
      * Creates a list of random notifications, with a mix of types.
      */
@@ -57,6 +60,7 @@ public class NotificationDataFactory {
                                             "msg_" + UUID.randomUUID().toString().substring(0, 8))
                                         .messageText(faker.lorem().paragraph())
                                         .messageTimestamp(randomDateTime())
+                                        .recipientEmail(recipientEmail)
                                         .build();
     }
 
@@ -82,6 +86,7 @@ public class NotificationDataFactory {
                                        .groupId(groupId)
                                        .groupName(faker.company().name() + " Team")
                                        .groupIcon(faker.internet().avatar())
+                                       .recipientEmail(recipientEmail)
                                        .build();
     }
 
@@ -108,6 +113,7 @@ public class NotificationDataFactory {
                                        .groupId(groupId)
                                        .groupName(faker.company().name() + " Team")
                                        .groupIcon(faker.internet().avatar())
+                                       .recipientEmail(recipientEmail)
                                        .build();
     }
 
