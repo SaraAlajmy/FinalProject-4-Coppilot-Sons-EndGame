@@ -9,6 +9,7 @@ import java.time.Instant;
 import java.util.List;
 
 @Document(collection = "groupMessage")
+
 public class GroupMessage {
     @Id
     private String id;
@@ -16,10 +17,11 @@ public class GroupMessage {
     private String senderId;
     private String content;
     @CreatedDate
-    private Instant createdAt;   // <-- set automatically when inserting
+    private Instant createdAt;
 
     @LastModifiedDate
-    private Instant updatedAt;   // <-- set automatically when updating
+    private Instant updatedAt;
+
     private boolean archived;
     private List<String> mentionedUserIds;
 

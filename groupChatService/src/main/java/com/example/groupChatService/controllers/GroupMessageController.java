@@ -4,6 +4,7 @@ import com.example.groupChatService.dto.SendMessageRequest;
 import com.example.groupChatService.models.GroupMessage;
 import com.example.groupChatService.services.GroupMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 @RequestMapping("/groupMessage")
 public class GroupMessageController {
     private final GroupMessageService groupMessageService;
+
     @Autowired
 
     public GroupMessageController(GroupMessageService groupMessageService) {
@@ -27,6 +29,7 @@ public class GroupMessageController {
             return null;
         }
     }
+
     @GetMapping("/{groupId}")
     public List<GroupMessage> getGroupMessagesByGroupChatId(@PathVariable String groupId) {
         try {
@@ -36,6 +39,7 @@ public class GroupMessageController {
             return null;
         }
     }
+
     @GetMapping("/{id}")
     public GroupMessage getGroupMessageById(@PathVariable String id) {
         try {
@@ -45,6 +49,7 @@ public class GroupMessageController {
             return null;
         }
     }
+
     @PostMapping("/")
     public GroupMessage addGroupMessage(@RequestBody GroupMessage groupMessage) {
         try {
@@ -54,6 +59,7 @@ public class GroupMessageController {
             return null;
         }
     }
+
     @PutMapping("/{id}")
     public GroupMessage editGroupMessage(@PathVariable String id, @RequestBody String content) {
         try {
@@ -63,6 +69,7 @@ public class GroupMessageController {
             return null;
         }
     }
+
     @DeleteMapping("/{id}")
     public void deleteGroupMessage(@PathVariable String id) {
         try {
@@ -71,16 +78,17 @@ public class GroupMessageController {
             System.out.println("Error deleting group message: " + e.getMessage());
         }
     }
+
     @PostMapping("/send")
-    public GroupMessage sendMessage(@RequestBody SendMessageRequest request) {
+    public ResponseEntity<GroupMessage> sendMessage(@RequestBody SendMessageRequest request) {
         try {
-            return groupMessageService.sendMessage(request);
+            GroupMessage message = groupMessageService.sendMessage(request);
+            return ResponseEntity.ok(message);
         } catch (Exception e) {
-            System.out.println("Error sending group message: " + e.getMessage());
-            return null;
+            System.out.println("Error sending a group message: " + e.getMessage());
+            return ResponseEntity.badRequest().body(null);
+
         }
     }
-
-
 
 }
