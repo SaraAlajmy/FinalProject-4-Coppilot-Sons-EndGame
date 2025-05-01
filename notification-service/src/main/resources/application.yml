@@ -1,6 +1,7 @@
 spring:
   application:
     name: notification-service
+
   data:
     mongodb:
       host: localhost
