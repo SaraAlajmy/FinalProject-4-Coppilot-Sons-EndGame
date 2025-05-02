@@ -62,4 +62,13 @@ public class GroupChatController {
             return null;
         }
     }
+    @GetMapping("/getGroupChatByMemberId/{id}")
+    public List<GroupChat> getGroupChatByMemberId(@PathVariable String id) {
+        try {
+            return groupChatService.getMemberGroupChats(id);
+        } catch (Exception e) {
+            System.out.println("Error fetching group chat by member ID: " + e.getMessage());
+            return null;
+        }
+    }
 }

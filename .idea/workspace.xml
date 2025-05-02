@@ -5,12 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="efb3c0f2-6abe-4a2b-b48a-0eec624f15e0" name="Changes" comment="Add most of CRUD Operations">
-      <change afterPath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/dto/GroupChatRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/dto/GroupUpdateRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-service/src/test/java/com/example/chat_service/ChatServiceApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/src/test/java/com/example/chat_service/ChatServiceApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/groupChatService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/groupChatService/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/controllers/GroupChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/controllers/GroupChatController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/models/GroupChat.java" beforeDir="false" afterPath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/models/GroupChat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/controllers/GroupMessageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/controllers/GroupMessageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/repositories/GroupChatRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/repositories/GroupChatRepo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/repositories/GroupMessageRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/repositories/GroupMessageRepo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/services/GroupChatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/services/GroupChatService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/services/GroupMessageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/services/GroupMessageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/groupChatService/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/groupChatService/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/userService/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,17 +37,31 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "Shorok02"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/SaraAlajmy/FinalProject-4-Coppilot-Sons-EndGame.git",
+    "accountId": "d3c85467-c469-49af-8f48-d6f3d342f954"
+  }
+}]]></component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
-        <option name="mavenHome" value="Use Maven wrapper" />
-        <option name="useMavenConfig" value="true" />
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
       </MavenGeneralSettings>
     </option>
   </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 1
+}]]></component>
   <component name="ProjectId" id="2wK2LI5TScMmtx279h0NzzR3LiN" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -46,10 +69,15 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.ChatServiceApplication.executor": "Run",
+    "Application.GroupChatServiceApplication.executor": "Run",
+    "Application.UserServiceApplication.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "shrouq-groupChatService",
     "jdk.selected.JAVA_MODULE": "23",
+    "kotlin-language-version-configured": "true",
     "last_opened_file_path": "E:/Semster 10/Scalable/FinalProject-4-Coppilot-Sons-EndGame/groupChatService/src/main/java/com/example/groupChatService",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
@@ -88,10 +116,24 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="UserServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.UserServiceApplication" />
+      <module name="userService" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.ChatServiceApplication" />
         <item itemvalue="Application.GroupChatServiceApplication" />
+        <item itemvalue="Application.UserServiceApplication" />
       </list>
     </recent_temporary>
   </component>
