@@ -26,6 +26,7 @@ public class GroupChatController {
             System.out.println("Error fetching group chats: " + e.getMessage());
             return null;
         }
+
     }
     @GetMapping("/{id}")
     public GroupChat getGroupChatById(@PathVariable String id) {
@@ -37,17 +38,17 @@ public class GroupChatController {
         }
     }
     @DeleteMapping("/{id}")
-    public String deleteGroupChatById(@PathVariable String id) {
+    public String deleteGroupChatById(@PathVariable String id,@RequestHeader("userId") String userId) {
         try {
-            return groupChatService.deleteGroupChat(id);
+            return groupChatService.deleteGroupChat(id,userId);
         } catch (Exception e) {
             return "Error deleting group chat by ID: " + e.getMessage();
         }
     }
     @PostMapping("/addGroupChat")
-    public GroupChat addGroupChat(@RequestBody GroupChatRequest groupChatRequest){
+    public GroupChat addGroupChat(@RequestBody GroupChatRequest groupChatRequest,@RequestHeader("userId") String userId){
         try {
-            return groupChatService.addGroupChat(groupChatRequest);
+            return groupChatService.addGroupChat(groupChatRequest,userId);
         } catch (Exception e) {
             System.out.println("Error adding group chat: " + e.getMessage());
             return null;

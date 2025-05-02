@@ -25,9 +25,7 @@ public class GroupMessageService {
         GroupMessage groupMessage=groupMessageRepo.findById(id).orElseThrow(() -> new RuntimeException("Group message not found with id:" + id));
         return groupMessage;
     }
-    public List<GroupMessage> getGroupMessagesByGroupId(String groupId) {
-        return groupMessageRepo.findByGroupId(groupId);
-    }
+
     public GroupMessage editGroupMessage(String id, String content) {
         GroupMessage existingGroupMessage = groupMessageRepo.findById(id).orElseThrow(() -> new RuntimeException("Group message not found with id:" + id));
         existingGroupMessage.setContent(content);

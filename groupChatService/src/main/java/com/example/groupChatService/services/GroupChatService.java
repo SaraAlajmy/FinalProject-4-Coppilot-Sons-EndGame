@@ -8,8 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.groupChatService.repositories.GroupChatRepo;
 
+
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.springframework.util.StringUtils.capitalize;
 
 @Service
 public class GroupChatService {
@@ -18,20 +22,19 @@ public class GroupChatService {
     public GroupChatService(GroupChatRepo groupChatRepo) {
         this.groupChatRepo = groupChatRepo;
     }
-    public GroupChat addGroupChat(GroupChatRequest groupChatRequest){
+    public GroupChat addGroupChat(GroupChatRequest groupChatRequest,String userId){
         String name= groupChatRequest.getName();
-        String creatorId= groupChatRequest.getCreatorId();
         List<String> admins= new ArrayList<String>();
         List<String> members= groupChatRequest.getMembers()==null? new ArrayList<String>(): groupChatRequest.getMembers();
-        admins.add(creatorId);
-        members.add(creatorId);
+        admins.add(userId);
+        members.add(userId);
         if(name==null || name.isEmpty()){
             throw new RuntimeException("Group chat name cannot be null or empty");
         }
-        if(creatorId==null || creatorId.isEmpty()){
+        if(userId==null || userId.isEmpty()){
             throw new RuntimeException("Creator ID cannot be null or empty");
         }
-        GroupChat.groupChatBuilder builder = new GroupChat.groupChatBuilder(name,creatorId ,admins,members);
+        GroupChat.groupChatBuilder builder = new GroupChat.groupChatBuilder(name,userId ,admins,members);
         if (groupChatRequest.getDescription() != null) {
             builder.setDescription(groupChatRequest.getDescription());
         }
@@ -57,38 +60,23 @@ public class GroupChatService {
     public GroupChat updateGroupChat(String id, GroupUpdateRequest groupUpdateRequest){
         GroupChat groupChat= groupChatRepo.findById(id).orElseThrow(() -> new RuntimeException("Group chat not found with id:" + id));
         GroupChat.groupChatBuilder builder = groupChat.toBuilder();
-        if (groupUpdateRequest.getName() != null) {
-            builder.setName(groupUpdateRequest.getName());
-        }
-        if (groupUpdateRequest.getDescription() != null) {
-            builder.setDescription(groupUpdateRequest.getDescription());
-        }
-        if (groupUpdateRequest.getEmoji() != null) {
-            builder.setEmoji(groupUpdateRequest.getEmoji());
-        }
-        //should we refuse update members if creatorId is not in the list of memberss?
-        if (groupUpdateRequest.getMembers() != null) {
-            if(!groupUpdateRequest.getMembers().contains(groupChat.getCreatorId())) {
-                groupUpdateRequest.getMembers().add(groupChat.getCreatorId());
+        for (Field field : GroupUpdateRequest.class.getDeclaredFields()) {
+            field.setAccessible(true);
+            try {
+                Object value = field.get(groupUpdateRequest);
+                if (value == null) continue;
+                String methodName = "set" + capitalize(field.getName());
+                builder.getClass().getMethod(methodName, field.getType()).invoke(builder, value);
+            }catch (Exception e) {
+                throw new RuntimeException("Error updating group chat: " + e.getMessage());
             }
-            builder.setMembers(groupUpdateRequest.getMembers());
-        }
-        //should we refuse update admins if creatorId is not in the list of admins?
-        if (groupUpdateRequest.getAdmins() != null) {
-            if(!groupUpdateRequest.getAdmins().contains(groupChat.getCreatorId())){
-                groupUpdateRequest.getAdmins().add(groupChat.getCreatorId());
-            }
-            builder.setAdmins(groupUpdateRequest.getAdmins());
-        }
-        if(groupUpdateRequest.getAdminOnlyMessages()!=null){
-            builder.setAdminOnlyMessages(groupUpdateRequest.getAdminOnlyMessages());
         }
         return groupChatRepo.save(builder.build());
     }
-    public String deleteGroupChat(String id) {
-        GroupChat groupChat = groupChatRepo.findById(id).orElse(null);
-        if (groupChat == null) {
-            throw new RuntimeException("Group chat not found with id: " + id);
+    public String deleteGroupChat(String id,String userId) {
+        GroupChat groupChat= groupChatRepo.findById(id).orElseThrow(() -> new RuntimeException("Group chat not found with id:" + id));
+        if(groupChat.getCreatorId()!=userId){
+            return "You can not delete the group chat because you are not the owner";
         }
         groupChatRepo.deleteById(id);
         return "Group chat deleted successfully with id: " + id;
@@ -102,6 +90,7 @@ public class GroupChatService {
         return groupChats;
 
     }
+
 
 
 
