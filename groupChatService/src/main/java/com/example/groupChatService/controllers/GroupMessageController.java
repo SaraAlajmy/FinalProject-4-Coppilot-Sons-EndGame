@@ -26,15 +26,15 @@ public class GroupMessageController {
             return null;
         }
     }
-    @GetMapping("/{groupId}")
-    public List<GroupMessage> getGroupMessagesByGroupChatId(@PathVariable String groupId) {
-        try {
-            return groupMessageService.getGroupMessagesByGroupId(groupId);
-        } catch (Exception e) {
-            System.out.println("Error fetching group messages by group chat ID: " + e.getMessage());
-            return null;
-        }
-    }
+//    @GetMapping("/{groupId}")
+//    public List<GroupMessage> getGroupMessagesByGroupChatId(@PathVariable String groupId) {
+//        try {
+//            return groupMessageService.getGroupMessagesByGroupId(groupId);
+//        } catch (Exception e) {
+//            System.out.println("Error fetching group messages by group chat ID: " + e.getMessage());
+//            return null;
+//        }
+//    }
     @GetMapping("/{id}")
     public GroupMessage getGroupMessageById(@PathVariable String id) {
         try {

@@ -16,8 +16,8 @@
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
         </processorPath>
-        <module name="groupChatService" />
         <module name="userService" />
+        <module name="groupChatService" />
       </profile>
     </annotationProcessing>
   </component>

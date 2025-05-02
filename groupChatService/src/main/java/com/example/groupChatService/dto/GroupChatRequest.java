@@ -7,7 +7,6 @@ public class GroupChatRequest {
     private String description;
     private String emoji;
     private List<String> members;
-    private String creatorId;
     private Boolean adminOnlyMessages;
 
     public GroupChatRequest() {
@@ -45,13 +44,6 @@ public class GroupChatRequest {
         this.members = members;
     }
 
-    public String getCreatorId() {
-        return creatorId;
-    }
-
-    public void setCreatorId(String creatorId) {
-        this.creatorId = creatorId;
-    }
 
     public Boolean getAdminOnlyMessages() {
         return adminOnlyMessages;

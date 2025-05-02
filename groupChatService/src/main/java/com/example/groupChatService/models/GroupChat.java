@@ -50,6 +50,9 @@ public class GroupChat {
         return adminOnlyMessages;
     }
 
+    public GroupChat() {
+    }
+
     private GroupChat(groupChatBuilder groupChatBuilder) {
         this.name = groupChatBuilder.name;
         this.description = groupChatBuilder.description;
