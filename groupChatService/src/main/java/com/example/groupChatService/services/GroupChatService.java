@@ -82,6 +82,16 @@ public class GroupChatService {
         return "Group chat deleted successfully with id: " + id;
     }
 
+    public List<GroupChat> getMemberGroupChats(String memberId) {
+        List<GroupChat> groupChats = groupChatRepo.findByMembersContaining(memberId);
+        if (groupChats.isEmpty()) {
+            throw new RuntimeException("No group chats found for member with id: " + memberId);
+        }
+        return groupChats;
+
+    }
+
+
 
 
 
