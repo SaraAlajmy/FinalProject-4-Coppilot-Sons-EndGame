@@ -43,4 +43,29 @@ public ResponseEntity<String> sendResetPasswordNotification(@RequestParam String
     else
         return ResponseEntity.status(500).body("Failed to send reset password notification.");
 }
+
+
+    @GetMapping("/AllNotifications")
+    public List<Notification> getAllNotifications(@RequestHeader String userId) {
+        return notificationQueryService.getAllNotifications(userId);
+    }
+
+
+    @GetMapping("/unread/count")
+    public int getUnreadNotificationCount(@RequestHeader String userId) {
+        return notificationQueryService.getUnreadNotificationCount(userId);
+    }
+
+
+    @PostMapping("/read")
+    public String markNotificationAsRead(@RequestParam String notificationId) {
+        return notificationQueryService.markNotificationAsRead(notificationId);
+    }
+
+
+    @PostMapping("/markAllRead")
+    public String markAllNotificationsAsRead(@RequestHeader String userId) {
+       return notificationQueryService.markAllNotificationsAsRead(userId);
+    }
+
 }

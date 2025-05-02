@@ -33,4 +33,8 @@ public abstract class Notification {
     private LocalDateTime timestamp;
     private boolean isRead;
     private String type;
+
+    public void setRead(boolean read) {
+        isRead = read;
+    }
 }

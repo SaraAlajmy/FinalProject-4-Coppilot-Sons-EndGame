@@ -1,0 +1,665 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="History">
+    <option name="requestHistoryStates">
+      <list>
+        <requestHistoryState>
+          <option name="dateTime" value="1746222839589" />
+          <option name="id" value="3e61da76-be98-4a9c-bbd5-58fe423feaa9" />
+          <option name="request">
+            <requestState>
+              <option name="body">
+                <bodyState>
+                  <option name="raw" value="{&#10;  &quot;id&quot;: &quot;909090&quot;,&#10;  &quot;recipientUserId&quot;: &quot;user123&quot;,&#10;  &quot;recipientEmail&quot;: &quot;user123@example.com&quot;,&#10;  &quot;isRead&quot;: false,&#10;  &quot;type&quot;:&quot;group_message&quot;&#10;}" />
+                  <option name="type" value="JSON" />
+                </bodyState>
+              </option>
+              <option name="headers">
+                <list>
+                  <headerState>
+                    <option name="key" value="userId" />
+                    <option name="value" value="122121" />
+                  </headerState>
+                </list>
+              </option>
+              <option name="id" value="70b9bb79-b5c7-44e4-8abf-cc950d7b92bd" />
+              <option name="method" value="POST" />
+              <option name="name" value="Draft" />
+              <option name="url" value="http://localhost:8082/notifications/unread/count" />
+            </requestState>
+          </option>
+          <option name="response">
+            <responseState>
+              <option name="bodyBytesBase64" value="eyJ0aW1lc3RhbXAiOiIyMDI1LTA1LTAyVDIxOjUzOjU5LjU4MiswMDowMCIsInN0YXR1cyI6NDA1LCJlcnJvciI6Ik1ldGhvZCBOb3QgQWxsb3dlZCIsInRyYWNlIjoib3JnLnNwcmluZ2ZyYW1ld29yay53ZWIuSHR0cFJlcXVlc3RNZXRob2ROb3RTdXBwb3J0ZWRFeGNlcHRpb246IFJlcXVlc3QgbWV0aG9kICdQT1NUJyBpcyBub3Qgc3VwcG9ydGVkXHJcblx0YXQgb3JnLnNwcmluZ2ZyYW1ld29yay53ZWIuc2VydmxldC5tdmMubWV0aG9kLlJlcXVlc3RNYXBwaW5nSW5mb0hhbmRsZXJNYXBwaW5nLmhhbmRsZU5vTWF0Y2goUmVxdWVzdE1hcHBpbmdJbmZvSGFuZGxlck1hcHBpbmcuamF2YToyNjcpXHJcblx0YXQgb3JnLnNwcmluZ2ZyYW1ld29yay53ZWIuc2VydmxldC5oYW5kbGVyLkFic3RyYWN0SGFuZGxlck1ldGhvZE1hcHBpbmcubG9va3VwSGFuZGxlck1ldGhvZChBYnN0cmFjdEhhbmRsZXJNZXRob2RNYXBwaW5nLmphdmE6NDQxKVxyXG5cdGF0IG9yZy5zcHJpbmdmcmFtZXdvcmsud2ViLnNlcnZsZXQuaGFuZGxlci5BYnN0cmFjdEhhbmRsZXJNZXRob2RNYXBwaW5nLmdldEhhbmRsZXJJbnRlcm5hbChBYnN0cmFjdEhhbmRsZXJNZXRob2RNYXBwaW5nLmphdmE6MzgyKVxyXG5cdGF0IG9yZy5zcHJpbmdmcmFtZXdvcmsud2ViLnNlcnZsZXQubXZjLm1ldGhvZC5SZXF1ZXN0TWFwcGluZ0luZm9IYW5kbGVyTWFwcGluZy5nZXRIYW5kbGVySW50ZXJuYWwoUmVxdWVzdE1hcHBpbmdJbmZvSGFuZGxlck1hcHBpbmcuamF2YToxMjcpXHJcblx0YXQgb3JnLnNwcmluZ2ZyYW1ld29yay53ZWIuc2VydmxldC5tdmMubWV0aG9kLlJlcXVlc3RNYXBwaW5nSW5mb0hhbmRsZXJNYXBwaW5nLmdldEhhbmRsZXJJbnRlcm5hbChSZXF1ZXN0TWFwcGluZ0luZm9IYW5kbGVyTWFwcGluZy5qYXZhOjY4KVxyXG5cdGF0IG9yZy5zcHJpbmdmcmFtZXdvcmsud2ViLnNlcnZsZXQuaGFuZGxlci5BYnN0cmFjdEhhbmRsZXJNYXBwaW5nLmdldEhhbmRsZXIoQWJzdHJhY3RIYW5kbGVyTWFwcGluZy5qYXZhOjUwOSlcclxuXHRhdCBvcmcuc3ByaW5nZnJhbWV3b3JrLndlYi5zZXJ2bGV0LkRpc3BhdGNoZXJTZXJ2bGV0LmdldEhhbmRsZXIoRGlzcGF0Y2hlclNlcnZsZXQuamF2YToxMjg0KVxyXG5cdGF0IG9yZy5zcHJpbmdmcmFtZXdvcmsud2ViLnNlcnZsZXQuRGlzcGF0Y2hlclNlcnZsZXQuZG9EaXNwYXRjaChEaXNwYXRjaGVyU2VydmxldC5qYXZhOjEwNjUpXHJcblx0YXQgb3JnLnNwcmluZ2ZyYW1ld29yay53ZWIuc2VydmxldC5EaXNwYXRjaGVyU2VydmxldC5kb1NlcnZpY2UoRGlzcGF0Y2hlclNlcnZsZXQuamF2YTo5NzkpXHJcblx0YXQgb3JnLnNwcmluZ2ZyYW1ld29yay53ZWIuc2VydmxldC5GcmFtZXdvcmtTZXJ2bGV0LnByb2Nlc3NSZXF1ZXN0KEZyYW1ld29ya1NlcnZsZXQuamF2YToxMDE0KVxyXG5cdGF0IG9yZy5zcHJpbmdmcmFtZXdvcmsud2ViLnNlcnZsZXQuRnJhbWV3b3JrU2VydmxldC5kb1Bvc3QoRnJhbWV3b3JrU2VydmxldC5qYXZhOjkxNClcclxuXHRhdCBqYWthcnRhLnNlcnZsZXQuaHR0cC5IdHRwU2VydmxldC5zZXJ2aWNlKEh0dHBTZXJ2bGV0LmphdmE6NTkwKVxyXG5cdGF0IG9yZy5zcHJpbmdmcmFtZXdvcmsud2ViLnNlcnZsZXQuRnJhbWV3b3JrU2VydmxldC5zZXJ2aWNlKEZyYW1ld29ya1NlcnZsZXQuamF2YTo4ODUpXHJcblx0YXQgamFrYXJ0YS5zZXJ2bGV0Lmh0dHAuSHR0cFNlcnZsZXQuc2VydmljZShIdHRwU2VydmxldC5qYXZhOjY1OClcclxuXHRhdCBvcmcuYXBhY2hlLmNhdGFsaW5hLmNvcmUuQXBwbGljYXRpb25GaWx0ZXJDaGFpbi5pbnRlcm5hbERvRmlsdGVyKEFwcGxpY2F0aW9uRmlsdGVyQ2hhaW4uamF2YToxOTUpXHJcblx0YXQgb3JnLmFwYWNoZS5jYXRhbGluYS5jb3JlLkFwcGxpY2F0aW9uRmlsdGVyQ2hhaW4uZG9GaWx0ZXIoQXBwbGljYXRpb25GaWx0ZXJDaGFpbi5qYXZhOjE0MClcclxuXHRhdCBvcmcuYXBhY2hlLnRvbWNhdC53ZWJzb2NrZXQuc2VydmVyLldzRmlsdGVyLmRvRmlsdGVyKFdzRmlsdGVyLmphdmE6NTEpXHJcblx0YXQgb3JnLmFwYWNoZS5jYXRhbGluYS5jb3JlLkFwcGxpY2F0aW9uRmlsdGVyQ2hhaW4uaW50ZXJuYWxEb0ZpbHRlcihBcHBsaWNhdGlvbkZpbHRlckNoYWluLmphdmE6MTY0KVxyXG5cdGF0IG9yZy5hcGFjaGUuY2F0YWxpbmEuY29yZS5BcHBsaWNhdGlvbkZpbHRlckNoYWluLmRvRmlsdGVyKEFwcGxpY2F0aW9uRmlsdGVyQ2hhaW4uamF2YToxNDApXHJcblx0YXQgb3JnLnNwcmluZ2ZyYW1ld29yay53ZWIuZmlsdGVyLlJlcXVlc3RDb250ZXh0RmlsdGVyLmRvRmlsdGVySW50ZXJuYWwoUmVxdWVzdENvbnRleHRGaWx0ZXIuamF2YToxMDApXHJcblx0YXQgb3JnLnNwcmluZ2ZyYW1ld29yay53ZWIuZmlsdGVyLk9uY2VQZXJSZXF1ZXN0RmlsdGVyLmRvRmlsdGVyKE9uY2VQZXJSZXF1ZXN0RmlsdGVyLmphdmE6MTE2KVxyXG5cdGF0IG9yZy5hcGFjaGUuY2F0YWxpbmEuY29yZS5BcHBsaWNhdGlvbkZpbHRlckNoYWluLmludGVybmFsRG9GaWx0ZXIoQXBwbGljYXRpb25GaWx0ZXJDaGFpbi5qYXZhOjE2NClcclxuXHRhdCBvcmcuYXBhY2hlLmNhdGFsaW5hLmNvcmUuQXBwbGljYXRpb25GaWx0ZXJDaGFpbi5kb0ZpbHRlcihBcHBsaWNhdGlvbkZpbHRlckNoYWluLmphdmE6MTQwKVxyXG5cdGF0IG9yZy5zcHJpbmdmcmFtZXdvcmsud2ViLmZpbHRlci5Gb3JtQ29udGVudEZpbHRlci5kb0ZpbHRlckludGVybmFsKEZvcm1Db250ZW50RmlsdGVyLmphdmE6OTMpXHJcblx0YXQgb3JnLnNwcmluZ2ZyYW1ld29yay53ZWIuZmlsdGVyLk9uY2VQZXJSZXF1ZXN0RmlsdGVyLmRvRmlsdGVyKE9uY2VQZXJSZXF1ZXN0RmlsdGVyLmphdmE6MTE2KVxyXG5cdGF0IG9yZy5hcGFjaGUuY2F0YWxpbmEuY29yZS5BcHBsaWNhdGlvbkZpbHRlckNoYWluLmludGVybmFsRG9GaWx0ZXIoQXBwbGljYXRpb25GaWx0ZXJDaGFpbi5qYXZhOjE2NClcclxuXHRhdCBvcmcuYXBhY2hlLmNhdGFsaW5hLmNvcmUuQXBwbGljYXRpb25GaWx0ZXJDaGFpbi5kb0ZpbHRlcihBcHBsaWNhdGlvbkZpbHRlckNoYWluLmphdmE6MTQwKVxyXG5cdGF0IG9yZy5zcHJpbmdmcmFtZXdvcmsud2ViLmZpbHRlci5DaGFyYWN0ZXJFbmNvZGluZ0ZpbHRlci5kb0ZpbHRlckludGVybmFsKENoYXJhY3RlckVuY29kaW5nRmlsdGVyLmphdmE6MjAxKVxyXG5cdGF0IG9yZy5zcHJpbmdmcmFtZXdvcmsud2ViLmZpbHRlci5PbmNlUGVyUmVxdWVzdEZpbHRlci5kb0ZpbHRlcihPbmNlUGVyUmVxdWVzdEZpbHRlci5qYXZhOjExNilcclxuXHRhdCBvcmcuYXBhY2hlLmNhdGFsaW5hLmNvcmUuQXBwbGljYXRpb25GaWx0ZXJDaGFpbi5pbnRlcm5hbERvRmlsdGVyKEFwcGxpY2F0aW9uRmlsdGVyQ2hhaW4uamF2YToxNjQpXHJcblx0YXQgb3JnLmFwYWNoZS5jYXRhbGluYS5jb3JlLkFwcGxpY2F0aW9uRmlsdGVyQ2hhaW4uZG9GaWx0ZXIoQXBwbGljYXRpb25GaWx0ZXJDaGFpbi5qYXZhOjE0MClcclxuXHRhdCBvcmcuYXBhY2hlLmNhdGFsaW5hLmNvcmUuU3RhbmRhcmRXcmFwcGVyVmFsdmUuaW52b2tlKFN0YW5kYXJkV3JhcHBlclZhbHZlLmphdmE6MTY3KVxyXG5cdGF0IG9yZy5hcGFjaGUuY2F0YWxpbmEuY29yZS5TdGFuZGFyZENvbnRleHRWYWx2ZS5pbnZva2UoU3RhbmRhcmRDb250ZXh0VmFsdmUuamF2YTo5MClcclxuXHRhdCBvcmcuYXBhY2hlLmNhdGFsaW5hLmF1dGhlbnRpY2F0b3IuQXV0aGVudGljYXRvckJhc2UuaW52b2tlKEF1dGhlbnRpY2F0b3JCYXNlLmphdmE6NDgzKVxyXG5cdGF0IG9yZy5hcGFjaGUuY2F0YWxpbmEuY29yZS5TdGFuZGFyZEhvc3RWYWx2ZS5pbnZva2UoU3RhbmRhcmRIb3N0VmFsdmUuamF2YToxMTYpXHJcblx0YXQgb3JnLmFwYWNoZS5jYXRhbGluYS52YWx2ZXMuRXJyb3JSZXBvcnRWYWx2ZS5pbnZva2UoRXJyb3JSZXBvcnRWYWx2ZS5qYXZhOjkzKVxyXG5cdGF0IG9yZy5hcGFjaGUuY2F0YWxpbmEuY29yZS5TdGFuZGFyZEVuZ2luZVZhbHZlLmludm9rZShTdGFuZGFyZEVuZ2luZVZhbHZlLmphdmE6NzQpXHJcblx0YXQgb3JnLmFwYWNoZS5jYXRhbGluYS5jb25uZWN0b3IuQ295b3RlQWRhcHRlci5zZXJ2aWNlKENveW90ZUFkYXB0ZXIuamF2YTozNDQpXHJcblx0YXQgb3JnLmFwYWNoZS5jb3lvdGUuaHR0cDExLkh0dHAxMVByb2Nlc3Nvci5zZXJ2aWNlKEh0dHAxMVByb2Nlc3Nvci5qYXZhOjM5OClcclxuXHRhdCBvcmcuYXBhY2hlLmNveW90ZS5BYnN0cmFjdFByb2Nlc3NvckxpZ2h0LnByb2Nlc3MoQWJzdHJhY3RQcm9jZXNzb3JMaWdodC5qYXZhOjYzKVxyXG5cdGF0IG9yZy5hcGFjaGUuY295b3RlLkFic3RyYWN0UHJvdG9jb2wkQ29ubmVjdGlvbkhhbmRsZXIucHJvY2VzcyhBYnN0cmFjdFByb3RvY29sLmphdmE6OTAzKVxyXG5cdGF0IG9yZy5hcGFjaGUudG9tY2F0LnV0aWwubmV0Lk5pb0VuZHBvaW50JFNvY2tldFByb2Nlc3Nvci5kb1J1bihOaW9FbmRwb2ludC5qYXZhOjE3NDApXHJcblx0YXQgb3JnLmFwYWNoZS50b21jYXQudXRpbC5uZXQuU29ja2V0UHJvY2Vzc29yQmFzZS5ydW4oU29ja2V0UHJvY2Vzc29yQmFzZS5qYXZhOjUyKVxyXG5cdGF0IG9yZy5hcGFjaGUudG9tY2F0LnV0aWwudGhyZWFkcy5UaHJlYWRQb29sRXhlY3V0b3IucnVuV29ya2VyKFRocmVhZFBvb2xFeGVjdXRvci5qYXZhOjExODkpXHJcblx0YXQgb3JnLmFwYWNoZS50b21jYXQudXRpbC50aHJlYWRzLlRocmVhZFBvb2xFeGVjdXRvciRXb3JrZXIucnVuKFRocmVhZFBvb2xFeGVjdXRvci5qYXZhOjY1OClcclxuXHRhdCBvcmcuYXBhY2hlLnRvbWNhdC51dGlsLnRocmVhZHMuVGFza1RocmVhZCRXcmFwcGluZ1J1bm5hYmxlLnJ1bihUYXNrVGhyZWFkLmphdmE6NjMpXHJcblx0YXQgamF2YS5iYXNlL2phdmEubGFuZy5UaHJlYWQucnVuKFRocmVhZC5qYXZhOjE1NzUpXHJcbiIsIm1lc3NhZ2UiOiJNZXRob2QgJ1BPU1QnIGlzIG5vdCBzdXBwb3J0ZWQuIiwicGF0aCI6Ii9ub3RpZmljYXRpb25zL3VucmVhZC9jb3VudCJ9" />
+              <option name="bodyString" value="{&#10;  &quot;timestamp&quot;: &quot;2025-05-02T21:53:59.582+00:00&quot;,&#10;  &quot;status&quot;: 405,&#10;  &quot;error&quot;: &quot;Method Not Allowed&quot;,&#10;  &quot;trace&quot;: &quot;org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported\r\n\tat org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping.handleNoMatch(RequestMappingInfoHandlerMapping.java:267)\r\n\tat org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.lookupHandlerMethod(AbstractHandlerMethodMapping.java:441)\r\n\tat org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.getHandlerInternal(AbstractHandlerMethodMapping.java:382)\r\n\tat org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping.getHandlerInternal(RequestMappingInfoHandlerMapping.java:127)\r\n\tat org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping.getHandlerInternal(RequestMappingInfoHandlerMapping.java:68)\r\n\tat org.springframework.web.servlet.handler.AbstractHandlerMapping.getHandler(AbstractHandlerMapping.java:509)\r\n\tat org.springframework.web.servlet.DispatcherServlet.getHandler(DispatcherServlet.java:1284)\r\n\tat org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1065)\r\n\tat org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)\r\n\tat org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)\r\n\tat org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)\r\n\tat jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)\r\n\tat org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)\r\n\tat jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)\r\n\tat org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)\r\n\tat org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)\r\n\tat org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)\r\n\tat org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)\r\n\tat org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)\r\n\tat org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)\r\n\tat org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)\r\n\tat org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)\r\n\tat org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)\r\n\tat org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)\r\n\tat org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:116)\r\n\tat org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)\r\n\tat org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)\r\n\tat org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)\r\n\tat org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:398)\r\n\tat org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)\r\n\tat org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)\r\n\tat org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1740)\r\n\tat org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)\r\n\tat org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1189)\r\n\tat org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:658)\r\n\tat org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)\r\n\tat java.base/java.lang.Thread.run(Thread.java:1575)\r\n&quot;,&#10;  &quot;message&quot;: &quot;Method 'POST' is not supported.&quot;,&#10;  &quot;path&quot;: &quot;/notifications/unread/count&quot;&#10;}" />
+              <option name="code" value="405" />
+              <option name="connectionEstablishingTime" value="2" />
+              <option name="contentType" value="application/json" />
+              <option name="headers">
+                <list>
+                  <headerState>
+                    <option name="key" value="Allow" />
+                    <option name="value" value="GET" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Content-Type" />
+                    <option name="value" value="application/json" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Transfer-Encoding" />
+                    <option name="value" value="chunked" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Date" />
+                    <option name="value" value="Fri, 02 May 2025 21:53:59 GMT" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Keep-Alive" />
+                    <option name="value" value="timeout=60" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Connection" />
+                    <option name="value" value="keep-alive" />
+                  </headerState>
+                </list>
+              </option>
+              <option name="id" value="3e61da76-be98-4a9c-bbd5-58fe423feaa9" />
+              <option name="message" value="Method Not Allowed" />
+              <option name="prettyResponseType" value="JSON" />
+              <option name="rawBodyString" value="{&quot;timestamp&quot;:&quot;2025-05-02T21:53:59.582+00:00&quot;,&quot;status&quot;:405,&quot;error&quot;:&quot;Method Not Allowed&quot;,&quot;trace&quot;:&quot;org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported\r\n\tat org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping.handleNoMatch(RequestMappingInfoHandlerMapping.java:267)\r\n\tat org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.lookupHandlerMethod(AbstractHandlerMethodMapping.java:441)\r\n\tat org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.getHandlerInternal(AbstractHandlerMethodMapping.java:382)\r\n\tat org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping.getHandlerInternal(RequestMappingInfoHandlerMapping.java:127)\r\n\tat org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping.getHandlerInternal(RequestMappingInfoHandlerMapping.java:68)\r\n\tat org.springframework.web.servlet.handler.AbstractHandlerMapping.getHandler(AbstractHandlerMapping.java:509)\r\n\tat org.springframework.web.servlet.DispatcherServlet.getHandler(DispatcherServlet.java:1284)\r\n\tat org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1065)\r\n\tat org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)\r\n\tat org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)\r\n\tat org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)\r\n\tat jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)\r\n\tat org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)\r\n\tat jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)\r\n\tat org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)\r\n\tat org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)\r\n\tat org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)\r\n\tat org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)\r\n\tat org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)\r\n\tat org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)\r\n\tat org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)\r\n\tat org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)\r\n\tat org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)\r\n\tat org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)\r\n\tat org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:116)\r\n\tat org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)\r\n\tat org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)\r\n\tat org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)\r\n\tat org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:398)\r\n\tat org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)\r\n\tat org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)\r\n\tat org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1740)\r\n\tat org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)\r\n\tat org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1189)\r\n\tat org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:658)\r\n\tat org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)\r\n\tat java.base/java.lang.Thread.run(Thread.java:1575)\r\n&quot;,&quot;message&quot;:&quot;Method 'POST' is not supported.&quot;,&quot;path&quot;:&quot;/notifications/unread/count&quot;}" />
+              <option name="size" value="4956" />
+              <option name="time" value="15" />
+            </responseState>
+          </option>
+          <option name="workspaceId" value="drafts" />
+        </requestHistoryState>
+        <requestHistoryState>
+          <option name="dateTime" value="1746222845169" />
+          <option name="id" value="c2fde99a-f559-49a0-9fa7-c05db8588625" />
+          <option name="request">
+            <requestState>
+              <option name="body">
+                <bodyState>
+                  <option name="raw" value="{&#10;  &quot;id&quot;: &quot;909090&quot;,&#10;  &quot;recipientUserId&quot;: &quot;user123&quot;,&#10;  &quot;recipientEmail&quot;: &quot;user123@example.com&quot;,&#10;  &quot;isRead&quot;: false,&#10;  &quot;type&quot;:&quot;group_message&quot;&#10;}" />
+                  <option name="type" value="JSON" />
+                </bodyState>
+              </option>
+              <option name="headers">
+                <list>
+                  <headerState>
+                    <option name="key" value="userId" />
+                    <option name="value" value="122121" />
+                  </headerState>
+                </list>
+              </option>
+              <option name="id" value="70b9bb79-b5c7-44e4-8abf-cc950d7b92bd" />
+              <option name="method" value="GET" />
+              <option name="name" value="Draft" />
+              <option name="url" value="http://localhost:8082/notifications/unread/count" />
+            </requestState>
+          </option>
+          <option name="response">
+            <responseState>
+              <option name="bodyBytesBase64" value="MA==" />
+              <option name="bodyString" value="0" />
+              <option name="code" value="200" />
+              <option name="contentType" value="application/json" />
+              <option name="headers">
+                <list>
+                  <headerState>
+                    <option name="key" value="Content-Type" />
+                    <option name="value" value="application/json" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Transfer-Encoding" />
+                    <option name="value" value="chunked" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Date" />
+                    <option name="value" value="Fri, 02 May 2025 21:54:05 GMT" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Keep-Alive" />
+                    <option name="value" value="timeout=60" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Connection" />
+                    <option name="value" value="keep-alive" />
+                  </headerState>
+                </list>
+              </option>
+              <option name="id" value="c2fde99a-f559-49a0-9fa7-c05db8588625" />
+              <option name="message" value="OK" />
+              <option name="prettyResponseType" value="JSON" />
+              <option name="rawBodyString" value="0" />
+              <option name="size" value="1" />
+              <option name="time" value="22" />
+            </responseState>
+          </option>
+          <option name="workspaceId" value="drafts" />
+        </requestHistoryState>
+        <requestHistoryState>
+          <option name="dateTime" value="1746222865803" />
+          <option name="id" value="cb7cfb4b-1132-4a87-b4f4-f767cdb399a4" />
+          <option name="request">
+            <requestState>
+              <option name="body">
+                <bodyState>
+                  <option name="raw" value="{&#10;  &quot;id&quot;: &quot;909090&quot;,&#10;  &quot;recipientUserId&quot;: &quot;user1244&quot;,&#10;  &quot;recipientEmail&quot;: &quot;user123@example.com&quot;,&#10;  &quot;isRead&quot;: false,&#10;  &quot;type&quot;:&quot;group_message&quot;&#10;}" />
+                  <option name="type" value="JSON" />
+                </bodyState>
+              </option>
+              <option name="headers">
+                <list>
+                  <headerState>
+                    <option name="key" value="userId" />
+                    <option name="value" value="122121" />
+                  </headerState>
+                </list>
+              </option>
+              <option name="id" value="70b9bb79-b5c7-44e4-8abf-cc950d7b92bd" />
+              <option name="method" value="POST" />
+              <option name="name" value="Draft" />
+              <option name="url" value="http://localhost:8082/debug/createSampleNotification" />
+            </requestState>
+          </option>
+          <option name="response">
+            <responseState>
+              <option name="code" value="200" />
+              <option name="connectionEstablishingTime" value="2" />
+              <option name="contentType" value="application/octet-stream" />
+              <option name="headers">
+                <list>
+                  <headerState>
+                    <option name="key" value="Content-Length" />
+                    <option name="value" value="0" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Date" />
+                    <option name="value" value="Fri, 02 May 2025 21:54:25 GMT" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Keep-Alive" />
+                    <option name="value" value="timeout=60" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Connection" />
+                    <option name="value" value="keep-alive" />
+                  </headerState>
+                </list>
+              </option>
+              <option name="id" value="cb7cfb4b-1132-4a87-b4f4-f767cdb399a4" />
+              <option name="message" value="OK" />
+              <option name="time" value="35" />
+            </responseState>
+          </option>
+          <option name="workspaceId" value="drafts" />
+        </requestHistoryState>
+        <requestHistoryState>
+          <option name="dateTime" value="1746222880464" />
+          <option name="id" value="8b0a4bcc-aa2f-4359-93a5-42acbebdfa37" />
+          <option name="request">
+            <requestState>
+              <option name="body">
+                <bodyState>
+                  <option name="raw" value="{&#10;  &quot;id&quot;: &quot;909090&quot;,&#10;  &quot;recipientUserId&quot;: &quot;user1244&quot;,&#10;  &quot;recipientEmail&quot;: &quot;user123@example.com&quot;,&#10;  &quot;isRead&quot;: false,&#10;  &quot;type&quot;:&quot;group_message&quot;&#10;}" />
+                  <option name="type" value="JSON" />
+                </bodyState>
+              </option>
+              <option name="headers">
+                <list>
+                  <headerState>
+                    <option name="key" value="userId" />
+                    <option name="value" value="user1244" />
+                  </headerState>
+                </list>
+              </option>
+              <option name="id" value="70b9bb79-b5c7-44e4-8abf-cc950d7b92bd" />
+              <option name="method" value="POST" />
+              <option name="name" value="Draft" />
+              <option name="url" value="http://localhost:8082/notifications/AllNotifications" />
+            </requestState>
+          </option>
+          <option name="response">
+            <responseState>
+              <option name="bodyBytesBase64" value="eyJ0aW1lc3RhbXAiOiIyMDI1LTA1LTAyVDIxOjU0OjQwLjQ2MSswMDowMCIsInN0YXR1cyI6NDA1LCJlcnJvciI6Ik1ldGhvZCBOb3QgQWxsb3dlZCIsInRyYWNlIjoib3JnLnNwcmluZ2ZyYW1ld29yay53ZWIuSHR0cFJlcXVlc3RNZXRob2ROb3RTdXBwb3J0ZWRFeGNlcHRpb246IFJlcXVlc3QgbWV0aG9kICdQT1NUJyBpcyBub3Qgc3VwcG9ydGVkXHJcblx0YXQgb3JnLnNwcmluZ2ZyYW1ld29yay53ZWIuc2VydmxldC5tdmMubWV0aG9kLlJlcXVlc3RNYXBwaW5nSW5mb0hhbmRsZXJNYXBwaW5nLmhhbmRsZU5vTWF0Y2goUmVxdWVzdE1hcHBpbmdJbmZvSGFuZGxlck1hcHBpbmcuamF2YToyNjcpXHJcblx0YXQgb3JnLnNwcmluZ2ZyYW1ld29yay53ZWIuc2VydmxldC5oYW5kbGVyLkFic3RyYWN0SGFuZGxlck1ldGhvZE1hcHBpbmcubG9va3VwSGFuZGxlck1ldGhvZChBYnN0cmFjdEhhbmRsZXJNZXRob2RNYXBwaW5nLmphdmE6NDQxKVxyXG5cdGF0IG9yZy5zcHJpbmdmcmFtZXdvcmsud2ViLnNlcnZsZXQuaGFuZGxlci5BYnN0cmFjdEhhbmRsZXJNZXRob2RNYXBwaW5nLmdldEhhbmRsZXJJbnRlcm5hbChBYnN0cmFjdEhhbmRsZXJNZXRob2RNYXBwaW5nLmphdmE6MzgyKVxyXG5cdGF0IG9yZy5zcHJpbmdmcmFtZXdvcmsud2ViLnNlcnZsZXQubXZjLm1ldGhvZC5SZXF1ZXN0TWFwcGluZ0luZm9IYW5kbGVyTWFwcGluZy5nZXRIYW5kbGVySW50ZXJuYWwoUmVxdWVzdE1hcHBpbmdJbmZvSGFuZGxlck1hcHBpbmcuamF2YToxMjcpXHJcblx0YXQgb3JnLnNwcmluZ2ZyYW1ld29yay53ZWIuc2VydmxldC5tdmMubWV0aG9kLlJlcXVlc3RNYXBwaW5nSW5mb0hhbmRsZXJNYXBwaW5nLmdldEhhbmRsZXJJbnRlcm5hbChSZXF1ZXN0TWFwcGluZ0luZm9IYW5kbGVyTWFwcGluZy5qYXZhOjY4KVxyXG5cdGF0IG9yZy5zcHJpbmdmcmFtZXdvcmsud2ViLnNlcnZsZXQuaGFuZGxlci5BYnN0cmFjdEhhbmRsZXJNYXBwaW5nLmdldEhhbmRsZXIoQWJzdHJhY3RIYW5kbGVyTWFwcGluZy5qYXZhOjUwOSlcclxuXHRhdCBvcmcuc3ByaW5nZnJhbWV3b3JrLndlYi5zZXJ2bGV0LkRpc3BhdGNoZXJTZXJ2bGV0LmdldEhhbmRsZXIoRGlzcGF0Y2hlclNlcnZsZXQuamF2YToxMjg0KVxyXG5cdGF0IG9yZy5zcHJpbmdmcmFtZXdvcmsud2ViLnNlcnZsZXQuRGlzcGF0Y2hlclNlcnZsZXQuZG9EaXNwYXRjaChEaXNwYXRjaGVyU2VydmxldC5qYXZhOjEwNjUpXHJcblx0YXQgb3JnLnNwcmluZ2ZyYW1ld29yay53ZWIuc2VydmxldC5EaXNwYXRjaGVyU2VydmxldC5kb1NlcnZpY2UoRGlzcGF0Y2hlclNlcnZsZXQuamF2YTo5NzkpXHJcblx0YXQgb3JnLnNwcmluZ2ZyYW1ld29yay53ZWIuc2VydmxldC5GcmFtZXdvcmtTZXJ2bGV0LnByb2Nlc3NSZXF1ZXN0KEZyYW1ld29ya1NlcnZsZXQuamF2YToxMDE0KVxyXG5cdGF0IG9yZy5zcHJpbmdmcmFtZXdvcmsud2ViLnNlcnZsZXQuRnJhbWV3b3JrU2VydmxldC5kb1Bvc3QoRnJhbWV3b3JrU2VydmxldC5qYXZhOjkxNClcclxuXHRhdCBqYWthcnRhLnNlcnZsZXQuaHR0cC5IdHRwU2VydmxldC5zZXJ2aWNlKEh0dHBTZXJ2bGV0LmphdmE6NTkwKVxyXG5cdGF0IG9yZy5zcHJpbmdmcmFtZXdvcmsud2ViLnNlcnZsZXQuRnJhbWV3b3JrU2VydmxldC5zZXJ2aWNlKEZyYW1ld29ya1NlcnZsZXQuamF2YTo4ODUpXHJcblx0YXQgamFrYXJ0YS5zZXJ2bGV0Lmh0dHAuSHR0cFNlcnZsZXQuc2VydmljZShIdHRwU2VydmxldC5qYXZhOjY1OClcclxuXHRhdCBvcmcuYXBhY2hlLmNhdGFsaW5hLmNvcmUuQXBwbGljYXRpb25GaWx0ZXJDaGFpbi5pbnRlcm5hbERvRmlsdGVyKEFwcGxpY2F0aW9uRmlsdGVyQ2hhaW4uamF2YToxOTUpXHJcblx0YXQgb3JnLmFwYWNoZS5jYXRhbGluYS5jb3JlLkFwcGxpY2F0aW9uRmlsdGVyQ2hhaW4uZG9GaWx0ZXIoQXBwbGljYXRpb25GaWx0ZXJDaGFpbi5qYXZhOjE0MClcclxuXHRhdCBvcmcuYXBhY2hlLnRvbWNhdC53ZWJzb2NrZXQuc2VydmVyLldzRmlsdGVyLmRvRmlsdGVyKFdzRmlsdGVyLmphdmE6NTEpXHJcblx0YXQgb3JnLmFwYWNoZS5jYXRhbGluYS5jb3JlLkFwcGxpY2F0aW9uRmlsdGVyQ2hhaW4uaW50ZXJuYWxEb0ZpbHRlcihBcHBsaWNhdGlvbkZpbHRlckNoYWluLmphdmE6MTY0KVxyXG5cdGF0IG9yZy5hcGFjaGUuY2F0YWxpbmEuY29yZS5BcHBsaWNhdGlvbkZpbHRlckNoYWluLmRvRmlsdGVyKEFwcGxpY2F0aW9uRmlsdGVyQ2hhaW4uamF2YToxNDApXHJcblx0YXQgb3JnLnNwcmluZ2ZyYW1ld29yay53ZWIuZmlsdGVyLlJlcXVlc3RDb250ZXh0RmlsdGVyLmRvRmlsdGVySW50ZXJuYWwoUmVxdWVzdENvbnRleHRGaWx0ZXIuamF2YToxMDApXHJcblx0YXQgb3JnLnNwcmluZ2ZyYW1ld29yay53ZWIuZmlsdGVyLk9uY2VQZXJSZXF1ZXN0RmlsdGVyLmRvRmlsdGVyKE9uY2VQZXJSZXF1ZXN0RmlsdGVyLmphdmE6MTE2KVxyXG5cdGF0IG9yZy5hcGFjaGUuY2F0YWxpbmEuY29yZS5BcHBsaWNhdGlvbkZpbHRlckNoYWluLmludGVybmFsRG9GaWx0ZXIoQXBwbGljYXRpb25GaWx0ZXJDaGFpbi5qYXZhOjE2NClcclxuXHRhdCBvcmcuYXBhY2hlLmNhdGFsaW5hLmNvcmUuQXBwbGljYXRpb25GaWx0ZXJDaGFpbi5kb0ZpbHRlcihBcHBsaWNhdGlvbkZpbHRlckNoYWluLmphdmE6MTQwKVxyXG5cdGF0IG9yZy5zcHJpbmdmcmFtZXdvcmsud2ViLmZpbHRlci5Gb3JtQ29udGVudEZpbHRlci5kb0ZpbHRlckludGVybmFsKEZvcm1Db250ZW50RmlsdGVyLmphdmE6OTMpXHJcblx0YXQgb3JnLnNwcmluZ2ZyYW1ld29yay53ZWIuZmlsdGVyLk9uY2VQZXJSZXF1ZXN0RmlsdGVyLmRvRmlsdGVyKE9uY2VQZXJSZXF1ZXN0RmlsdGVyLmphdmE6MTE2KVxyXG5cdGF0IG9yZy5hcGFjaGUuY2F0YWxpbmEuY29yZS5BcHBsaWNhdGlvbkZpbHRlckNoYWluLmludGVybmFsRG9GaWx0ZXIoQXBwbGljYXRpb25GaWx0ZXJDaGFpbi5qYXZhOjE2NClcclxuXHRhdCBvcmcuYXBhY2hlLmNhdGFsaW5hLmNvcmUuQXBwbGljYXRpb25GaWx0ZXJDaGFpbi5kb0ZpbHRlcihBcHBsaWNhdGlvbkZpbHRlckNoYWluLmphdmE6MTQwKVxyXG5cdGF0IG9yZy5zcHJpbmdmcmFtZXdvcmsud2ViLmZpbHRlci5DaGFyYWN0ZXJFbmNvZGluZ0ZpbHRlci5kb0ZpbHRlckludGVybmFsKENoYXJhY3RlckVuY29kaW5nRmlsdGVyLmphdmE6MjAxKVxyXG5cdGF0IG9yZy5zcHJpbmdmcmFtZXdvcmsud2ViLmZpbHRlci5PbmNlUGVyUmVxdWVzdEZpbHRlci5kb0ZpbHRlcihPbmNlUGVyUmVxdWVzdEZpbHRlci5qYXZhOjExNilcclxuXHRhdCBvcmcuYXBhY2hlLmNhdGFsaW5hLmNvcmUuQXBwbGljYXRpb25GaWx0ZXJDaGFpbi5pbnRlcm5hbERvRmlsdGVyKEFwcGxpY2F0aW9uRmlsdGVyQ2hhaW4uamF2YToxNjQpXHJcblx0YXQgb3JnLmFwYWNoZS5jYXRhbGluYS5jb3JlLkFwcGxpY2F0aW9uRmlsdGVyQ2hhaW4uZG9GaWx0ZXIoQXBwbGljYXRpb25GaWx0ZXJDaGFpbi5qYXZhOjE0MClcclxuXHRhdCBvcmcuYXBhY2hlLmNhdGFsaW5hLmNvcmUuU3RhbmRhcmRXcmFwcGVyVmFsdmUuaW52b2tlKFN0YW5kYXJkV3JhcHBlclZhbHZlLmphdmE6MTY3KVxyXG5cdGF0IG9yZy5hcGFjaGUuY2F0YWxpbmEuY29yZS5TdGFuZGFyZENvbnRleHRWYWx2ZS5pbnZva2UoU3RhbmRhcmRDb250ZXh0VmFsdmUuamF2YTo5MClcclxuXHRhdCBvcmcuYXBhY2hlLmNhdGFsaW5hLmF1dGhlbnRpY2F0b3IuQXV0aGVudGljYXRvckJhc2UuaW52b2tlKEF1dGhlbnRpY2F0b3JCYXNlLmphdmE6NDgzKVxyXG5cdGF0IG9yZy5hcGFjaGUuY2F0YWxpbmEuY29yZS5TdGFuZGFyZEhvc3RWYWx2ZS5pbnZva2UoU3RhbmRhcmRIb3N0VmFsdmUuamF2YToxMTYpXHJcblx0YXQgb3JnLmFwYWNoZS5jYXRhbGluYS52YWx2ZXMuRXJyb3JSZXBvcnRWYWx2ZS5pbnZva2UoRXJyb3JSZXBvcnRWYWx2ZS5qYXZhOjkzKVxyXG5cdGF0IG9yZy5hcGFjaGUuY2F0YWxpbmEuY29yZS5TdGFuZGFyZEVuZ2luZVZhbHZlLmludm9rZShTdGFuZGFyZEVuZ2luZVZhbHZlLmphdmE6NzQpXHJcblx0YXQgb3JnLmFwYWNoZS5jYXRhbGluYS5jb25uZWN0b3IuQ295b3RlQWRhcHRlci5zZXJ2aWNlKENveW90ZUFkYXB0ZXIuamF2YTozNDQpXHJcblx0YXQgb3JnLmFwYWNoZS5jb3lvdGUuaHR0cDExLkh0dHAxMVByb2Nlc3Nvci5zZXJ2aWNlKEh0dHAxMVByb2Nlc3Nvci5qYXZhOjM5OClcclxuXHRhdCBvcmcuYXBhY2hlLmNveW90ZS5BYnN0cmFjdFByb2Nlc3NvckxpZ2h0LnByb2Nlc3MoQWJzdHJhY3RQcm9jZXNzb3JMaWdodC5qYXZhOjYzKVxyXG5cdGF0IG9yZy5hcGFjaGUuY295b3RlLkFic3RyYWN0UHJvdG9jb2wkQ29ubmVjdGlvbkhhbmRsZXIucHJvY2VzcyhBYnN0cmFjdFByb3RvY29sLmphdmE6OTAzKVxyXG5cdGF0IG9yZy5hcGFjaGUudG9tY2F0LnV0aWwubmV0Lk5pb0VuZHBvaW50JFNvY2tldFByb2Nlc3Nvci5kb1J1bihOaW9FbmRwb2ludC5qYXZhOjE3NDApXHJcblx0YXQgb3JnLmFwYWNoZS50b21jYXQudXRpbC5uZXQuU29ja2V0UHJvY2Vzc29yQmFzZS5ydW4oU29ja2V0UHJvY2Vzc29yQmFzZS5qYXZhOjUyKVxyXG5cdGF0IG9yZy5hcGFjaGUudG9tY2F0LnV0aWwudGhyZWFkcy5UaHJlYWRQb29sRXhlY3V0b3IucnVuV29ya2VyKFRocmVhZFBvb2xFeGVjdXRvci5qYXZhOjExODkpXHJcblx0YXQgb3JnLmFwYWNoZS50b21jYXQudXRpbC50aHJlYWRzLlRocmVhZFBvb2xFeGVjdXRvciRXb3JrZXIucnVuKFRocmVhZFBvb2xFeGVjdXRvci5qYXZhOjY1OClcclxuXHRhdCBvcmcuYXBhY2hlLnRvbWNhdC51dGlsLnRocmVhZHMuVGFza1RocmVhZCRXcmFwcGluZ1J1bm5hYmxlLnJ1bihUYXNrVGhyZWFkLmphdmE6NjMpXHJcblx0YXQgamF2YS5iYXNlL2phdmEubGFuZy5UaHJlYWQucnVuKFRocmVhZC5qYXZhOjE1NzUpXHJcbiIsIm1lc3NhZ2UiOiJNZXRob2QgJ1BPU1QnIGlzIG5vdCBzdXBwb3J0ZWQuIiwicGF0aCI6Ii9ub3RpZmljYXRpb25zL0FsbE5vdGlmaWNhdGlvbnMifQ==" />
+              <option name="bodyString" value="{&#10;  &quot;timestamp&quot;: &quot;2025-05-02T21:54:40.461+00:00&quot;,&#10;  &quot;status&quot;: 405,&#10;  &quot;error&quot;: &quot;Method Not Allowed&quot;,&#10;  &quot;trace&quot;: &quot;org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported\r\n\tat org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping.handleNoMatch(RequestMappingInfoHandlerMapping.java:267)\r\n\tat org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.lookupHandlerMethod(AbstractHandlerMethodMapping.java:441)\r\n\tat org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.getHandlerInternal(AbstractHandlerMethodMapping.java:382)\r\n\tat org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping.getHandlerInternal(RequestMappingInfoHandlerMapping.java:127)\r\n\tat org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping.getHandlerInternal(RequestMappingInfoHandlerMapping.java:68)\r\n\tat org.springframework.web.servlet.handler.AbstractHandlerMapping.getHandler(AbstractHandlerMapping.java:509)\r\n\tat org.springframework.web.servlet.DispatcherServlet.getHandler(DispatcherServlet.java:1284)\r\n\tat org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1065)\r\n\tat org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)\r\n\tat org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)\r\n\tat org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)\r\n\tat jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)\r\n\tat org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)\r\n\tat jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)\r\n\tat org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)\r\n\tat org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)\r\n\tat org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)\r\n\tat org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)\r\n\tat org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)\r\n\tat org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)\r\n\tat org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)\r\n\tat org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)\r\n\tat org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)\r\n\tat org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)\r\n\tat org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:116)\r\n\tat org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)\r\n\tat org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)\r\n\tat org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)\r\n\tat org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:398)\r\n\tat org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)\r\n\tat org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)\r\n\tat org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1740)\r\n\tat org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)\r\n\tat org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1189)\r\n\tat org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:658)\r\n\tat org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)\r\n\tat java.base/java.lang.Thread.run(Thread.java:1575)\r\n&quot;,&#10;  &quot;message&quot;: &quot;Method 'POST' is not supported.&quot;,&#10;  &quot;path&quot;: &quot;/notifications/AllNotifications&quot;&#10;}" />
+              <option name="code" value="405" />
+              <option name="connectionEstablishingTime" value="1" />
+              <option name="contentType" value="application/json" />
+              <option name="headers">
+                <list>
+                  <headerState>
+                    <option name="key" value="Allow" />
+                    <option name="value" value="GET" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Content-Type" />
+                    <option name="value" value="application/json" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Transfer-Encoding" />
+                    <option name="value" value="chunked" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Date" />
+                    <option name="value" value="Fri, 02 May 2025 21:54:40 GMT" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Keep-Alive" />
+                    <option name="value" value="timeout=60" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Connection" />
+                    <option name="value" value="keep-alive" />
+                  </headerState>
+                </list>
+              </option>
+              <option name="id" value="8b0a4bcc-aa2f-4359-93a5-42acbebdfa37" />
+              <option name="message" value="Method Not Allowed" />
+              <option name="prettyResponseType" value="JSON" />
+              <option name="rawBodyString" value="{&quot;timestamp&quot;:&quot;2025-05-02T21:54:40.461+00:00&quot;,&quot;status&quot;:405,&quot;error&quot;:&quot;Method Not Allowed&quot;,&quot;trace&quot;:&quot;org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported\r\n\tat org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping.handleNoMatch(RequestMappingInfoHandlerMapping.java:267)\r\n\tat org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.lookupHandlerMethod(AbstractHandlerMethodMapping.java:441)\r\n\tat org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.getHandlerInternal(AbstractHandlerMethodMapping.java:382)\r\n\tat org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping.getHandlerInternal(RequestMappingInfoHandlerMapping.java:127)\r\n\tat org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping.getHandlerInternal(RequestMappingInfoHandlerMapping.java:68)\r\n\tat org.springframework.web.servlet.handler.AbstractHandlerMapping.getHandler(AbstractHandlerMapping.java:509)\r\n\tat org.springframework.web.servlet.DispatcherServlet.getHandler(DispatcherServlet.java:1284)\r\n\tat org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1065)\r\n\tat org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)\r\n\tat org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)\r\n\tat org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)\r\n\tat jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)\r\n\tat org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)\r\n\tat jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)\r\n\tat org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)\r\n\tat org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)\r\n\tat org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)\r\n\tat org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)\r\n\tat org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)\r\n\tat org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)\r\n\tat org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)\r\n\tat org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)\r\n\tat org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)\r\n\tat org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)\r\n\tat org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:116)\r\n\tat org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)\r\n\tat org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)\r\n\tat org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)\r\n\tat org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:398)\r\n\tat org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)\r\n\tat org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)\r\n\tat org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1740)\r\n\tat org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)\r\n\tat org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1189)\r\n\tat org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:658)\r\n\tat org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)\r\n\tat java.base/java.lang.Thread.run(Thread.java:1575)\r\n&quot;,&quot;message&quot;:&quot;Method 'POST' is not supported.&quot;,&quot;path&quot;:&quot;/notifications/AllNotifications&quot;}" />
+              <option name="size" value="4960" />
+              <option name="time" value="8" />
+            </responseState>
+          </option>
+          <option name="workspaceId" value="drafts" />
+        </requestHistoryState>
+        <requestHistoryState>
+          <option name="dateTime" value="1746222885842" />
+          <option name="id" value="d5fbbc0b-f242-416c-8f79-967335922ec9" />
+          <option name="request">
+            <requestState>
+              <option name="body">
+                <bodyState>
+                  <option name="raw" value="{&#10;  &quot;id&quot;: &quot;909090&quot;,&#10;  &quot;recipientUserId&quot;: &quot;user1244&quot;,&#10;  &quot;recipientEmail&quot;: &quot;user123@example.com&quot;,&#10;  &quot;isRead&quot;: false,&#10;  &quot;type&quot;:&quot;group_message&quot;&#10;}" />
+                  <option name="type" value="JSON" />
+                </bodyState>
+              </option>
+              <option name="headers">
+                <list>
+                  <headerState>
+                    <option name="key" value="userId" />
+                    <option name="value" value="user1244" />
+                  </headerState>
+                </list>
+              </option>
+              <option name="id" value="70b9bb79-b5c7-44e4-8abf-cc950d7b92bd" />
+              <option name="method" value="GET" />
+              <option name="name" value="Draft" />
+              <option name="url" value="http://localhost:8082/notifications/AllNotifications" />
+            </requestState>
+          </option>
+          <option name="response">
+            <responseState>
+              <option name="bodyBytesBase64" value="W3sidHlwZSI6Imdyb3VwX21lc3NhZ2UiLCJpZCI6IjkwOTA5MCIsInJlY2lwaWVudFVzZXJJZCI6InVzZXIxMjQ0IiwicmVjaXBpZW50RW1haWwiOiJhdWRyYS5jcm9va3NAeWFob28uY29tIiwidGltZXN0YW1wIjoiMjAyNS0wNS0wM1QwMDo1NDoyNS43NzMiLCJ0eXBlIjoiZ3JvdXBfbWVzc2FnZSIsInNlbmRlclVzZXJJZCI6bnVsbCwic2VuZGVyVXNlck5hbWUiOm51bGwsIm1lc3NhZ2VJZCI6bnVsbCwibWVzc2FnZVRleHQiOm51bGwsIm1lc3NhZ2VUaW1lc3RhbXAiOm51bGwsImdyb3VwSWQiOm51bGwsImdyb3VwTmFtZSI6bnVsbCwiZ3JvdXBJY29uIjpudWxsLCJyZWFkIjpmYWxzZX1d" />
+              <option name="bodyString" value="[&#10;  {&#10;    &quot;type&quot;: &quot;group_message&quot;,&#10;    &quot;id&quot;: &quot;909090&quot;,&#10;    &quot;recipientUserId&quot;: &quot;user1244&quot;,&#10;    &quot;recipientEmail&quot;: &quot;audra.crooks@yahoo.com&quot;,&#10;    &quot;timestamp&quot;: &quot;2025-05-03T00:54:25.773&quot;,&#10;    &quot;senderUserId&quot;: null,&#10;    &quot;senderUserName&quot;: null,&#10;    &quot;messageId&quot;: null,&#10;    &quot;messageText&quot;: null,&#10;    &quot;messageTimestamp&quot;: null,&#10;    &quot;groupId&quot;: null,&#10;    &quot;groupName&quot;: null,&#10;    &quot;groupIcon&quot;: null,&#10;    &quot;read&quot;: false&#10;  }&#10;]" />
+              <option name="code" value="200" />
+              <option name="connectionEstablishingTime" value="1" />
+              <option name="contentType" value="application/json" />
+              <option name="headers">
+                <list>
+                  <headerState>
+                    <option name="key" value="Content-Type" />
+                    <option name="value" value="application/json" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Transfer-Encoding" />
+                    <option name="value" value="chunked" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Date" />
+                    <option name="value" value="Fri, 02 May 2025 21:54:45 GMT" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Keep-Alive" />
+                    <option name="value" value="timeout=60" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Connection" />
+                    <option name="value" value="keep-alive" />
+                  </headerState>
+                </list>
+              </option>
+              <option name="id" value="d5fbbc0b-f242-416c-8f79-967335922ec9" />
+              <option name="message" value="OK" />
+              <option name="prettyResponseType" value="JSON" />
+              <option name="rawBodyString" value="[{&quot;type&quot;:&quot;group_message&quot;,&quot;id&quot;:&quot;909090&quot;,&quot;recipientUserId&quot;:&quot;user1244&quot;,&quot;recipientEmail&quot;:&quot;audra.crooks@yahoo.com&quot;,&quot;timestamp&quot;:&quot;2025-05-03T00:54:25.773&quot;,&quot;type&quot;:&quot;group_message&quot;,&quot;senderUserId&quot;:null,&quot;senderUserName&quot;:null,&quot;messageId&quot;:null,&quot;messageText&quot;:null,&quot;messageTimestamp&quot;:null,&quot;groupId&quot;:null,&quot;groupName&quot;:null,&quot;groupIcon&quot;:null,&quot;read&quot;:false}]" />
+              <option name="size" value="336" />
+              <option name="time" value="42" />
+            </responseState>
+          </option>
+          <option name="workspaceId" value="drafts" />
+        </requestHistoryState>
+        <requestHistoryState>
+          <option name="dateTime" value="1746222896707" />
+          <option name="id" value="2c0f52d0-04a7-472a-95b4-147948d6a83f" />
+          <option name="request">
+            <requestState>
+              <option name="body">
+                <bodyState>
+                  <option name="raw" value="{&#10;  &quot;id&quot;: &quot;909090&quot;,&#10;  &quot;recipientUserId&quot;: &quot;user1244&quot;,&#10;  &quot;recipientEmail&quot;: &quot;user123@example.com&quot;,&#10;  &quot;isRead&quot;: false,&#10;  &quot;type&quot;:&quot;group_message&quot;&#10;}" />
+                  <option name="type" value="JSON" />
+                </bodyState>
+              </option>
+              <option name="headers">
+                <list>
+                  <headerState>
+                    <option name="key" value="userId" />
+                    <option name="value" value="user1244" />
+                  </headerState>
+                </list>
+              </option>
+              <option name="id" value="70b9bb79-b5c7-44e4-8abf-cc950d7b92bd" />
+              <option name="method" value="GET" />
+              <option name="name" value="Draft" />
+              <option name="url" value="http://localhost:8082/notifications/unread/count" />
+            </requestState>
+          </option>
+          <option name="response">
+            <responseState>
+              <option name="bodyBytesBase64" value="MQ==" />
+              <option name="bodyString" value="1" />
+              <option name="code" value="200" />
+              <option name="connectionEstablishingTime" value="1" />
+              <option name="contentType" value="application/json" />
+              <option name="headers">
+                <list>
+                  <headerState>
+                    <option name="key" value="Content-Type" />
+                    <option name="value" value="application/json" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Transfer-Encoding" />
+                    <option name="value" value="chunked" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Date" />
+                    <option name="value" value="Fri, 02 May 2025 21:54:56 GMT" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Keep-Alive" />
+                    <option name="value" value="timeout=60" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Connection" />
+                    <option name="value" value="keep-alive" />
+                  </headerState>
+                </list>
+              </option>
+              <option name="id" value="2c0f52d0-04a7-472a-95b4-147948d6a83f" />
+              <option name="message" value="OK" />
+              <option name="prettyResponseType" value="JSON" />
+              <option name="rawBodyString" value="1" />
+              <option name="size" value="1" />
+              <option name="time" value="12" />
+            </responseState>
+          </option>
+          <option name="workspaceId" value="drafts" />
+        </requestHistoryState>
+        <requestHistoryState>
+          <option name="dateTime" value="1746222921632" />
+          <option name="id" value="ea73046d-3d0d-4300-95ec-101e518552d9" />
+          <option name="request">
+            <requestState>
+              <option name="body">
+                <bodyState>
+                  <option name="raw" value="{&#10;  &quot;id&quot;: &quot;909090&quot;,&#10;  &quot;recipientUserId&quot;: &quot;user1244&quot;,&#10;  &quot;recipientEmail&quot;: &quot;user123@example.com&quot;,&#10;  &quot;isRead&quot;: false,&#10;  &quot;type&quot;:&quot;group_message&quot;&#10;}" />
+                  <option name="type" value="JSON" />
+                </bodyState>
+              </option>
+              <option name="headers">
+                <list>
+                  <headerState>
+                    <option name="key" value="userId" />
+                    <option name="value" value="user1244" />
+                  </headerState>
+                </list>
+              </option>
+              <option name="id" value="70b9bb79-b5c7-44e4-8abf-cc950d7b92bd" />
+              <option name="method" value="POST" />
+              <option name="name" value="Draft" />
+              <option name="queryParams">
+                <list>
+                  <queryParamState>
+                    <option name="key" value="notificationId" />
+                    <option name="value" value="909090" />
+                  </queryParamState>
+                </list>
+              </option>
+              <option name="url" value="http://localhost:8082/notifications/read?notificationId=909090" />
+            </requestState>
+          </option>
+          <option name="response">
+            <responseState>
+              <option name="bodyBytesBase64" value="Tm90aWZpY2F0aW9uIE1hcmtlZA==" />
+              <option name="bodyString" value="Notification Marked" />
+              <option name="code" value="200" />
+              <option name="connectionEstablishingTime" value="1" />
+              <option name="contentType" value="text/plain; charset=UTF-8" />
+              <option name="headers">
+                <list>
+                  <headerState>
+                    <option name="key" value="Content-Type" />
+                    <option name="value" value="text/plain;charset=UTF-8" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Content-Length" />
+                    <option name="value" value="19" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Date" />
+                    <option name="value" value="Fri, 02 May 2025 21:55:21 GMT" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Keep-Alive" />
+                    <option name="value" value="timeout=60" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Connection" />
+                    <option name="value" value="keep-alive" />
+                  </headerState>
+                </list>
+              </option>
+              <option name="id" value="ea73046d-3d0d-4300-95ec-101e518552d9" />
+              <option name="message" value="OK" />
+              <option name="prettyResponseType" value="TEXT" />
+              <option name="rawBodyString" value="Notification Marked" />
+              <option name="size" value="19" />
+              <option name="time" value="15" />
+            </responseState>
+          </option>
+          <option name="workspaceId" value="drafts" />
+        </requestHistoryState>
+        <requestHistoryState>
+          <option name="dateTime" value="1746222949371" />
+          <option name="id" value="c3ac94c9-7b24-4cef-984b-6889f3e0ead9" />
+          <option name="request">
+            <requestState>
+              <option name="body">
+                <bodyState>
+                  <option name="raw" value="{&#10;  &quot;id&quot;: &quot;909090&quot;,&#10;  &quot;recipientUserId&quot;: &quot;user1244&quot;,&#10;  &quot;recipientEmail&quot;: &quot;user123@example.com&quot;,&#10;  &quot;isRead&quot;: false,&#10;  &quot;type&quot;:&quot;group_message&quot;&#10;}" />
+                  <option name="type" value="JSON" />
+                </bodyState>
+              </option>
+              <option name="headers">
+                <list>
+                  <headerState>
+                    <option name="key" value="userId" />
+                    <option name="value" value="user1244" />
+                  </headerState>
+                </list>
+              </option>
+              <option name="id" value="70b9bb79-b5c7-44e4-8abf-cc950d7b92bd" />
+              <option name="method" value="POST" />
+              <option name="name" value="Draft" />
+              <option name="url" value="http://localhost:8082/notifications/markAllRead" />
+            </requestState>
+          </option>
+          <option name="response">
+            <responseState>
+              <option name="bodyBytesBase64" value="Tm8gbm90aWZpY2F0aW9ucyB0byBtYXJrIGFzIHJlYWQ=" />
+              <option name="bodyString" value="No notifications to mark as read" />
+              <option name="code" value="200" />
+              <option name="connectionEstablishingTime" value="1" />
+              <option name="contentType" value="text/plain; charset=UTF-8" />
+              <option name="headers">
+                <list>
+                  <headerState>
+                    <option name="key" value="Content-Type" />
+                    <option name="value" value="text/plain;charset=UTF-8" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Content-Length" />
+                    <option name="value" value="32" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Date" />
+                    <option name="value" value="Fri, 02 May 2025 21:55:49 GMT" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Keep-Alive" />
+                    <option name="value" value="timeout=60" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Connection" />
+                    <option name="value" value="keep-alive" />
+                  </headerState>
+                </list>
+              </option>
+              <option name="id" value="c3ac94c9-7b24-4cef-984b-6889f3e0ead9" />
+              <option name="message" value="OK" />
+              <option name="prettyResponseType" value="TEXT" />
+              <option name="rawBodyString" value="No notifications to mark as read" />
+              <option name="size" value="32" />
+              <option name="time" value="9" />
+            </responseState>
+          </option>
+          <option name="workspaceId" value="drafts" />
+        </requestHistoryState>
+        <requestHistoryState>
+          <option name="dateTime" value="1746222979265" />
+          <option name="id" value="5d8ac284-cd67-48a5-bb85-44619b978639" />
+          <option name="request">
+            <requestState>
+              <option name="body">
+                <bodyState>
+                  <option name="raw" value="{&#10;  &quot;id&quot;: &quot;9090&quot;,&#10;  &quot;recipientUserId&quot;: &quot;user11&quot;,&#10;  &quot;recipientEmail&quot;: &quot;user123@example.com&quot;,&#10;  &quot;isRead&quot;: false,&#10;  &quot;type&quot;:&quot;group_message&quot;&#10;}" />
+                  <option name="type" value="JSON" />
+                </bodyState>
+              </option>
+              <option name="headers">
+                <list>
+                  <headerState>
+                    <option name="key" value="userId" />
+                    <option name="value" value="user1244" />
+                  </headerState>
+                </list>
+              </option>
+              <option name="id" value="70b9bb79-b5c7-44e4-8abf-cc950d7b92bd" />
+              <option name="method" value="POST" />
+              <option name="name" value="Draft" />
+              <option name="url" value="http://localhost:8082/debug/createSampleNotification" />
+            </requestState>
+          </option>
+          <option name="response">
+            <responseState>
+              <option name="code" value="200" />
+              <option name="contentType" value="application/octet-stream" />
+              <option name="headers">
+                <list>
+                  <headerState>
+                    <option name="key" value="Content-Length" />
+                    <option name="value" value="0" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Date" />
+                    <option name="value" value="Fri, 02 May 2025 21:56:19 GMT" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Keep-Alive" />
+                    <option name="value" value="timeout=60" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Connection" />
+                    <option name="value" value="keep-alive" />
+                  </headerState>
+                </list>
+              </option>
+              <option name="id" value="5d8ac284-cd67-48a5-bb85-44619b978639" />
+              <option name="message" value="OK" />
+              <option name="time" value="19" />
+            </responseState>
+          </option>
+          <option name="workspaceId" value="drafts" />
+        </requestHistoryState>
+        <requestHistoryState>
+          <option name="dateTime" value="1746222992921" />
+          <option name="id" value="57c84c87-8d2e-474e-9808-9da6b03c722b" />
+          <option name="request">
+            <requestState>
+              <option name="body">
+                <bodyState>
+                  <option name="raw" value="{&#10;  &quot;id&quot;: &quot;9090&quot;,&#10;  &quot;recipientUserId&quot;: &quot;user11&quot;,&#10;  &quot;recipientEmail&quot;: &quot;user123@example.com&quot;,&#10;  &quot;isRead&quot;: false,&#10;  &quot;type&quot;:&quot;group_message&quot;&#10;}" />
+                  <option name="type" value="JSON" />
+                </bodyState>
+              </option>
+              <option name="headers">
+                <list>
+                  <headerState>
+                    <option name="key" value="userId" />
+                    <option name="value" value="user11" />
+                  </headerState>
+                </list>
+              </option>
+              <option name="id" value="70b9bb79-b5c7-44e4-8abf-cc950d7b92bd" />
+              <option name="method" value="POST" />
+              <option name="name" value="Draft" />
+              <option name="url" value="http://localhost:8082/notifications/markAllRead" />
+            </requestState>
+          </option>
+          <option name="response">
+            <responseState>
+              <option name="bodyBytesBase64" value="QWxsIHVucmVhZCBub3RpZmljYXRpb25zIG1hcmtlZCBhcyByZWFkIHN1Y2Nlc3NmdWxseQ==" />
+              <option name="bodyString" value="All unread notifications marked as read successfully" />
+              <option name="code" value="200" />
+              <option name="connectionEstablishingTime" value="1" />
+              <option name="contentType" value="text/plain; charset=UTF-8" />
+              <option name="headers">
+                <list>
+                  <headerState>
+                    <option name="key" value="Content-Type" />
+                    <option name="value" value="text/plain;charset=UTF-8" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Content-Length" />
+                    <option name="value" value="52" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Date" />
+                    <option name="value" value="Fri, 02 May 2025 21:56:32 GMT" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Keep-Alive" />
+                    <option name="value" value="timeout=60" />
+                  </headerState>
+                  <headerState>
+                    <option name="key" value="Connection" />
+                    <option name="value" value="keep-alive" />
+                  </headerState>
+                </list>
+              </option>
+              <option name="id" value="57c84c87-8d2e-474e-9808-9da6b03c722b" />
+              <option name="message" value="OK" />
+              <option name="prettyResponseType" value="TEXT" />
+              <option name="rawBodyString" value="All unread notifications marked as read successfully" />
+              <option name="size" value="52" />
+              <option name="time" value="14" />
+            </responseState>
+          </option>
+          <option name="workspaceId" value="drafts" />
+        </requestHistoryState>
+      </list>
+    </option>
+  </component>
+</project>

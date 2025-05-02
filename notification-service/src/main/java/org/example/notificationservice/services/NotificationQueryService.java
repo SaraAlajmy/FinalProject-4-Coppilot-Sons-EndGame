@@ -25,7 +25,7 @@ public class NotificationQueryService {
 
     // Get all notifications for a user
     public List<Notification> getAllUnreadNotifications(String recipientUserId) {
-        return notificationRepository.findByRecipientUserIdAndIsRead(recipientUserId,false);
+        return notificationRepository.findByRecipientUserIdAndIsRead(recipientUserId, false);
 
     }
 
@@ -33,16 +33,47 @@ public class NotificationQueryService {
     public Map<String, List<Notification>> getAllUnreadNotificationsGroupedBySender(String userId) {
         List<Notification> unreadNotifications = getAllUnreadNotifications(userId);
 
-        return unreadNotifications.stream()
-                .collect(Collectors.groupingBy(notification -> {
-                    if (notification instanceof MessageNotification) {
-                        return ((MessageNotification) notification).getSenderUserId();
-                    }
-                    return "Unknown Sender";
-                }));
+        return unreadNotifications.stream().collect(Collectors.groupingBy(notification -> {
+            if (notification instanceof MessageNotification) {
+                return ((MessageNotification) notification).getSenderUserId();
+            }
+            return "Unknown Sender";
+        }));
     }
 
-    
+    public List<Notification> getAllNotifications(String recipientUserId) {
+        return notificationRepository.findByRecipientUserId(recipientUserId);
+    }
+
+    public int getUnreadNotificationCount(String recipientUserId) {
+        return (int) notificationRepository.findByRecipientUserIdAndIsRead(recipientUserId, false)
+                                           .size();
+    }
+
+    public String markNotificationAsRead(String notificationId) {
+        Notification notification = notificationRepository.findById(notificationId)
+                                                          .orElseThrow(() -> new IllegalArgumentException(
+                                                              "Notification not found"));
+        notification.setRead(true);
+        notificationRepository.save(notification);
+        return "Notification Marked";
+    }
+
+    public String markAllNotificationsAsRead(String recipientUserId) {
+        List<Notification> notifications =
+            notificationRepository.findByRecipientUserIdAndIsRead(recipientUserId, false);
+
+        if (notifications.isEmpty()) {
+            return "No notifications to mark as read";
+        }
+        for (Notification notification : notifications) {
+            notification.setRead(true);
+            notificationRepository.save(notification);
+        }
+
+        return "All unread notifications marked as read successfully";
+    }
+
     public Notification updateNotification(String id, Notification updated) {
         Optional<Notification> existingOpt = notificationRepository.findById(id);
 
@@ -60,3 +91,4 @@ public class NotificationQueryService {
         notificationRepository.deleteById(id);
     }
 }
+
