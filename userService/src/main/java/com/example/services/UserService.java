@@ -1,5 +1,7 @@
 package com.example.services;
 
+import com.example.clients.EmailClient;
+import com.example.models.EmailRequest;
 import com.example.models.User;
 import com.example.repositories.UserRepository;
 import com.example.services.loginStrategies.LoginStrategy;
@@ -28,6 +30,9 @@ public class UserService {
 
     @Autowired
     AuthenticationManager authManager;
+
+    @Autowired
+    private EmailClient emailClient;
 
 
     @Autowired
@@ -189,8 +194,15 @@ public class UserService {
         }
 
         String resetToken = jwtService.generateResetToken(user.getUsername());
-        // Send the reset token to the user's email or phone number
-        System.out.println(resetToken);
+//        String link = "http://localhost:8080/auth/resetPassword?token=" + resetToken;
+//        EmailRequest request = new EmailRequest(
+//                user.getEmail(),
+//                "Reset Your Password",
+//                "Click here to reset: " + link
+//        );
+//
+//        emailClient.sendEmail(request);
+
         logger.info("Password reset token generated successfully");
     }
     public String resetPassword(String token, String newPassword) {
