@@ -31,6 +31,7 @@ public class JWTService {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", id);
         claims.put("username", username);
+        claims.put("type", "access");
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(username)
@@ -93,9 +94,47 @@ public class JWTService {
             if (claims.getExpiration().before(new Date())) {
                 throw new RuntimeException("Token expired");
             }
+            if (!claims.get("type").equals("access")) {
+                throw new RuntimeException("Invalid token type");
+            }
 
             Map<String, Object> response = new HashMap<>();
             response.put("userId", claims.get("userId", Long.class));
+            response.put("username", claims.get("username", String.class));
+
+            return response;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+
+    public String generateResetToken(String username) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("username", username);
+        claims.put("type", "reset");
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(username)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_VALIDITY))
+                .signWith(getKey())
+                .compact();
+
+    }
+    public Map<String, Object> validateResetToken(String token) {
+        try {
+            Claims claims = extractAllClaims(token);
+
+            if (claims.getExpiration().before(new Date())) {
+                throw new RuntimeException("Token expired");
+            }
+            if (!claims.get("type").equals("reset")) {
+                throw new RuntimeException("Invalid token type");
+            }
+
+            Map<String, Object> response = new HashMap<>();
             response.put("username", claims.get("username", String.class));
 
             return response;

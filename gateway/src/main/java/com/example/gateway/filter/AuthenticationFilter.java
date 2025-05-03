@@ -25,7 +25,9 @@ public class AuthenticationFilter implements GlobalFilter {
             "/auth/login",
             "/auth/register",
             "/auth/validateToken",
-            "/auth/refresh"
+            "/auth/refresh",
+            "/auth/forgotPassword",
+            "/auth/resetPassword"
 
     );
 

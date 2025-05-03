@@ -180,6 +180,36 @@ public class UserService {
             throw new RuntimeException("User not found");
         }
     }
+    public void forgotPassword(String identifier, String loginType) {
+        LoginStrategy strategy= loginType.equals("phone")? new PhoneLoginStrategy(userRepository): new UsernameLoginStrategy(userRepository);
+        User user = strategy.loadUser(identifier);
+
+        if (user == null) {
+            logger.error("User not found");
+            throw new RuntimeException("User not found");
+        }
+
+        String resetToken = jwtService.generateResetToken(user.getUsername());
+        // Send the reset token to the user's email or phone number
+        System.out.println(resetToken);
+        logger.info("Password reset token generated successfully");
+    }
+    public String resetPassword(String token, String newPassword) {
+        System.out.print(token);
+        Map<String, Object> claims = jwtService.validateResetToken(token);
+        String username = (String) claims.get("username");
+        User user = userRepository.findByUsername(username);
+
+        if (user == null) {
+            logger.error("User not found");
+            throw new RuntimeException("User not found");
+        }
+
+        user.setPassword(encoder.encode(newPassword));
+        userRepository.save(user);
+        logger.info("Password reset successfully");
+        return "Password reset successfully";
+    }
     //for sake of helping in testing
     public void deleteAllUsers() {
         try {
