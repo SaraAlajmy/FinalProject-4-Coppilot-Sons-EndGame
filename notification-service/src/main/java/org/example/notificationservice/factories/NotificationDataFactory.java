@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+
 @Component
 public class NotificationDataFactory {
     private final Faker faker = new Faker();
@@ -22,20 +23,21 @@ public class NotificationDataFactory {
         List<Notification> notifications = new ArrayList<>();
 
         for (int i = 0; i < count; i++) {
-            Notification notification;
-            int type = i % 3;
-
-            notification = switch (type) {
-                case 0 -> createDirectMessageNotification();
-                case 1 -> createGroupMessageNotification();
-                case 2 -> createGroupMentionNotification();
-                default -> createDirectMessageNotification();
-            };
-
-            notifications.add(notification);
+            notifications.add(createRandomNotification());
         }
 
         return notifications;
+    }
+
+    public Notification createRandomNotification() {
+        int type = faker.number().numberBetween(0, 3);
+
+        return switch (type) {
+            case 0 -> createDirectMessageNotification();
+            case 1 -> createGroupMessageNotification();
+            case 2 -> createGroupMentionNotification();
+            default -> createDirectMessageNotification();
+        };
     }
 
     /**
@@ -51,11 +53,12 @@ public class NotificationDataFactory {
                                         .isRead(faker.bool().bool())
                                         .type(NotificationType.DIRECT_MESSAGE)
                                         .senderUserId(senderId)
-                                        .senderName(faker.name().fullName())
+                                        .senderUserName(faker.name().username())
                                         .messageId(
                                             "msg_" + UUID.randomUUID().toString().substring(0, 8))
                                         .messageText(faker.lorem().paragraph())
                                         .messageTimestamp(randomDateTime())
+                                        .chatId("chat_" + faker.number().randomNumber(4, false))
                                         .build();
     }
 
@@ -73,7 +76,7 @@ public class NotificationDataFactory {
                                        .isRead(faker.bool().bool())
                                        .type(NotificationType.GROUP_MESSAGE)
                                        .senderUserId(senderId)
-                                       .senderName(faker.name().fullName())
+                                        .senderUserName(faker.name().username())
                                        .messageId(
                                            "msg_" + UUID.randomUUID().toString().substring(0, 8))
                                        .messageText(faker.lorem().paragraph())
@@ -98,7 +101,7 @@ public class NotificationDataFactory {
                                        .isRead(faker.bool().bool())
                                        .type(NotificationType.GROUP_MENTION)
                                        .senderUserId(senderId)
-                                       .senderName(faker.name().fullName())
+                                       .senderUserName(faker.name().username())
                                        .messageId(
                                            "msg_" + UUID.randomUUID().toString().substring(0, 8))
                                        .messageText(
