@@ -4,18 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-
-    <list default="true" id="efb3c0f2-6abe-4a2b-b48a-0eec624f15e0" name="Changes" comment="change to local date time">
+    <list default="true" id="efb3c0f2-6abe-4a2b-b48a-0eec624f15e0" name="Changes" comment="fix dependency and some logic">
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat-service/src/test/java/com/example/chat_service/ChatServiceApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/src/test/java/com/example/chat_service/ChatServiceApplicationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/groupChatService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/groupChatService/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/controllers/GroupChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/controllers/GroupChatController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/GroupChatServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/GroupChatServiceApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/controllers/GroupMessageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/controllers/GroupMessageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/repositories/GroupChatRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/repositories/GroupChatRepo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/repositories/GroupMessageRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/repositories/GroupMessageRepo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/services/GroupChatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/groupChatService/src/main/java/com/example/groupChatService/services/GroupChatService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/groupChatService/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/groupChatService/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,37 +27,29 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Shorok02"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Shorok02&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/SaraAlajmy/FinalProject-4-Coppilot-Sons-EndGame.git",
-    "accountId": "d3c85467-c469-49af-8f48-d6f3d342f954"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/SaraAlajmy/FinalProject-4-Coppilot-Sons-EndGame.git&quot;,
+    &quot;accountId&quot;: &quot;d3c85467-c469-49af-8f48-d6f3d342f954&quot;
   }
-}]]></component>
+}</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="MavenImportPreferences">
-    <option name="generalSettings">
-      <MavenGeneralSettings>
-        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
-      </MavenGeneralSettings>
-    </option>
-  </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 1
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="2wK2LI5TScMmtx279h0NzzR3LiN" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,

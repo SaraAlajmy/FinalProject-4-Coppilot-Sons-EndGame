@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/groupMessage")
@@ -35,10 +36,10 @@ public class GroupMessageController {
 //            return null;
 //        }
 //    }
-    @GetMapping("/{id}")
-    public List<GroupMessage> getGroupMessageById(@PathVariable String id) {
+    @GetMapping("/{groupId}")
+    public List<GroupMessage> getGroupMessageById(@PathVariable String groupId) {
         try {
-            return groupMessageService.getUnarchivedGroupMessages(id);
+            return groupMessageService.getUnarchivedGroupMessages(groupId);
         } catch (Exception e) {
             System.out.println("Error fetching group message by ID: " + e.getMessage());
             return null;
@@ -54,8 +55,9 @@ public class GroupMessageController {
         }
     }
     @PutMapping("/{id}")
-    public GroupMessage editGroupMessage(@PathVariable String id, @RequestBody String content) {
+    public GroupMessage editGroupMessage(@PathVariable String id, @RequestBody Map<String, String> body) {
         try {
+            String content = body.get("content");
             return groupMessageService.editGroupMessage(id, content);
         } catch (Exception e) {
             System.out.println("Error editing group message: " + e.getMessage());

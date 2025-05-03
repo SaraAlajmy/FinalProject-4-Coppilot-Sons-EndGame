@@ -45,6 +45,7 @@ public class GroupChatService {
             builder.setAdminOnlyMessages(groupChatRequest.getAdminOnlyMessages());
         }
         GroupChat groupChat= builder.build();
+        System.out.println("Group chat created: " + groupChat);
         return groupChatRepo.save(groupChat);
     }
     public List<GroupChat> getAllGroupChat(){
@@ -75,7 +76,7 @@ public class GroupChatService {
     }
     public String deleteGroupChat(String id,String userId) {
         GroupChat groupChat= groupChatRepo.findById(id).orElseThrow(() -> new RuntimeException("Group chat not found with id:" + id));
-        if(groupChat.getCreatorId()!=userId){
+        if(!groupChat.getCreatorId().equals(userId)){
             return "You can not delete the group chat because you are not the owner";
         }
         groupChatRepo.deleteById(id);
