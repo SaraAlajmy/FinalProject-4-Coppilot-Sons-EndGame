@@ -17,7 +17,6 @@ public class GroupChat {
     private List<String> members;
     private List<String> admins;
     private boolean adminOnlyMessages;
-    public GroupChat() {}
 
     public String getId() {
         return id;
@@ -49,6 +48,9 @@ public class GroupChat {
 
     public boolean isAdminOnlyMessages() {
         return adminOnlyMessages;
+    }
+
+    public GroupChat() {
     }
 
     private GroupChat(groupChatBuilder groupChatBuilder) {

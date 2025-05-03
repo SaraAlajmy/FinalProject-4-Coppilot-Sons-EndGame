@@ -9,4 +9,6 @@ public interface GroupMessageRepo extends MongoRepository<GroupMessage, String> 
     // Custom query methods can be defined here if needed
     // For example, to find messages by group ID:
     List<GroupMessage> findByGroupId(String groupId);
+    List<GroupMessage> findByGroupIdAndArchived(String groupId, boolean archived);
+    List<GroupMessage> findByGroupIdAndSenderId(String groupId, String senderId);
 }
