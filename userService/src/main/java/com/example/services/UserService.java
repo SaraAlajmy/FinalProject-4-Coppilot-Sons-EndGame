@@ -82,7 +82,6 @@ public class UserService {
 
         existingUser.setUsername(user.getUsername() != null ? user.getUsername() : existingUser.getUsername());
         existingUser.setPassword(user.getPassword() != null ? user.getPassword() : existingUser.getPassword());
-        existingUser.setNotificationSettings(user.getNotificationSettings() != null ? user.getNotificationSettings() : existingUser.getNotificationSettings());
 
         User updated = userRepository.save(existingUser);
         logger.info("User with ID {} updated successfully", id);
@@ -112,7 +111,7 @@ public class UserService {
 
     public User register(User user) {
         user.setPassword(encoder.encode(user.getPassword()));
-        userRepository .save(user);
+        userRepository.save(user);
         return user;
     }
 
@@ -222,6 +221,28 @@ public class UserService {
 
     }
 
+    public boolean isBlocked(Long userBlockingId, Long userToCheckId) {
+        try {
+            User userBlocking = getUserById(userBlockingId);
+            User userToCheck = getUserById(userToCheckId);
+            if (userBlocking.getBlockedUsers() != null) {
+                return userBlocking.getBlockedUsers().contains(userToCheck);
+            }
+            return false;
+        } catch (Exception e) {
+            logger.error("Error checking block status: {}", e.getMessage());
+            throw e;
+        }
+    }
 
+    public String getUserEmail(Long userId){
+        User user = userRepository.findById(userId).orElse(null);
+        if (user != null) {
+            return user.getEmail();
+        } else {
+            logger.error("User not found");
+            throw new RuntimeException("User not found");
+        }
+    }
 
 }

@@ -1,9 +1,7 @@
 package com.example.models;
 
 import jakarta.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -17,9 +15,8 @@ public class User {
     private String password;
     @Column(nullable = false, unique = true)
     private String phoneNumber;
-
-    @Embedded
-    private NotificationSettings notificationSettings = new NotificationSettings();
+    @Column(nullable = false)
+    private String email;
 
     @ManyToMany
     private Set<User> blockedUsers = new HashSet<>();
@@ -30,17 +27,19 @@ public class User {
     public User() {
     }
 
-    private User(String username, String phoneNumber, String password) {
+    private User(String username, String phoneNumber, String password, String email) {
         this.username = username;
         this.phoneNumber = phoneNumber;
         this.password = password;
+        this.email = email;
     }
 
-    public User(Long id, String username, String password, NotificationSettings notificationSettings, Set<User> blockedUsers) {
+    public User(Long id, String username, String phoneNumber, String password, String email, Set<User> blockedUsers) {
         this.id = id;
         this.username = username;
+        this.phoneNumber = phoneNumber;
         this.password = password;
-        this.notificationSettings = notificationSettings;
+        this.email = email;
         this.blockedUsers = blockedUsers;
     }
 
@@ -68,14 +67,6 @@ public class User {
         this.password= passwordHash;
     }
 
-    public NotificationSettings getNotificationSettings() {
-        return notificationSettings;
-    }
-
-    public void setNotificationSettings(NotificationSettings notificationSettings) {
-        this.notificationSettings = notificationSettings;
-    }
-
     public Set<User> getBlockedUsers() {
         return blockedUsers;
     }
@@ -83,12 +74,23 @@ public class User {
     public void setBlockedUsers(Set<User> blockedUsers) {
         this.blockedUsers = blockedUsers;
     }
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
+
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getRefreshToken() {
         return refreshToken;
     }

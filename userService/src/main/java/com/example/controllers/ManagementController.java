@@ -1,6 +1,5 @@
 package com.example.controllers;
 
-import com.example.models.NotificationSettings;
 import com.example.services.ManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,56 +18,24 @@ public class ManagementController {
     }
 
     @PutMapping("/block/{blockerId}/{blockedId}")
-    public String blockUser(@PathVariable Long blockerId, @PathVariable Long blockedId) {
+    public ResponseEntity<String> blockUser(@PathVariable Long blockerId, @PathVariable Long blockedId) {
         try {
             managementService.blockUser(blockerId, blockedId);
-            return "User blocked successfully";
+            return ResponseEntity.ok("User blocked successfully");
         } catch (Exception e) {
-            return "Error blocking user: " + e.getMessage();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error blocking user: " + e.getMessage());
         }
     }
 
     @PutMapping("/unblock/{blockerId}/{blockedId}")
-    public String unblockUser(@PathVariable Long blockerId, @PathVariable Long blockedId) {
+    public ResponseEntity<String> unblockUser(@PathVariable Long blockerId, @PathVariable Long blockedId) {
         try {
             managementService.unBlockUser(blockerId, blockedId);
-            return "User unblocked successfully";
+            return ResponseEntity.ok("User unblocked successfully");
         } catch (Exception e) {
-            return "Error unblocking user: " + e.getMessage();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error unblocking user: " + e.getMessage());
         }
     }
 
-    @PutMapping("/mute/{userId}")
-    public ResponseEntity<String> muteNotifications(@PathVariable Long userId) {
-        try {
-            managementService.muteNotifications(userId);
-            return ResponseEntity.ok("Notifications muted successfully");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error muting notifications: " + e.getMessage());
-        }
-    }
-
-    @PutMapping("/unmute/{userId}")
-    public ResponseEntity<String> unmuteNotifications(@PathVariable Long userId) {
-        try {
-            managementService.unmuteNotifications(userId);
-            return ResponseEntity.ok("Notifications unmuted successfully");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error unmuting notifications: " + e.getMessage());
-        }
-    }
-
-    @PutMapping("/updateNotificationSettings/{userId}")
-    public ResponseEntity<String> updateNotificationSettings(
-            @PathVariable Long userId,
-            @RequestBody NotificationSettings updateDTO) {
-        try {
-            managementService.updateNotificationSettings(userId, updateDTO);
-            return ResponseEntity.ok("Notification settings updated successfully");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error updating notification settings: " + e.getMessage());
-        }
-    }
 
 }

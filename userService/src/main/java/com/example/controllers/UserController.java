@@ -50,6 +50,24 @@ public class UserController {
         }
     }
 
+    @GetMapping("/isBlocked/{blockerId}/{blockedId}")
+    public ResponseEntity<Boolean> isBlocked(@PathVariable Long blockerId, @PathVariable Long blockedId){
+        try{
+            boolean isBlocked = userService.isBlocked(blockerId, blockedId);
+            return ResponseEntity.ok(isBlocked);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
+        }
+    }
 
+    @GetMapping("/getUserEmail/{userId}")
+    public ResponseEntity<String> getUserEmail(@PathVariable Long userId){
+        try{
+            String email = userService.getUserEmail(userId);
+            return ResponseEntity.ok(email);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error getting user email: " + e.getMessage());
+        }
+    }
 
 }
