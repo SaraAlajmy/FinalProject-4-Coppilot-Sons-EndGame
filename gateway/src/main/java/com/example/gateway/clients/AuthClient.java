@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.util.Map;
 
-@FeignClient(name = "user-service", configuration = FeignConfig.class)
+@FeignClient(name = "user-service", configuration = FeignConfig.class,url="http://localhost:8086")
 public interface AuthClient {
     @PostMapping("auth/validateToken")
     ResponseEntity<Map<String, Object>> validateToken(@RequestHeader("Authorization") String token);

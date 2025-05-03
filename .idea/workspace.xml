@@ -5,18 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="897e0d13-6a27-48a8-afc0-23b1e6282013" name="Changes" comment="if login register passs without validation">
+      <change afterPath="$PROJECT_DIR$/gateway/src/main/java/com/example/gateway/config/Routing.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/example/gateway/filter/AuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/java/com/example/gateway/filter/AuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/example/gateway/clients/AuthClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/java/com/example/gateway/clients/AuthClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/example/gateway/services/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/java/com/example/gateway/services/AuthService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userService/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/userService/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userService/src/main/java/com/example/controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/userService/src/main/java/com/example/controllers/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userService/src/main/java/com/example/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/userService/src/main/java/com/example/controllers/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userService/src/main/java/com/example/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/userService/src/main/java/com/example/models/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userService/src/main/java/com/example/repositories/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/userService/src/main/java/com/example/repositories/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userService/src/main/java/com/example/services/JWTService.java" beforeDir="false" afterPath="$PROJECT_DIR$/userService/src/main/java/com/example/services/JWTService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userService/src/main/java/com/example/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/userService/src/main/java/com/example/services/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-registry/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-registry/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-registry/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-registry/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-registry/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-registry/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-registry/src/main/java/com/telusko/serviceregistry/ServiceRegistryApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-registry/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-registry/src/test/java/com/telusko/serviceregistry/ServiceRegistryApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/userService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/userService/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userService/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/userService/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,7 +84,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "Merging userService",
+    "git-widget-placeholder": "userService",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/hp/Documents/FinalProject-4-Coppilot-Sons-EndGame/service-registry",
     "node.js.detected.package.eslint": "true",
@@ -98,7 +105,7 @@
       <recent name="C:\Users\hp\Documents\FinalProject-4-Coppilot-Sons-EndGame\userService\src" />
     </key>
   </component>
-  <component name="RunManager" selected="Docker.userService.redis insight: Compose Deployment">
+  <component name="RunManager" selected="Application.ServiceRegistryApplication">
     <configuration name="ChatServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.chat_service.ChatServiceApplication" />
       <module name="chatService" />
@@ -179,7 +186,9 @@
       </method>
     </configuration>
     <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
-      <deployment type="docker-compose.yml" />
+      <deployment type="docker-compose.yml">
+        <settings />
+      </deployment>
       <method v="2" />
     </configuration>
     <configuration name="userService.redis insight: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
@@ -197,11 +206,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.GatewayApplication" />
+        <item itemvalue="Application.ServiceRegistryApplication" />
         <item itemvalue="Application.UserServiceApplication" />
         <item itemvalue="Docker.userService.redis insight: Compose Deployment" />
-        <item itemvalue="Application.GatewayApplication" />
         <item itemvalue="Application.ChatServiceApplication" />
-        <item itemvalue="Application.ServiceRegistryApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -267,10 +276,15 @@
           <line>84</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/service-registry/src/main/java/com/telusko/serviceregistry/ServiceRegistryApplication.java</url>
+          <line>8</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/userService/src/main/java/com/example/services/JWTService.java</url>
           <line>67</line>
-          <properties class="com.example.services.JWTService" method="extractAllClaims">
+          <properties class="com.example.services.JWTService">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>

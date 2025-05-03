@@ -17,7 +17,7 @@ public class AuthService {
         this.authClient = authClient;
     }
 
-    @Cacheable(value = "token", key = "#token")
+   // @Cacheable(value = "token", key = "#token")
     public Mono<ResponseEntity<Map<String, Object>>> validateToken(String token) {
         return Mono.fromCallable(() -> authClient.validateToken(token))
                 .subscribeOn(Schedulers.boundedElastic()); // Offload blocking
