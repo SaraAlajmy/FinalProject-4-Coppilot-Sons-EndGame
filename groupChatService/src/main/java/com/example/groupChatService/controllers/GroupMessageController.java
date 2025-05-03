@@ -1,8 +1,10 @@
 package com.example.groupChatService.controllers;
 
+import com.example.groupChatService.dto.SendMessageRequest;
 import com.example.groupChatService.models.GroupMessage;
 import com.example.groupChatService.services.GroupMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,6 +13,7 @@ import java.util.List;
 @RequestMapping("/groupMessage")
 public class GroupMessageController {
     private final GroupMessageService groupMessageService;
+
     @Autowired
 
     public GroupMessageController(GroupMessageService groupMessageService) {
@@ -44,6 +47,7 @@ public class GroupMessageController {
             return null;
         }
     }
+
     @PostMapping("/")
     public GroupMessage addGroupMessage(@RequestBody GroupMessage groupMessage) {
         try {
@@ -53,6 +57,7 @@ public class GroupMessageController {
             return null;
         }
     }
+
     @PutMapping("/{id}")
     public GroupMessage editGroupMessage(@PathVariable String id, @RequestBody String content) {
         try {
@@ -62,6 +67,7 @@ public class GroupMessageController {
             return null;
         }
     }
+
     @DeleteMapping("/{id}")
     public void deleteGroupMessage(@PathVariable String id) {
         try {
@@ -110,6 +116,10 @@ public class GroupMessageController {
 
 
 
-
+    @PostMapping("/send")
+    public GroupMessage sendMessage(@RequestBody SendMessageRequest request) {
+        return groupMessageService.sendMessage(request); 
+    }
+    
 
 }
