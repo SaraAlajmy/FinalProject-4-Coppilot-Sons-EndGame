@@ -20,6 +20,9 @@ public class MessageController {
 
     @PostMapping("/send")
     public void sendMessage(@RequestBody MessageRequestDTO dto, @RequestHeader("userId") String userId) {
+        if (!dto.getSenderId().equals(userId)) {
+            throw new IllegalArgumentException("Sender ID does not match the authenticated user ID.");
+        }
         messageService.sendMessage(dto.getSenderId(), dto.getReceiverId(), dto.getContent());
     }
 
