@@ -25,7 +25,7 @@ public class RealMessageService implements MessageService {
     }
 
     @Override
-    public void deleteMessage(String messageId) {
+    public void deleteMessage(String messageId, String userId) {
         Message message = messageRepository.findById(messageId).orElseThrow(() -> new RuntimeException("Message not found"));
         message.setDeleted(true);
         messageRepository.save(message);
@@ -39,7 +39,7 @@ public class RealMessageService implements MessageService {
         messageRepository.save(message);
     }
 
-
+    @Override
     public void unmarkAsFavorite(String messageId) {
         Message message = messageRepository.findById(messageId).orElseThrow(() -> new RuntimeException("Message not found"));
         message.setFavorite(false);
@@ -52,13 +52,18 @@ public class RealMessageService implements MessageService {
     }
 
     @Override
-    public List<Message> getFavoriteMessages(String senderId) {
-        return messageRepository.findBySenderIdAndIsFavoriteTrueAndIsDeletedFalse(senderId);
+    public List<Message> getFavoriteMessages(String userId) {
+        return messageRepository.findBySenderIdOrReceiverIdAndIsFavoriteTrueAndIsDeletedFalse(userId);
     }
 
     @Override
     public List<Message> filterByDate(String receiverId, LocalDateTime startDate, LocalDateTime endDate) {
         return messageRepository.findByReceiverIdAndIsDeletedFalseAndCreatedAtBetween(receiverId, startDate, endDate);
+    }
+
+    public boolean isMessageOwner(String messageId, String userId) {
+        Message message = messageRepository.findById(messageId).orElseThrow(() -> new RuntimeException("Message not found"));
+        return message.getSenderId().equals(userId) || message.getReceiverId().equals(userId);
     }
 
 }

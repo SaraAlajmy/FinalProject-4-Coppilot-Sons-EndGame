@@ -33,6 +33,9 @@ public class MessageServiceProxy implements MessageService {
     @Override
     public void deleteMessage(String messageId) {
 
+        if (!messageService.isMessageOwner(messageId, userId)) {
+            throw new UnauthorizedOperationException("User not authorized to delete this message");
+        }
         realMessageService.deleteMessage(messageId);
 
     }
@@ -54,8 +57,8 @@ public class MessageServiceProxy implements MessageService {
     }
 
     @Override
-    public List<Message> filterByDate(String userId, LocalDateTime startDate, LocalDateTime endDate) {
-        return realMessageService.filterByDate(userId, startDate, endDate);
+    public List<Message> filterByDate(String receiverId, LocalDateTime startDate, LocalDateTime endDate) {
+        return realMessageService.filterByDate(receiverId, startDate, endDate);
     }
 
 

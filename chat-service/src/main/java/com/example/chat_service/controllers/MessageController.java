@@ -2,10 +2,9 @@ package com.example.chat_service.controllers;
 
 import com.example.chat_service.dto.MessageRequestDTO;
 import com.example.chat_service.models.Message;
-import com.example.chat_service.services.MessageService;
 import com.example.chat_service.services.MessageServiceProxy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.Header;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -27,8 +26,8 @@ public class MessageController {
     }
 
     @DeleteMapping("/{messageId}")
-    public void deleteMessage(@PathVariable String messageId) {
-        messageService.deleteMessage(messageId);
+        public void deleteMessage(@PathVariable String messageId, @RequestHeader("userId") String userId) {
+            messageService.deleteMessage(messageId, userId);
     }
 
     @PostMapping("/{messageId}/favorite")
@@ -46,17 +45,16 @@ public class MessageController {
         return messageService.getMessages(chatId);
     }
 
-    @GetMapping("/favorites/{senderId}")
-    public List<Message> getFavoriteMessages(@PathVariable String senderId) {
-        return messageService.getFavoriteMessages(senderId);
+    @GetMapping("/favorites/{userId}")
+    public List<Message> getFavoriteMessages(@PathVariable String userId) {
+        return messageService.getFavoriteMessages(userId);
     }
 
     @GetMapping("/filter")
     public List<Message> filterByDate(
             @RequestHeader("userId") String userId,
-            @RequestParam String startDate,
-            @RequestParam String endDate) {
-
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) String startDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) String endDate) {
 
         LocalDateTime start = LocalDateTime.parse(startDate);
         LocalDateTime end = LocalDateTime.parse(endDate);
