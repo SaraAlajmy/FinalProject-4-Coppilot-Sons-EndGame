@@ -57,8 +57,8 @@ public class RealMessageService implements MessageService {
     }
 
     @Override
-    public List<Message> filterByDate(String chatId, LocalDateTime startDate, LocalDateTime endDate) {
-        return messageRepository.findByReceiverIdAndIsDeletedFalseAndCreatedAtBetween(chatId, startDate, endDate);
+    public List<Message> filterByDate(String receiverId, LocalDateTime startDate, LocalDateTime endDate) {
+        return messageRepository.findByReceiverIdAndIsDeletedFalseAndCreatedAtBetween(receiverId, startDate, endDate);
     }
 
 }
