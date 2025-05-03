@@ -45,8 +45,8 @@ public class MessageController {
         return messageService.getMessages(chatId, userId);
     }
 
-    @GetMapping("/favorites/{userId}")
-    public List<Message> getFavoriteMessages(@PathVariable String userId) {
+    @GetMapping("/favorites")
+    public List<Message> getFavoriteMessages(@RequestHeader("userId") String userId) {
         return messageService.getFavoriteMessages(userId);
     }
 
