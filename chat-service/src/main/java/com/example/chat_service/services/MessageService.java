@@ -9,14 +9,14 @@ import java.util.List;
 public interface MessageService {
     void sendMessage(String senderId, String receiverId, String content);
 
-    void deleteMessage(String messageId);
+    void deleteMessage(String messageId, String userId);
 
 
-    void markAsFavorite(String messageId);
+    void markAsFavorite(String messageId, String userId);
 
-    void unmarkAsFavorite(String messageId);
+    void unmarkAsFavorite(String messageId, String userId);
 
-    List<Message> getMessages(String chatId);
+    List<Message> getMessages(String chatId, String userId);
 
 
     List<Message> getFavoriteMessages(String userId);

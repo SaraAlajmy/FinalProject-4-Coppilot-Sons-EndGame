@@ -33,21 +33,22 @@ public class RealMessageService implements MessageService {
 
 
     @Override
-    public void markAsFavorite(String messageId) {
+    public void markAsFavorite(String messageId, String userId) {
+
         Message message = messageRepository.findById(messageId).orElseThrow(() -> new RuntimeException("Message not found"));
         message.setFavorite(true);
         messageRepository.save(message);
     }
 
     @Override
-    public void unmarkAsFavorite(String messageId) {
+    public void unmarkAsFavorite(String messageId, String userId) {
         Message message = messageRepository.findById(messageId).orElseThrow(() -> new RuntimeException("Message not found"));
         message.setFavorite(false);
         messageRepository.save(message);
     }
 
     @Override
-    public List<Message> getMessages(String chatId) {
+    public List<Message> getMessages(String chatId, String userId) {
         return messageRepository.findByChatIdAndIsDeletedFalse(chatId);
     }
 
@@ -64,6 +65,11 @@ public class RealMessageService implements MessageService {
     public boolean isMessageOwner(String messageId, String userId) {
         Message message = messageRepository.findById(messageId).orElseThrow(() -> new RuntimeException("Message not found"));
         return message.getSenderId().equals(userId) || message.getReceiverId().equals(userId);
+    }
+
+    public boolean isChatParticipant(String chatId, String userId) {
+        //TODO: use chat service to get chat
+        return true;
     }
 
 }

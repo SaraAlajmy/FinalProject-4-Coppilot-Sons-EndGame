@@ -31,18 +31,18 @@ public class MessageController {
     }
 
     @PostMapping("/{messageId}/favorite")
-    public void markAsFavorite(@PathVariable String messageId) {
-        messageService.markAsFavorite(messageId);
+    public void markAsFavorite(@PathVariable String messageId, @RequestHeader("userId") String userId) {
+        messageService.markAsFavorite(messageId, userId);
     }
 
     @DeleteMapping("/{messageId}/favorite")
-    public void unmarkAsFavorite(@PathVariable String messageId) {
-        messageService.unmarkAsFavorite(messageId);
+    public void unmarkAsFavorite(@PathVariable String messageId, @RequestHeader("userId") String userId) {
+        messageService.unmarkAsFavorite(messageId, userId);
     }
 
     @GetMapping("/chat/{chatId}")
-    public List<Message> getMessages(@PathVariable String chatId) {
-        return messageService.getMessages(chatId);
+    public List<Message> getMessages(@PathVariable String chatId, @RequestHeader("userId") String userId) {
+        return messageService.getMessages(chatId, userId);
     }
 
     @GetMapping("/favorites/{userId}")
