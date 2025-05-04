@@ -7,12 +7,9 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MessageRequestDTO {
-
     private String content;
     private String senderId;
     private String receiverId;
     private String chatId;
     private boolean isFavorite;
-
-
 }
