@@ -67,6 +67,10 @@ public class MessageServiceProxy implements MessageService {
     }
 
 
+    @Override
+    public List<Message> searchMessages(String userId, String keyword) {
+        return realMessageService.searchMessages(userId, keyword);
+    }
 
 
 }

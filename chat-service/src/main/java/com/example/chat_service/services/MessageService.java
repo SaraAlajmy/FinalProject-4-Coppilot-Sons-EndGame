@@ -24,4 +24,5 @@ public interface MessageService {
 
     List<Message> filterByDate(String userId, LocalDateTime startDate, LocalDateTime endDate);
 
+    List<Message> searchMessages(String userId, String keyword);
 }

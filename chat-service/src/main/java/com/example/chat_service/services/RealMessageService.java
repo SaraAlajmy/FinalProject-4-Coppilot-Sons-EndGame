@@ -74,4 +74,9 @@ public class RealMessageService implements MessageService {
         return messageRepository.findByReceiverIdAndIsDeletedFalseAndCreatedAtBetween(chatId, startDate, endDate);
     }
 
+    @Override
+    public List<Message> searchMessages(String userId, String keyword) {
+        return messageRepository.searchMessages(userId, keyword);
+    }
+
 }

@@ -21,4 +21,7 @@ public interface MessageRepository extends MongoRepository<Message, String> {
 
 
     List<Message> findByChatIdAndCreatedAtAfter(String chatId, LocalDateTime createdAt);
+
+    @Query("{ '$and': [ { '$or': [ {'senderId': ?0}, {'receiverId': ?0} ] }, { 'content': { '$regex': ?1, '$options': 'i' } } ] }")
+    List<Message> searchMessages(String userId, String keyword);
 }

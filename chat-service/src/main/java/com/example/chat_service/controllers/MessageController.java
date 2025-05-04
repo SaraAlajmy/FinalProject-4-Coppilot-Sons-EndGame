@@ -59,4 +59,11 @@ public class MessageController {
         LocalDateTime end = LocalDateTime.parse(endDate);
         return messageService.filterByDate(userId, start, end);
     }
+
+    @GetMapping("/search")
+    public List<Message> searchMessages(
+            @RequestHeader("userId") String userId,
+            @RequestParam String keyword) {
+        return messageService.searchMessages(userId, keyword);
+    }
 }
