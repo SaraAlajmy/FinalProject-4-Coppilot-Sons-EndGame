@@ -14,7 +14,7 @@ public class NotificationObserver implements Observer {
     private NotificationProducer notificationProducer;
 
     @Override
-    public void createNotification(Message message) {
+    public void update(Message message) {
         NotificationDTO notification = messageToNotification(message);
         notificationProducer.sendMessage(notification);
     }

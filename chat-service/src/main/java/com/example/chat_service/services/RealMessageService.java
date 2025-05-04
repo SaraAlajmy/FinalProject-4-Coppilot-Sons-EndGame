@@ -3,22 +3,23 @@ package com.example.chat_service.services;
 import com.example.chat_service.dto.MessageRequestDTO;
 import com.example.chat_service.models.Message;
 import com.example.chat_service.repositories.MessageRepository;
-import org.springframework.amqp.rabbit.listener.MessageAckListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class RealMessageService implements MessageService {
+public class RealMessageService implements MessageService, MessageSubject {
     MessageRepository messageRepository;
-    NotificationObserver notificationObserver;
+    List<Observer> observers;
 
 
     @Autowired
     public RealMessageService(MessageRepository messageRepository) {
         this.messageRepository = messageRepository;
+        observers = new ArrayList<>();
     }
 
     @Override
@@ -34,7 +35,7 @@ public class RealMessageService implements MessageService {
         );
 
         messageRepository.save(message);
-        notificationObserver.createNotification(message);
+        notifyObservers(message);
     }
 
     @Override
@@ -79,4 +80,20 @@ public class RealMessageService implements MessageService {
         return messageRepository.searchMessages(userId, keyword);
     }
 
+    @Override
+    public void addObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers(Message message) {
+        for (Observer observer : observers) {
+            observer.update(message);
+        }
+    }
 }
