@@ -18,8 +18,10 @@ public class NotificationController {
 private NotificationQueryService notificationQueryService;
 private NotificationService notificationService;
 @Autowired
-public NotificationController(NotificationQueryService notificationQueryService) {
+public NotificationController(NotificationQueryService notificationQueryService,
+                              NotificationService notificationService) {
     this.notificationQueryService = notificationQueryService;
+    this.notificationService = notificationService;
 }
 
 @GetMapping("/unread")
