@@ -35,6 +35,9 @@ public class UserService {
     @Autowired
     private EmailClient emailClient;
 
+    @Autowired
+    private TokenBlacklistService tokenBlacklistService;
+
 
     @Autowired
     public UserService(UserRepository userRepository) {
@@ -174,11 +177,12 @@ public class UserService {
         );
     }
 
-    public void logout(String userId) {
+    public void logout(String userId, String token) {
        User user = userRepository.findById(Long.valueOf(userId)).orElse(null);
         if (user != null) {
             user.setRefreshToken(null);
             userRepository.save(user);
+            tokenBlacklistService.blacklist(token);
             logger.info("User logged out successfully");
         } else {
             logger.error("User not found");

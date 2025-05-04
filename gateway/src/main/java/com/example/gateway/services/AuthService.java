@@ -3,7 +3,9 @@ package com.example.gateway.services;
 import com.example.gateway.clients.AuthClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -20,13 +22,20 @@ public class AuthService {
 
     private final AuthClient authClient;
     private final RedisTemplate<String, Map<String, Object>> redisTemplate;
+    private TokenBlacklistService tokenBlacklistService;
 
-    public AuthService(AuthClient authClient, RedisTemplate<String, Map<String, Object>> redisTemplate) {
+    public AuthService(AuthClient authClient, RedisTemplate<String, Map<String, Object>> redisTemplate, TokenBlacklistService tokenBlacklistService) {
         this.authClient = authClient;
         this.redisTemplate = redisTemplate;
+        this.tokenBlacklistService = tokenBlacklistService;
     }
 
     public Mono<ResponseEntity<Map<String, Object>>> validateToken(String token) {
+
+        if (isTokenBlacklisted(token)) {
+            log.warn("🚫 Token is blacklisted: {}", token);
+            return Mono.just(ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Unauthorized", "message", "Token is logged out")));
+        }
         String redisKey = "token::" + token;
 
         try {
@@ -75,5 +84,9 @@ public class AuthService {
             }
         }
         return null;
+    }
+
+    private boolean isTokenBlacklisted(String token) {
+        return tokenBlacklistService.isBlacklisted(token);
     }
 }

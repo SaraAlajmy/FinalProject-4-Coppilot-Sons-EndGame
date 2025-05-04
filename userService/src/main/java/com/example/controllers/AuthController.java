@@ -54,9 +54,9 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(@RequestHeader String userId) {
+    public ResponseEntity<?> logout(@RequestHeader String userId, @RequestHeader("Authorization") String token){
         try {
-            userService.logout(userId);
+            userService.logout(userId, token);
             return ResponseEntity.ok("Logged out successfully");
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());

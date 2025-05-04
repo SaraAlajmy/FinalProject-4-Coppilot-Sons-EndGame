@@ -5,17 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="897e0d13-6a27-48a8-afc0-23b1e6282013" name="Changes" comment="if login register passs without validation">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/gateway/src/main/java/com/example/gateway/services/TokenBlacklistService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userService/src/main/java/com/example/config/RedisCacheConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userService/src/main/java/com/example/services/TokenBlacklistService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/example/gateway/GatewayApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/java/com/example/gateway/GatewayApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/example/gateway/config/RedisCacheConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/java/com/example/gateway/config/RedisCacheConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/example/gateway/services/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/java/com/example/gateway/services/AuthService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gateway/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userService/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/userService/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userService/src/main/java/com/example/services/JWTService.java" beforeDir="false" afterPath="$PROJECT_DIR$/userService/src/main/java/com/example/services/JWTService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userService/src/main/java/com/example/controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/userService/src/main/java/com/example/controllers/AuthController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/userService/src/main/java/com/example/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/userService/src/main/java/com/example/services/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userService/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/userService/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -252,7 +250,7 @@
       <updated>1745777293244</updated>
       <workItem from="1746019152671" duration="7173000" />
       <workItem from="1746076902378" duration="9736000" />
-      <workItem from="1746326512604" duration="7898000" />
+      <workItem from="1746326512604" duration="16336000" />
     </task>
     <task id="LOCAL-00001" summary="add temprory docker">
       <option name="closed" value="true" />
@@ -287,11 +285,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/userService/src/main/java/com/example/services/UserService.java</url>
-          <line>35</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/service-registry/src/main/java/com/telusko/serviceregistry/ServiceRegistryApplication.java</url>
           <line>8</line>
