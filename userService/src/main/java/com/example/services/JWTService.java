@@ -22,7 +22,7 @@ public class JWTService {
 
     @Value("${jwt.secret}")
     private String secretKey;
-    private static final long ACCESS_TOKEN_VALIDITY = 1000 * 60 * 60 * 5;  // 5 minutes
+    private static final long ACCESS_TOKEN_VALIDITY = 1000 * 60 * 5;  // 5 minutes
     private static final long REFRESH_TOKEN_VALIDITY = 1000 * 60 * 60 * 24 * 6L;  // 6 days
 
     public JWTService() {}
@@ -101,7 +101,7 @@ public class JWTService {
             Map<String, Object> response = new HashMap<>();
             response.put("userId", claims.get("userId", Long.class));
             response.put("username", claims.get("username", String.class));
-
+            response.put("exp", claims.getExpiration().getTime() / 1000);
             return response;
 
         } catch (Exception e) {

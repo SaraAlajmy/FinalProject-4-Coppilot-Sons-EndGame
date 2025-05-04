@@ -9,7 +9,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableFeignClients
-@EnableCaching// Enable OpenFeign
+@EnableCaching
 public class GatewayApplication {
 
 	public static void main(String[] args) {

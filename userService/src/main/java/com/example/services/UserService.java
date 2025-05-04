@@ -7,6 +7,7 @@ import com.example.repositories.UserRepository;
 import com.example.services.loginStrategies.LoginStrategy;
 import com.example.services.loginStrategies.PhoneLoginStrategy;
 import com.example.services.loginStrategies.UsernameLoginStrategy;
+import io.jsonwebtoken.Claims;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
