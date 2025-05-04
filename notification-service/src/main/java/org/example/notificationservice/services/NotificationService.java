@@ -48,4 +48,26 @@ public class NotificationService {
 
         return success;
     }
+    public boolean sendResetPasswordNotification(String resetLink,String receipientEmail, String receipientName) {
+
+        Notification notification = new ResetPasswordNotification()
+                                    .builder()
+                                    .resetPasswordLink(resetLink)
+                                    .recipientEmail(receipientEmail)
+                                    .recipientName(receipientName)
+                                    .timestamp(LocalDateTime.now())
+                                    .type(NotificationType.RESET_PASSWORD)
+                                    .build();
+        if(!notificationDeliveryService.deliverNotificationUsingStrategy(
+                notification,
+                NotificationStrategyType.EMAIL
+        )){
+            log.error("Failed to deliver Reset Password Notification using Email strategy for recipient {}", notification.getRecipientUserId());
+            return false;
+        } else {
+            log.info("Reset Password Notification sent successfully to {}", notification.getRecipientUserId());
+            return true;
+        }
+
+    }
 }
