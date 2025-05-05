@@ -1,13 +1,11 @@
 package com.example.services;
 
 import com.example.clients.EmailClient;
-import com.example.models.EmailRequest;
 import com.example.models.User;
 import com.example.repositories.UserRepository;
 import com.example.services.loginStrategies.LoginStrategy;
 import com.example.services.loginStrategies.PhoneLoginStrategy;
 import com.example.services.loginStrategies.UsernameLoginStrategy;
-import io.jsonwebtoken.Claims;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -67,7 +66,7 @@ public class UserService {
         }
     }
 
-    public User getUserById(Long id) {
+    public User getUserById(UUID id) {
         try {
             User user =  userRepository.findById(id).orElse(null);
             if (user == null) {
@@ -83,7 +82,7 @@ public class UserService {
         }
     }
 
-    public User updateUser(Long id, User user) {
+    public User updateUser(UUID id, User user) {
         User existingUser = userRepository.findById(id).orElseThrow(() -> {
             logger.error("User with ID {} not found", id);
             return new RuntimeException("User not found");
@@ -97,7 +96,7 @@ public class UserService {
         return updated;
     }
 
-    public void deleteUser(Long id) {
+    public void deleteUser(UUID id) {
         try {
             userRepository.deleteById(id);
             logger.info("User with ID {} deleted successfully", id);
@@ -178,7 +177,7 @@ public class UserService {
     }
 
     public void logout(String userId, String token) {
-       User user = userRepository.findById(Long.valueOf(userId)).orElse(null);
+       User user = userRepository.findById(UUID.fromString(userId)).orElse(null);
         if (user != null) {
             user.setRefreshToken(null);
             userRepository.save(user);
@@ -238,7 +237,7 @@ public class UserService {
 
     }
 
-    public boolean isBlocked(Long userBlockingId, Long userToCheckId) {
+    public boolean isBlocked(UUID userBlockingId, UUID userToCheckId) {
         try {
             User userBlocking = getUserById(userBlockingId);
             User userToCheck = getUserById(userToCheckId);
@@ -252,7 +251,7 @@ public class UserService {
         }
     }
 
-    public String getUserEmail(Long userId){
+    public String getUserEmail(UUID userId){
         User user = userRepository.findById(userId).orElse(null);
         if (user != null) {
             return user.getEmail();

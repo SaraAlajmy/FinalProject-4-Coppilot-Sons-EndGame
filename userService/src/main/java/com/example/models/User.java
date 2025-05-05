@@ -3,13 +3,15 @@ package com.example.models;
 import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue
+    @Column(columnDefinition = "uuid", updatable = false, nullable = false)
+    private UUID id;
     @Column(nullable = false, unique = true)
     private String username;
     private String password;
@@ -34,7 +36,7 @@ public class User {
         this.email = email;
     }
 
-    public User(Long id, String username, String phoneNumber, String password, String email, Set<User> blockedUsers) {
+    public User(UUID id, String username, String phoneNumber, String password, String email, Set<User> blockedUsers) {
         this.id = id;
         this.username = username;
         this.phoneNumber = phoneNumber;
@@ -43,11 +45,11 @@ public class User {
         this.blockedUsers = blockedUsers;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/manageUser")
 public class ManagementController {
@@ -18,7 +20,7 @@ public class ManagementController {
     }
 
     @PutMapping("/block/{blockerId}/{blockedId}")
-    public ResponseEntity<String> blockUser(@PathVariable Long blockerId, @PathVariable Long blockedId) {
+    public ResponseEntity<String> blockUser(@PathVariable UUID blockerId, @PathVariable UUID blockedId) {
         try {
             managementService.blockUser(blockerId, blockedId);
             return ResponseEntity.ok("User blocked successfully");
@@ -28,7 +30,7 @@ public class ManagementController {
     }
 
     @PutMapping("/unblock/{blockerId}/{blockedId}")
-    public ResponseEntity<String> unblockUser(@PathVariable Long blockerId, @PathVariable Long blockedId) {
+    public ResponseEntity<String> unblockUser(@PathVariable UUID blockerId, @PathVariable UUID blockedId) {
         try {
             managementService.unBlockUser(blockerId, blockedId);
             return ResponseEntity.ok("User unblocked successfully");

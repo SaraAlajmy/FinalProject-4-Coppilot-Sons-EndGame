@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.UUID;
 
 @Service
 public class ManagementService {
@@ -22,7 +23,7 @@ public class ManagementService {
         this.userService = userService;
     }
 
-    public void blockUser(Long userBlockingId, Long userToBlockId) {
+    public void blockUser(UUID userBlockingId, UUID userToBlockId) {
         try {
             User userBlocking = userService.getUserById(userBlockingId);
             User userToBlock = userService.getUserById(userToBlockId);
@@ -38,7 +39,7 @@ public class ManagementService {
         }
     }
 
-    public void unBlockUser(Long userBlockingId, Long userToUnBlockId) {
+    public void unBlockUser(UUID userBlockingId, UUID userToUnBlockId) {
         try {
             User userBlocking = userService.getUserById(userBlockingId);
             User userToUnBlock = userService.getUserById(userToUnBlockId);

@@ -11,10 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
-import java.util.Base64;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 @Service
@@ -27,7 +24,7 @@ public class JWTService {
 
     public JWTService() {}
 
-    public String generateToken(String username, Long id) {
+    public String generateToken(String username, UUID id) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", id);
         claims.put("username", username);
@@ -99,7 +96,7 @@ public class JWTService {
             }
 
             Map<String, Object> response = new HashMap<>();
-            response.put("userId", claims.get("userId", Long.class));
+            response.put("userId", claims.get("userId", String.class));
             response.put("username", claims.get("username", String.class));
             response.put("exp", claims.getExpiration().getTime() / 1000);
             return response;
