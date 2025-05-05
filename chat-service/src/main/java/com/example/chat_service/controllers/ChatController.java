@@ -30,14 +30,8 @@ public class ChatController {
      */
     @PostMapping
     public ResponseEntity<Chat> createOrGetChat(@RequestBody CreateChatRequestDTO request) {
-        try {
-            Chat chat = chatService.createOrGetChat(request.getUserId1(), request.getUserId2());
-            // TODO: Do we care about returning different status codes for created vs. fetched?
-            return ResponseEntity.ok(chat);
-        } catch (RuntimeException e) {
-            // Handle the block exception from ChatService
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null); // Or return an error object
-        }
+        Chat chat = chatService.createOrGetChat(request.getUserId1(), request.getUserId2());
+        return ResponseEntity.ok(chat);
     }
 
     /**

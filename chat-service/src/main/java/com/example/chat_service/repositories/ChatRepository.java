@@ -20,6 +20,7 @@ public interface ChatRepository extends MongoRepository<Chat, String> {
     List<Chat> findByParticipantOneIdOrParticipantTwoId(String participantOneId, String participantTwoId);
 
     // This is the same as the above method, but using a custom query
+    // not deleting this for now in case we need it later
 //    @Query("{$or: [{'participantOneId': ?0}, {'participantTwoId': ?0}]}") // ?0 matches the first parameter (userId)
 //    List<Chat> findByUserId(String userId);
 }

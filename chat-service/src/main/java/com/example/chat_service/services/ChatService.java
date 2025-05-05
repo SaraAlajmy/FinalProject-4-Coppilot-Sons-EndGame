@@ -35,18 +35,6 @@ public class ChatService {
         chat = chatRepository.findByParticipantOneIdAndParticipantTwoId(userId2, userId1);
         if (chat.isPresent()) return chat.get();
 
-        // This doesn't really need a proxy because chat is not extensible already
-        // only this specific method will need to check for blocks
-        // also we don't need to check for authentication if I understand correctly
-
-        // Check for blocks before creating a new chat
-        boolean isUser1BlockedByUser2 = userClient.isBlocked(userId1, userId2);
-        boolean isUser2BlockedByUser1 = userClient.isBlocked(userId2, userId1);
-
-        if (isUser1BlockedByUser2 || isUser2BlockedByUser1) {
-            throw new RuntimeException("Cannot create chat: One user has blocked the other.");
-        }
-
         // Create new chat if no block exists
         Chat newChat = new Chat(null, userId1, userId2);
         return chatRepository.save(newChat);
