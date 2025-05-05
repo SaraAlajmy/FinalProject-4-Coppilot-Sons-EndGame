@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+
 @Component
 public class NotificationDataFactory {
     private final Faker faker = new Faker();
@@ -52,11 +53,12 @@ public class NotificationDataFactory {
                                         .isRead(faker.bool().bool())
                                         .type(NotificationType.DIRECT_MESSAGE)
                                         .senderUserId(senderId)
-                                        .senderName(faker.name().fullName())
+                                        .senderUserName(faker.name().username())
                                         .messageId(
                                             "msg_" + UUID.randomUUID().toString().substring(0, 8))
                                         .messageText(faker.lorem().paragraph())
                                         .messageTimestamp(randomDateTime())
+                                        .chatId("chat_" + faker.number().randomNumber(4, false))
                                         .build();
     }
 
@@ -74,7 +76,7 @@ public class NotificationDataFactory {
                                        .isRead(faker.bool().bool())
                                        .type(NotificationType.GROUP_MESSAGE)
                                        .senderUserId(senderId)
-                                       .senderName(faker.name().fullName())
+                                        .senderUserName(faker.name().username())
                                        .messageId(
                                            "msg_" + UUID.randomUUID().toString().substring(0, 8))
                                        .messageText(faker.lorem().paragraph())
@@ -99,7 +101,7 @@ public class NotificationDataFactory {
                                        .isRead(faker.bool().bool())
                                        .type(NotificationType.GROUP_MENTION)
                                        .senderUserId(senderId)
-                                       .senderName(faker.name().fullName())
+                                       .senderUserName(faker.name().username())
                                        .messageId(
                                            "msg_" + UUID.randomUUID().toString().substring(0, 8))
                                        .messageText(

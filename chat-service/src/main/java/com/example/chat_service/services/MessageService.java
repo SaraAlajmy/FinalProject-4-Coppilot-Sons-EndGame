@@ -10,19 +10,19 @@ import java.util.List;
 public interface MessageService {
     void sendMessage(MessageRequestDTO dto, String senderUserName);
 
-    void deleteMessage(String messageId);
+    void deleteMessage(String messageId, String userId);
 
 
-    void markAsFavorite(String messageId);
+    void markAsFavorite(String messageId, String userId);
 
-    void unmarkAsFavorite(String messageId);
+    void unmarkAsFavorite(String messageId, String userId);
 
-    List<Message> getMessages(String chatId);
+    List<Message> getMessages(String chatId, String userId);
 
 
-    List<Message> getFavoriteMessages(String senderId);
+    List<Message> getFavoriteMessages(String userId);
 
-    List<Message> filterByDate(String userId, LocalDateTime startDate, LocalDateTime endDate);
+    List<Message> filterByDate(String receiverId, LocalDateTime startDate, LocalDateTime endDate);
 
     List<Message> searchMessages(String userId, String keyword);
 }

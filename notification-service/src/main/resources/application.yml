@@ -10,5 +10,10 @@ spring:
       authentication-database: admin
       database: notification-db
 
+
 server:
   port: 8082 # TODO: Change this when other services are ready
+
+user-service:
+  url: http://localhost:8080 #TODO: Change this when other services are ready
+

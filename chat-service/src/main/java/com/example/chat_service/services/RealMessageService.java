@@ -39,7 +39,7 @@ public class RealMessageService implements MessageService, MessageSubject {
     }
 
     @Override
-    public void deleteMessage(String messageId) {
+    public void deleteMessage(String messageId, String userId) {
         Message message = messageRepository.findById(messageId).orElseThrow(() -> new RuntimeException("Message not found"));
         message.setDeleted(true);
         messageRepository.save(message);
@@ -47,32 +47,43 @@ public class RealMessageService implements MessageService, MessageSubject {
 
 
     @Override
-    public void markAsFavorite(String messageId) {
+    public void markAsFavorite(String messageId, String userId) {
+
         Message message = messageRepository.findById(messageId).orElseThrow(() -> new RuntimeException("Message not found"));
         message.setFavorite(true);
         messageRepository.save(message);
     }
 
-
-    public void unmarkAsFavorite(String messageId) {
+    @Override
+    public void unmarkAsFavorite(String messageId, String userId) {
         Message message = messageRepository.findById(messageId).orElseThrow(() -> new RuntimeException("Message not found"));
         message.setFavorite(false);
         messageRepository.save(message);
     }
 
     @Override
-    public List<Message> getMessages(String chatId) {
+    public List<Message> getMessages(String chatId, String userId) {
         return messageRepository.findByChatIdAndIsDeletedFalse(chatId);
     }
 
     @Override
-    public List<Message> getFavoriteMessages(String senderId) {
-        return messageRepository.findBySenderIdAndIsFavoriteTrueAndIsDeletedFalse(senderId);
+    public List<Message> getFavoriteMessages(String userId) {
+        return messageRepository.findBySenderIdOrReceiverIdAndIsFavoriteTrueAndIsDeletedFalse(userId);
     }
 
     @Override
-    public List<Message> filterByDate(String chatId, LocalDateTime startDate, LocalDateTime endDate) {
-        return messageRepository.findByReceiverIdAndIsDeletedFalseAndCreatedAtBetween(chatId, startDate, endDate);
+    public List<Message> filterByDate(String receiverId, LocalDateTime startDate, LocalDateTime endDate) {
+        return messageRepository.findByReceiverIdAndIsDeletedFalseAndCreatedAtBetween(receiverId, startDate, endDate);
+    }
+
+    public boolean isMessageOwner(String messageId, String userId) {
+        Message message = messageRepository.findById(messageId).orElseThrow(() -> new RuntimeException("Message not found"));
+        return message.getSenderId().equals(userId) || message.getReceiverId().equals(userId);
+    }
+
+    public boolean isChatParticipant(String chatId, String userId) {
+        //TODO: use chat service to get chat
+        return true;
     }
 
     @Override

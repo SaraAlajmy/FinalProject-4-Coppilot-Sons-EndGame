@@ -2,6 +2,7 @@ package com.example.chat_service.services;
 
 import com.example.chat_service.clients.UserClient;
 import com.example.chat_service.dto.MessageRequestDTO;
+import com.example.chat_service.expections.UnauthorizedOperationException;
 import com.example.chat_service.models.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,11 +13,11 @@ import java.util.List;
 @Service
 public class MessageServiceProxy implements MessageService {
 
-    private final MessageService realMessageService;
+    private final RealMessageService realMessageService;
     private final UserClient userClient;
 
     @Autowired
-    public MessageServiceProxy(MessageService realMessageService, UserClient userClient) {
+    public MessageServiceProxy(RealMessageService realMessageService, UserClient userClient) {
         this.realMessageService = realMessageService;
         this.userClient = userClient;
     }
@@ -32,31 +33,43 @@ public class MessageServiceProxy implements MessageService {
     }
 
     @Override
-    public void deleteMessage(String messageId) {
+    public void deleteMessage(String messageId, String userId) {
 
-        realMessageService.deleteMessage(messageId);
+        if (!realMessageService.isMessageOwner(messageId, userId)) {
+            throw new UnauthorizedOperationException("User not authorized to delete this message");
+        }
+        realMessageService.deleteMessage(messageId, userId);
 
     }
 
 
     @Override
-    public void markAsFavorite(String messageId) {
-        realMessageService.markAsFavorite(messageId);
+    public void markAsFavorite(String messageId, String userId) {
+        if (!realMessageService.isMessageOwner(messageId, userId)) {
+            throw new UnauthorizedOperationException("User not authorized to mark this message as favorite");
+        }
+        realMessageService.markAsFavorite(messageId, userId);
     }
 
     @Override
-    public void unmarkAsFavorite(String messageId) {
-        realMessageService.unmarkAsFavorite(messageId);
+    public void unmarkAsFavorite(String messageId, String userId) {
+        if (!realMessageService.isMessageOwner(messageId, userId)) {
+            throw new UnauthorizedOperationException("User not authorized to unmark this message as favorite");
+        }
+        realMessageService.unmarkAsFavorite(messageId, userId);
     }
 
     @Override
-    public List<Message> getMessages(String chatId) {
-        return realMessageService.getMessages(chatId);
+    public List<Message> getMessages(String chatId, String userId) {
+        if (!realMessageService.isChatParticipant(chatId, userId)) {
+            throw new UnauthorizedOperationException("User not authorized to access this chat");
+        }
+        return realMessageService.getMessages(chatId, userId);
     }
 
     @Override
-    public List<Message> filterByDate(String userId, LocalDateTime startDate, LocalDateTime endDate) {
-        return realMessageService.filterByDate(userId, startDate, endDate);
+    public List<Message> filterByDate(String receiverId, LocalDateTime startDate, LocalDateTime endDate) {
+        return realMessageService.filterByDate(receiverId, startDate, endDate);
     }
 
 
