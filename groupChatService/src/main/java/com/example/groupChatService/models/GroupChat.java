@@ -13,6 +13,7 @@ public class GroupChat {
     private String name;
     private String description;
     private String emoji;
+
     private String creatorId;
     private List<String> members;
     private List<String> admins;
@@ -54,6 +55,9 @@ public class GroupChat {
     }
 
     private GroupChat(groupChatBuilder groupChatBuilder) {
+        if(groupChatBuilder.getId()!=null){
+            this.id=groupChatBuilder.getId();
+        }
         this.name = groupChatBuilder.name;
         this.description = groupChatBuilder.description;
         this.emoji = groupChatBuilder.emoji;
@@ -72,6 +76,7 @@ public class GroupChat {
     }
 
     public static class groupChatBuilder {
+        private String id;
         private String name;
         private String description;
         private String emoji;
@@ -114,6 +119,14 @@ public class GroupChat {
         public groupChatBuilder setAdminOnlyMessages(boolean adminOnlyMessages) {
             this.adminOnlyMessages = adminOnlyMessages;
             return this;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
         }
 
         public GroupChat build() {

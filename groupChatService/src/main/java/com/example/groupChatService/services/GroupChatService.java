@@ -61,6 +61,7 @@ public class GroupChatService {
     public GroupChat updateGroupChat(String id, GroupUpdateRequest groupUpdateRequest){
         GroupChat groupChat= groupChatRepo.findById(id).orElseThrow(() -> new RuntimeException("Group chat not found with id:" + id));
         GroupChat.groupChatBuilder builder = groupChat.toBuilder();
+        builder.setId(id);
         for (Field field : GroupUpdateRequest.class.getDeclaredFields()) {
             field.setAccessible(true);
             try {
