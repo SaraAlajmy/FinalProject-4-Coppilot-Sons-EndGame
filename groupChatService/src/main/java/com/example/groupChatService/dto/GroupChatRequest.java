@@ -6,6 +6,7 @@ public class GroupChatRequest {
     private String name;
     private String description;
     private String emoji;
+    private String colorTheme;
     private List<String> members;
     private Boolean adminOnlyMessages;
 
@@ -44,6 +45,13 @@ public class GroupChatRequest {
         this.members = members;
     }
 
+    public String getColorTheme() {
+        return colorTheme;
+    }
+
+    public void setColorTheme(String colorTheme) {
+        this.colorTheme = colorTheme;
+    }
 
     public Boolean getAdminOnlyMessages() {
         return adminOnlyMessages;

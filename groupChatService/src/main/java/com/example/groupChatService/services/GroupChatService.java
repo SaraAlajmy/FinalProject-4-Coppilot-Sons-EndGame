@@ -41,6 +41,9 @@ public class GroupChatService {
         if (groupChatRequest.getEmoji() != null) {
             builder.setEmoji(groupChatRequest.getEmoji());
         }
+        if (groupChatRequest.getColorTheme() != null) {
+            builder.setColorTheme(groupChatRequest.getColorTheme());
+        }
         if (groupChatRequest.getAdminOnlyMessages()!=null) {
             builder.setAdminOnlyMessages(groupChatRequest.getAdminOnlyMessages());
         }

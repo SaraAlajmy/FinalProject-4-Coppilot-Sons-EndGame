@@ -6,6 +6,7 @@ public class GroupUpdateRequest {
     private String name;
     private String description;
     private String emoji;
+    private String colorTheme;
     private List<String> members;
     private List<String> admins;
     private Boolean adminOnlyMessages;
@@ -52,6 +53,15 @@ public class GroupUpdateRequest {
     public void setAdmins(List<String> admins) {
         this.admins = admins;
     }
+
+    public String getColorTheme() {
+        return colorTheme;
+    }
+
+    public void setColorTheme(String colorTheme) {
+        this.colorTheme = colorTheme;
+    }
+
     public Boolean getAdminOnlyMessages() {
         return adminOnlyMessages;
     }

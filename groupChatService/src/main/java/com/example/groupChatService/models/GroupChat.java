@@ -13,7 +13,7 @@ public class GroupChat {
     private String name;
     private String description;
     private String emoji;
-
+    private String colorTheme;
     private String creatorId;
     private List<String> members;
     private List<String> admins;
@@ -33,6 +33,10 @@ public class GroupChat {
 
     public String getEmoji() {
         return emoji;
+    }
+
+    public String getColorTheme() {
+        return colorTheme;
     }
 
     public List<String> getMembers() {
@@ -61,6 +65,7 @@ public class GroupChat {
         this.name = groupChatBuilder.name;
         this.description = groupChatBuilder.description;
         this.emoji = groupChatBuilder.emoji;
+        this.colorTheme=groupChatBuilder.colorTheme;
         this.creatorId = groupChatBuilder.creatorId;
         this.members = groupChatBuilder.members;
         this.admins = groupChatBuilder.admins;
@@ -72,6 +77,7 @@ public class GroupChat {
         return new groupChatBuilder(this.name, this.creatorId,new ArrayList<String>(this.admins),new ArrayList<>(this.members))
                 .setDescription(this.description)
                 .setEmoji(this.emoji)
+                .setColorTheme(colorTheme)
                 .setAdminOnlyMessages(this.adminOnlyMessages);
     }
 
@@ -80,6 +86,7 @@ public class GroupChat {
         private String name;
         private String description;
         private String emoji;
+        private String colorTheme;
         private List<String> members;
         private List<String> admins;
         private boolean adminOnlyMessages;
@@ -121,6 +128,11 @@ public class GroupChat {
             return this;
         }
 
+        public groupChatBuilder setColorTheme(String colorTheme) {
+            this.colorTheme = colorTheme;
+            return this;
+        }
+
         public String getId() {
             return id;
         }
@@ -128,6 +140,7 @@ public class GroupChat {
         public void setId(String id) {
             this.id = id;
         }
+
 
         public GroupChat build() {
             return new GroupChat(this);
