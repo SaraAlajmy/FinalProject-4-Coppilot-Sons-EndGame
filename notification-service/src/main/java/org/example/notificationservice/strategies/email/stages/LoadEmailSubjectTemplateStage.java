@@ -15,7 +15,7 @@ public class LoadEmailSubjectTemplateStage extends EmailNotificationChain {
     @Override
     public boolean executeStage(Notification notification, Context context) {
         log.info("Load email subject template...");
-
+        System.out.println(notification.getType());
         String template =
             templatesConfig.getSubjectTemplateForNotificationType(notification.getType());
 

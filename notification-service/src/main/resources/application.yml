@@ -1,6 +1,7 @@
 spring:
   application:
     name: notification-service
+
   data:
     mongodb:
       host: localhost
@@ -31,4 +32,3 @@ debug:
 
 user-service:
   url: http://localhost:8080 #TODO: Change this when other services are ready
-
