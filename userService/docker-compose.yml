@@ -1,0 +1,57 @@
+
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    environment:
+      POSTGRES_DB: your_postgres_db
+      POSTGRES_USER: your_pg_username
+      POSTGRES_PASSWORD: your_pg_password
+    ports:
+      - "5000:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  redis_cache:
+    image: redis:latest
+    container_name: redisCache
+    ports:
+      - "6379:6379"
+
+  redisinsight:
+    image: redis/redisinsight:latest
+    container_name: redisInsight
+    ports:
+      - "5540:5540"
+    restart: always
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin_password
+    ports:
+      - "80:80"
+    depends_on:
+      - postgres
+
+
+  app:
+    build: .
+    container_name: springboot-app
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/your_postgres_db
+      SPRING_DATASOURCE_USERNAME: your_pg_username
+      SPRING_DATASOURCE_PASSWORD: your_pg_password
+    ports:
+      - "8080:8080"
+
+
+
+volumes:
+  postgres-data:
