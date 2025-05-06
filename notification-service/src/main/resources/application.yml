@@ -10,6 +10,18 @@ spring:
       authentication-database: admin
       database: notification-db
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: noreply.copilotsons@gmail.com
+    password: zitj ggst tglt mqdr
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    from: noreply.copilotsons@gmail.com
 
 server:
   port: 8082 # TODO: Change this when other services are ready
