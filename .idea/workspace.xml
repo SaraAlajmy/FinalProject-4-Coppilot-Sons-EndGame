@@ -4,10 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="897e0d13-6a27-48a8-afc0-23b1e6282013" name="Changes" comment="test: add endpoints to test strategy and chain design patterns">
+    <list default="true" id="897e0d13-6a27-48a8-afc0-23b1e6282013" name="Changes" comment="feat: add notification settings">
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/config/EmailSubjectTemplatesConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/resources/templates/email-bodies/direct_message.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/resources/templates/email-bodies/group_mention.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/resources/templates/email-bodies/group_message.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/resources/templates/email-subjects.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/controllers/NotificationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/controllers/NotificationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/controllers/NotificationSettingsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/controllers/NotificationSettingsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/models/Notification.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/org/example/notificationservice/models/Notification.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,22 +39,22 @@
     &quot;assignee&quot;: &quot;Dareenfadel&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/SaraAlajmy/FinalProject-4-Coppilot-Sons-EndGame.git",
-    "accountId": "6ccb049f-4d8b-45bf-8192-bf0c534bb701"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/SaraAlajmy/FinalProject-4-Coppilot-Sons-EndGame.git&quot;,
+    &quot;accountId&quot;: &quot;aef7ef8b-308e-408c-91f1-8ccb01261406&quot;
   },
-  "recentNewPullRequestHead": {
-    "server": {
-      "useHttp": false,
-      "host": "github.com",
-      "port": null,
-      "suffix": null
+  &quot;recentNewPullRequestHead&quot;: {
+    &quot;server&quot;: {
+      &quot;useHttp&quot;: false,
+      &quot;host&quot;: &quot;github.com&quot;,
+      &quot;port&quot;: null,
+      &quot;suffix&quot;: null
     },
-    "owner": "SaraAlajmy",
-    "repository": "FinalProject-4-Coppilot-Sons-EndGame"
+    &quot;owner&quot;: &quot;SaraAlajmy&quot;,
+    &quot;repository&quot;: &quot;FinalProject-4-Coppilot-Sons-EndGame&quot;
   }
-}]]></component>
+}</component>
   <component name="KubernetesApiPersistence">{}</component>
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
@@ -72,7 +76,6 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.NotificationServiceApplication.executor": "Run",
     "Docker.docker-compose.yml.mongo-express: Compose Deployment.executor": "Run",
     "Docker.docker-compose.yml.mongo: Compose Deployment.executor": "Run",
     "Docker.docker-compose.yml: Compose Deployment.executor": "Run",
@@ -87,10 +90,10 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Spring Boot.NotificationServiceApplication.executor": "Run",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "#8 on notification-service/feat/notific…ement",
+    "git-widget-placeholder": "notification-service/feat/add-models",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/FinalProject-4-Coppilot-Sons-EndGame",
+    "last_opened_file_path": "/Users/mathewhany/Code/guc/acl/acl-final-project",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
@@ -116,7 +119,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.NotificationRepositoryTest">
     <configuration name="NotificationRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="notification-service" />
       <extension name="coverage">
@@ -221,6 +224,13 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.23774.435" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -230,7 +240,7 @@
       <option name="presentableId" value="Default" />
       <updated>1745777293244</updated>
       <workItem from="1745950471484" duration="11079000" />
-      <workItem from="1746013755264" duration="13207000" />
+      <workItem from="1746013755264" duration="7152000" />
     </task>
     <task id="LOCAL-00001" summary="feat: initialize notification-service module">
       <option name="closed" value="true" />
@@ -321,11 +331,6 @@
     <MESSAGE value="feat: add a notification seeder and helpers to generate sample data" />
     <MESSAGE value="feat: add docker-compose to launch mongo and connect notification-service" />
     <MESSAGE value="feat: remove notification controller used to testing" />
-    <MESSAGE value="feat: add" />
-    <MESSAGE value="feat: add notification strategy structure" />
-    <MESSAGE value="feat: add chain of responsibility structure" />
-    <MESSAGE value="feat: add recipient email to notification &amp; email service structure" />
-    <MESSAGE value="test: add endpoints to test strategy and chain design patterns" />
-    <option name="LAST_COMMIT_MESSAGE" value="test: add endpoints to test strategy and chain design patterns" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: remove notification controller used to testing" />
   </component>
 </project>
