@@ -1,45 +1,55 @@
 package com.example.models;
 
 import jakarta.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
+@Table(name = "users")
 public class User {
     @Id
-    private Long id;
+    @GeneratedValue
+    @Column(columnDefinition = "uuid", updatable = false, nullable = false)
+    private UUID id;
+    @Column(nullable = false, unique = true)
     private String username;
-    private String passwordHash;
-
-    @Embedded
-    private NotificationSettings notificationSettings = new NotificationSettings();
+    private String password;
+    @Column(nullable = false, unique = true)
+    private String phoneNumber;
+    @Column(nullable = false)
+    private String email;
 
     @ManyToMany
     private Set<User> blockedUsers = new HashSet<>();
 
+    private String refreshToken;
+
+
     public User() {
     }
 
-    public User(String username, String passwordHash) {
+    private User(String username, String phoneNumber, String password, String email) {
         this.username = username;
-        this.passwordHash = passwordHash;
+        this.phoneNumber = phoneNumber;
+        this.password = password;
+        this.email = email;
     }
 
-    public User(Long id, String username, String passwordHash, NotificationSettings notificationSettings, Set<User> blockedUsers) {
+    public User(UUID id, String username, String phoneNumber, String password, String email, Set<User> blockedUsers) {
         this.id = id;
         this.username = username;
-        this.passwordHash = passwordHash;
-        this.notificationSettings = notificationSettings;
+        this.phoneNumber = phoneNumber;
+        this.password = password;
+        this.email = email;
         this.blockedUsers = blockedUsers;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -51,20 +61,12 @@ public class User {
         this.username = username;
     }
 
-    public String getPasswordHash() {
-        return passwordHash;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
-    }
-
-    public NotificationSettings getNotificationSettings() {
-        return notificationSettings;
-    }
-
-    public void setNotificationSettings(NotificationSettings notificationSettings) {
-        this.notificationSettings = notificationSettings;
+    public void setPassword(String passwordHash) {
+        this.password= passwordHash;
     }
 
     public Set<User> getBlockedUsers() {
@@ -73,6 +75,29 @@ public class User {
 
     public void setBlockedUsers(Set<User> blockedUsers) {
         this.blockedUsers = blockedUsers;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
     }
 
 }

@@ -2,6 +2,7 @@ package org.example.notificationservice.factories;
 
 import com.github.javafaker.Faker;
 import org.example.notificationservice.models.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -14,6 +15,9 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class NotificationDataFactory {
     private final Faker faker = new Faker();
+
+    @Value("${debug.notification_recipient_email}")
+    private String recipientEmail = "example@example.com";
 
     /**
      * Creates a list of random notifications, with a mix of types.
@@ -52,11 +56,13 @@ public class NotificationDataFactory {
                                         .isRead(faker.bool().bool())
                                         .type(NotificationType.DIRECT_MESSAGE)
                                         .senderUserId(senderId)
-                                        .senderName(faker.name().fullName())
+                                        .senderUsername(faker.name().username())
                                         .messageId(
                                             "msg_" + UUID.randomUUID().toString().substring(0, 8))
                                         .messageText(faker.lorem().paragraph())
                                         .messageTimestamp(randomDateTime())
+                                        .chatId("chat_" + faker.number().randomNumber(4, false))
+                                        .recipientEmail(recipientEmail)
                                         .build();
     }
 
@@ -74,7 +80,7 @@ public class NotificationDataFactory {
                                        .isRead(faker.bool().bool())
                                        .type(NotificationType.GROUP_MESSAGE)
                                        .senderUserId(senderId)
-                                       .senderName(faker.name().fullName())
+                                       .senderUsername(faker.name().username())
                                        .messageId(
                                            "msg_" + UUID.randomUUID().toString().substring(0, 8))
                                        .messageText(faker.lorem().paragraph())
@@ -82,6 +88,7 @@ public class NotificationDataFactory {
                                        .groupId(groupId)
                                        .groupName(faker.company().name() + " Team")
                                        .groupIcon(faker.internet().avatar())
+                                       .recipientEmail(recipientEmail)
                                        .build();
     }
 
@@ -99,7 +106,7 @@ public class NotificationDataFactory {
                                        .isRead(faker.bool().bool())
                                        .type(NotificationType.GROUP_MENTION)
                                        .senderUserId(senderId)
-                                       .senderName(faker.name().fullName())
+                                       .senderUsername(faker.name().username())
                                        .messageId(
                                            "msg_" + UUID.randomUUID().toString().substring(0, 8))
                                        .messageText(
@@ -108,6 +115,7 @@ public class NotificationDataFactory {
                                        .groupId(groupId)
                                        .groupName(faker.company().name() + " Team")
                                        .groupIcon(faker.internet().avatar())
+                                       .recipientEmail(recipientEmail)
                                        .build();
     }
 
