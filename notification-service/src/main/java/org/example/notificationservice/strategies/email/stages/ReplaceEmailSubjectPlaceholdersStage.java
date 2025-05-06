@@ -33,7 +33,7 @@ public class ReplaceEmailSubjectPlaceholdersStage extends EmailNotificationChain
         Map<String, String> placeholders = new HashMap<>();
 
         if (notification instanceof MessageNotification messageNotification) {
-            placeholders.put("senderName", messageNotification.getSenderName());
+            placeholders.put("senderUsername", messageNotification.getSenderUsername());
         }
 
         if (notification instanceof GroupNotification groupNotification) {

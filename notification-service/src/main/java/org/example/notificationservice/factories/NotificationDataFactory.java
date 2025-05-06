@@ -56,7 +56,7 @@ public class NotificationDataFactory {
                                         .isRead(faker.bool().bool())
                                         .type(NotificationType.DIRECT_MESSAGE)
                                         .senderUserId(senderId)
-                                        .senderUserName(faker.name().username())
+                                        .senderUsername(faker.name().username())
                                         .messageId(
                                             "msg_" + UUID.randomUUID().toString().substring(0, 8))
                                         .messageText(faker.lorem().paragraph())
@@ -80,7 +80,7 @@ public class NotificationDataFactory {
                                        .isRead(faker.bool().bool())
                                        .type(NotificationType.GROUP_MESSAGE)
                                        .senderUserId(senderId)
-                                        .senderUserName(faker.name().username())
+                                       .senderUsername(faker.name().username())
                                        .messageId(
                                            "msg_" + UUID.randomUUID().toString().substring(0, 8))
                                        .messageText(faker.lorem().paragraph())
@@ -106,7 +106,7 @@ public class NotificationDataFactory {
                                        .isRead(faker.bool().bool())
                                        .type(NotificationType.GROUP_MENTION)
                                        .senderUserId(senderId)
-                                       .senderUserName(faker.name().username())
+                                       .senderUsername(faker.name().username())
                                        .messageId(
                                            "msg_" + UUID.randomUUID().toString().substring(0, 8))
                                        .messageText(
