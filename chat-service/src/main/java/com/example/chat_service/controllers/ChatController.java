@@ -4,14 +4,13 @@ import com.example.chat_service.dto.CreateChatRequestDTO;
 import com.example.chat_service.models.Chat;
 import com.example.chat_service.services.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/chats") // Base path for chat-related endpoints
+@RequestMapping("/chats")
 public class ChatController {
 
     private final ChatService chatService;

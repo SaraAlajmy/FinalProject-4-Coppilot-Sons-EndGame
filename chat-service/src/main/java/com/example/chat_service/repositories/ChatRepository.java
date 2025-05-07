@@ -11,16 +11,11 @@ import java.util.Optional;
 @Repository
 public interface ChatRepository extends MongoRepository<Chat, String> {
 
-    // Don't think we'll need any more queries for now
-
-    // Gets chat between two users
+    // find chat by participantOneId and participantTwoId
+    @Query(value = "{ 'participantOneId': ?0, 'participantTwoId': ?1 } or { 'participantOneId': ?1, 'participantTwoId': ?0 }")
     Optional<Chat> findByParticipantOneIdAndParticipantTwoId(String participantOneId, String participantTwoId);
 
     // get all chats for a user
     List<Chat> findByParticipantOneIdOrParticipantTwoId(String participantOneId, String participantTwoId);
 
-    // This is the same as the above method, but using a custom query
-    // not deleting this for now in case we need it later
-//    @Query("{$or: [{'participantOneId': ?0}, {'participantTwoId': ?0}]}") // ?0 matches the first parameter (userId)
-//    List<Chat> findByUserId(String userId);
 }

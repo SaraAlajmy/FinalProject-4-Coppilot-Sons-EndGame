@@ -1,6 +1,5 @@
 package com.example.chat_service.services;
 
-import com.example.chat_service.clients.UserClient;
 import com.example.chat_service.models.Chat;
 import com.example.chat_service.repositories.ChatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +10,11 @@ import java.util.Optional;
 
 @Service
 public class ChatService {
-     private final ChatRepository chatRepository;
-    private final UserClient userClient;
+    private final ChatRepository chatRepository;
 
     @Autowired
-    public ChatService(ChatRepository chatRepository, UserClient userClient) {
+    public ChatService(ChatRepository chatRepository) {
         this.chatRepository = chatRepository;
-        this.userClient = userClient;
     }
 
     /**
@@ -29,10 +26,6 @@ public class ChatService {
      */
     public Chat createOrGetChat(String userId1, String userId2) {
         Optional<Chat> chat = chatRepository.findByParticipantOneIdAndParticipantTwoId(userId1, userId2);
-        if (chat.isPresent()) return chat.get();
-
-        // Try reverse order
-        chat = chatRepository.findByParticipantOneIdAndParticipantTwoId(userId2, userId1);
         if (chat.isPresent()) return chat.get();
 
         // Create new chat if no block exists
