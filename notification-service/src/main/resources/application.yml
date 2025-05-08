@@ -1,6 +1,7 @@
 spring:
   application:
     name: notification-service
+
   data:
     mongodb:
       host: localhost
@@ -10,10 +11,24 @@ spring:
       authentication-database: admin
       database: notification-db
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: noreply.copilotsons@gmail.com
+    password: zitj ggst tglt mqdr
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    from: noreply.copilotsons@gmail.com
 
 server:
-  port: 8082 # TODO: Change this when other services are ready
+  port: 8082  # TODO: Change this when other services are ready
+
+debug:
+  notification_recipient_email: "mathew.hanybb@gmail.com"
 
 user-service:
   url: http://localhost:8080 #TODO: Change this when other services are ready
-

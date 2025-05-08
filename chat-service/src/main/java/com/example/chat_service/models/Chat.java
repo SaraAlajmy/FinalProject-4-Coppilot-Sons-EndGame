@@ -12,13 +12,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Chat {
-
-    @Id // I was considering making the id a combination of participant IDs, but ig keeping it consistent with other models is better for now
+    @Id
     private String chatId;
 
-    @Indexed // Indexing participant IDs for faster lookups
+    @Indexed
     private String participantOneId;
 
-    @Indexed // Indexing participant IDs for faster lookups
+    @Indexed
     private String participantTwoId;
 }

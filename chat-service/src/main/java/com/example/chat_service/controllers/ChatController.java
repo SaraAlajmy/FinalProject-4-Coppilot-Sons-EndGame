@@ -5,14 +5,13 @@ import com.example.chat_service.models.Chat;
 import com.example.chat_service.models.Message;
 import com.example.chat_service.services.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/chats") // Base path for chat-related endpoints
+@RequestMapping("/chats")
 public class ChatController {
 
     private final ChatService chatService;
@@ -31,14 +30,8 @@ public class ChatController {
      */
     @PostMapping
     public ResponseEntity<Chat> createOrGetChat(@RequestBody CreateChatRequestDTO request) {
-        try {
-            Chat chat = chatService.createOrGetChat(request.getUserId1(), request.getUserId2());
-            // TODO: Do we care about returning different status codes for created vs. fetched?
-            return ResponseEntity.ok(chat);
-        } catch (RuntimeException e) {
-            // Handle the block exception from ChatService
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null); // Or return an error object
-        }
+        Chat chat = chatService.createOrGetChat(request.getUserId1(), request.getUserId2());
+        return ResponseEntity.ok(chat);
     }
 
     /**

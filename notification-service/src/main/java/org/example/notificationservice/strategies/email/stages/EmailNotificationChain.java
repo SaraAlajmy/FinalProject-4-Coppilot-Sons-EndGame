@@ -28,6 +28,11 @@ public abstract class EmailNotificationChain {
         return stages[0];
     }
 
+    @Data
     public static class Context {
+        private String subjectTemplate;
+        private String subject;
+        private String bodyTemplate;
+        private String body;
     }
 }
