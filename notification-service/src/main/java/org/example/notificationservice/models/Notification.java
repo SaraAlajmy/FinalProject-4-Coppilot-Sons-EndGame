@@ -20,7 +20,9 @@ import java.time.LocalDateTime;
 @JsonSubTypes({
     @JsonSubTypes.Type(value = GroupMessageNotification.class, name = NotificationType.GROUP_MESSAGE),
     @JsonSubTypes.Type(value = GroupMentionNotification.class, name = NotificationType.GROUP_MENTION),
-    @JsonSubTypes.Type(value = DirectMessageNotification.class, name = NotificationType.DIRECT_MESSAGE)
+    @JsonSubTypes.Type(value = DirectMessageNotification.class, name = NotificationType.DIRECT_MESSAGE),
+    @JsonSubTypes.Type(value = ResetPasswordNotification.class, name = NotificationType.RESET_PASSWORD)
+
 })
 
 public abstract class Notification {

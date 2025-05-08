@@ -10,7 +10,6 @@ public class EmailNotificationChainConfig {
     @Bean
     @Primary
     public EmailNotificationChain getEmailNotificationChain(
-        LoadConfigStage loadConfigStage,
         LoadEmailSubjectTemplateStage loadEmailSubjectTemplateStage,
         LoadEmailBodyTemplateStage loadEmailBodyTemplateStage,
         ReplaceEmailSubjectPlaceholdersStage replaceEmailSubjectPlaceholdersStage,
@@ -18,7 +17,6 @@ public class EmailNotificationChainConfig {
         SendEmailStage sendEmailStage
     ) {
         return EmailNotificationChain.createChain(
-            loadConfigStage,
             loadEmailSubjectTemplateStage,
             loadEmailBodyTemplateStage,
             replaceEmailSubjectPlaceholdersStage,

@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    spring:
+      cloud:
+        gateway:
+      routes:
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/user/**
+            - Path=/auth/**
+          filters:
+              - AuthenticationFilter
+
+        - id: chat-service
+          uri: lb://chat-service
+          predicates:
+            - Path=/chat/**
+  data:
+    redis:
+      host: redis_cache
+      port: 6379
+  cache: 
+    type: redis
+
+#    need to be updated with the rest also for each service it has
+#  to have euroko client in its pom.xml file to be
+#  noticied by the
+#registery
+
+
+feign:
+  hystrix:
+    enabled: true
+
