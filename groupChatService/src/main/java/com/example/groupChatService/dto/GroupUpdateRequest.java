@@ -7,9 +7,7 @@ public class GroupUpdateRequest {
     private String description;
     private String emoji;
     private String colorTheme;
-    private List<String> members;
-    private List<String> admins;
-    private Boolean adminOnlyMessages;
+
 
     public GroupUpdateRequest() {
     }
@@ -38,21 +36,6 @@ public class GroupUpdateRequest {
         this.emoji = emoji;
     }
 
-    public List<String> getMembers() {
-        return members;
-    }
-
-    public void setMembers(List<String> members) {
-        this.members = members;
-    }
-
-    public List<String> getAdmins() {
-        return admins;
-    }
-
-    public void setAdmins(List<String> admins) {
-        this.admins = admins;
-    }
 
     public String getColorTheme() {
         return colorTheme;
@@ -62,13 +45,6 @@ public class GroupUpdateRequest {
         this.colorTheme = colorTheme;
     }
 
-    public Boolean getAdminOnlyMessages() {
-        return adminOnlyMessages;
-    }
-
-    public void setAdminOnlyMessages(Boolean adminOnlyMessages) {
-        this.adminOnlyMessages = adminOnlyMessages;
-    }
 }
 
 

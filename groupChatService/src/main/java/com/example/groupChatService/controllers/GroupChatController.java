@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -60,6 +61,64 @@ public class GroupChatController {
             return groupChatService.updateGroupChat(id,groupUpdateRequest);
         }catch (Exception e) {
             System.out.println("Error updating group chat: " + e.getMessage());
+            return null;
+        }
+    }
+    @PutMapping("/activateAdminOnlyMessages/{id}")
+    public GroupChat activateAdminOnlyMessages(@PathVariable String id,@RequestHeader("userId") String userId){
+        try{
+            return groupChatService.activateAdminOnlyMessages(id,userId);
+        }catch (Exception e) {
+            System.out.println("Error activateAdminOnlyMessages for group chat: " + e.getMessage());
+            return null;
+        }
+    }
+    @PutMapping("/unactivateAdminOnlyMessages/{id}")
+    public GroupChat unactivateAdminOnlyMessages(@PathVariable String id,@RequestHeader("userId") String userId){
+        try{
+            return groupChatService.unactivateAdminOnlyMessages(id,userId);
+        }catch (Exception e) {
+            System.out.println("Error unactivate AdminOnlyMessages for group chat: " + e.getMessage());
+            return null;
+        }
+    }
+    @PutMapping("/addMember/{id}")
+    public GroupChat addMember(@PathVariable String id,@RequestHeader("userId") String userId,@RequestBody Map<String, String> body){
+        try{
+            String memberId = body.get("memberId");
+            return groupChatService.addMember(id,userId,memberId);
+        }catch (Exception e) {
+            System.out.println("Error adding member for group chat: " + e.getMessage());
+            return null;
+        }
+    }
+    @PutMapping("/removeMember/{id}")
+    public GroupChat removeMember(@PathVariable String id,@RequestHeader("userId") String userId,@RequestBody Map<String, String> body){
+        try{
+            String memberId = body.get("memberId");
+            return groupChatService.removeMember(id,userId,memberId);
+        }catch (Exception e) {
+            System.out.println("Error removing member for group chat: " + e.getMessage());
+            return null;
+        }
+    }
+    @PutMapping("/makeAdmin/{id}")
+    public GroupChat makeAdmin(@PathVariable String id,@RequestHeader("userId") String userId,@RequestBody Map<String, String> body){
+        try{
+            String memberId = body.get("memberId");
+            return groupChatService.makeAdmin(id,userId,memberId);
+        }catch (Exception e) {
+            System.out.println("Error making admin for group chat: " + e.getMessage());
+            return null;
+        }
+    }
+    @PutMapping("/removeAdmin/{id}")
+    public GroupChat removeAdmin(@PathVariable String id,@RequestHeader("userId") String userId,@RequestBody Map<String, String> body){
+        try{
+            String memberId = body.get("memberId");
+            return groupChatService.removeAdmin(id,userId,memberId);
+        }catch (Exception e) {
+            System.out.println("Error making admin for group chat: " + e.getMessage());
             return null;
         }
     }

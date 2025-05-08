@@ -7,7 +7,7 @@ import com.example.groupChatService.models.GroupChat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.groupChatService.repositories.GroupChatRepo;
-
+import org.example.shared.Utils;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -65,17 +65,80 @@ public class GroupChatService {
         GroupChat groupChat= groupChatRepo.findById(id).orElseThrow(() -> new RuntimeException("Group chat not found with id:" + id));
         GroupChat.groupChatBuilder builder = groupChat.toBuilder();
         builder.setId(id);
-        for (Field field : GroupUpdateRequest.class.getDeclaredFields()) {
-            field.setAccessible(true);
-            try {
-                Object value = field.get(groupUpdateRequest);
-                if (value == null) continue;
-                String methodName = "set" + capitalize(field.getName());
-                builder.getClass().getMethod(methodName, field.getType()).invoke(builder, value);
-            }catch (Exception e) {
-                throw new RuntimeException("Error updating group chat: " + e.getMessage());
-            }
+        Utils.copyPropertiesWithReflection(groupUpdateRequest, builder);
+        return groupChatRepo.save(builder.build());
+    }
+    public GroupChat activateAdminOnlyMessages(String id, String userId) {
+        GroupChat groupChat = groupChatRepo.findById(id).orElseThrow(() -> new RuntimeException("Group chat not found with id:" + id));
+        if (!groupChat.getAdmins().contains(userId)) {
+            throw new RuntimeException("You are not an admin of this group chat");
         }
+        GroupChat.groupChatBuilder builder = groupChat.toBuilder();
+        builder.setId(id);
+        builder.setAdminOnlyMessages(true);
+        return groupChatRepo.save(builder.build());
+    }
+    public GroupChat unactivateAdminOnlyMessages(String id, String userId) {
+        GroupChat groupChat = groupChatRepo.findById(id).orElseThrow(() -> new RuntimeException("Group chat not found with id:" + id));
+        if (!groupChat.getAdmins().contains(userId)) {
+            throw new RuntimeException("You are not an admin of this group chat");
+        }
+        GroupChat.groupChatBuilder builder = groupChat.toBuilder();
+        builder.setId(id);
+        builder.setAdminOnlyMessages(false);
+        return groupChatRepo.save(builder.build());
+    }
+    public GroupChat addMember(String id,String userId,String memberId){
+        GroupChat groupChat = groupChatRepo.findById(id).orElseThrow(() -> new RuntimeException("Group chat not found with id:" + id));
+        if (!groupChat.getAdmins().contains(userId)) {
+            throw new RuntimeException("You are not an admin of this group chat");
+        }
+        if(groupChat.getMembers().contains(memberId)){
+            throw new RuntimeException("member with id "+memberId+" is already a member of this group");
+        }
+        GroupChat.groupChatBuilder builder = groupChat.toBuilder();
+        builder.setId(id);
+        builder.addMember(memberId);
+        return groupChatRepo.save(builder.build());
+    }
+    public GroupChat removeMember(String id,String userId,String memberId){
+        GroupChat groupChat = groupChatRepo.findById(id).orElseThrow(() -> new RuntimeException("Group chat not found with id:" + id));
+        if (!groupChat.getAdmins().contains(userId)) {
+            throw new RuntimeException("You are not an admin of this group chat");
+        }
+        if(!groupChat.getMembers().contains(memberId)){
+            throw new RuntimeException("member with id "+memberId+" is not member of this group");
+        }
+        GroupChat.groupChatBuilder builder = groupChat.toBuilder();
+        builder.setId(id);
+        builder.removeMember(memberId);
+        builder.removeAdmin(memberId);
+        return groupChatRepo.save(builder.build());
+    }
+    public GroupChat makeAdmin(String id,String userId,String memberId){
+        GroupChat groupChat = groupChatRepo.findById(id).orElseThrow(() -> new RuntimeException("Group chat not found with id:" + id));
+        if (!groupChat.getAdmins().contains(userId)) {
+            throw new RuntimeException("You are not an admin of this group chat");
+        }
+        if(!groupChat.getMembers().contains(memberId)){
+            throw new RuntimeException("member with id "+memberId+" is not member of this group");
+        }
+        GroupChat.groupChatBuilder builder = groupChat.toBuilder();
+        builder.setId(id);
+        builder.makeAdmin(memberId);
+        return groupChatRepo.save(builder.build());
+    }
+    public GroupChat removeAdmin(String id,String userId,String memberId){
+        GroupChat groupChat = groupChatRepo.findById(id).orElseThrow(() -> new RuntimeException("Group chat not found with id:" + id));
+        if (!groupChat.getAdmins().contains(userId)) {
+            throw new RuntimeException("You are not an admin of this group chat");
+        }
+        if(!groupChat.getMembers().contains(memberId)){
+            throw new RuntimeException("member with id "+memberId+" is not member of this group");
+        }
+        GroupChat.groupChatBuilder builder = groupChat.toBuilder();
+        builder.setId(id);
+        builder.removeAdmin(memberId);
         return groupChatRepo.save(builder.build());
     }
     public String deleteGroupChat(String id,String userId) {
