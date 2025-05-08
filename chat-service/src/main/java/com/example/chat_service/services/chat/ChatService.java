@@ -17,8 +17,9 @@ public class ChatService {
     private final MessageRepository messageRepository;
 
     @Autowired
-    public ChatService(ChatRepository chatRepository) {
+    public ChatService(ChatRepository chatRepository, MessageRepository messageRepository) {
         this.chatRepository = chatRepository;
+        this.messageRepository = messageRepository;
     }
 
     /**
