@@ -3,7 +3,7 @@ package com.example.chat_service.controllers;
 import com.example.chat_service.dto.CreateChatRequestDTO;
 import com.example.chat_service.models.Chat;
 import com.example.chat_service.models.Message;
-import com.example.chat_service.services.ChatService;
+import com.example.chat_service.services.chat.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

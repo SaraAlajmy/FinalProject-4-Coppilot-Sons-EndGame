@@ -1,4 +1,4 @@
-package com.example.chat_service.services;
+package com.example.chat_service.services.observer;
 
 import com.example.chat_service.dto.NotificationDTO;
 import com.example.chat_service.models.Message;

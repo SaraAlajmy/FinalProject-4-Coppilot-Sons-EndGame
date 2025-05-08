@@ -1,9 +1,10 @@
-package com.example.chat_service.services;
+package com.example.chat_service.services.config;
 
 
+import com.example.chat_service.services.chat.RealMessageService;
+import com.example.chat_service.services.observer.Observer;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.List;

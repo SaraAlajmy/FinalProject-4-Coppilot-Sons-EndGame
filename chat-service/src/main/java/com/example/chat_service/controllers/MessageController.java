@@ -2,7 +2,7 @@ package com.example.chat_service.controllers;
 
 import com.example.chat_service.dto.MessageRequestDTO;
 import com.example.chat_service.models.Message;
-import com.example.chat_service.services.MessageServiceProxy;
+import com.example.chat_service.services.chat.MessageServiceProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;

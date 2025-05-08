@@ -1,8 +1,10 @@
-package com.example.chat_service.services;
+package com.example.chat_service.services.chat;
 
 import com.example.chat_service.dto.MessageRequestDTO;
 import com.example.chat_service.models.Message;
 import com.example.chat_service.repositories.MessageRepository;
+import com.example.chat_service.services.observer.MessageSubject;
+import com.example.chat_service.services.observer.Observer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

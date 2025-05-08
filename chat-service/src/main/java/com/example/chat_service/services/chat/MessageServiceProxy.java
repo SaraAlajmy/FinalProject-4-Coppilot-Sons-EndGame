@@ -1,4 +1,4 @@
-package com.example.chat_service.services;
+package com.example.chat_service.services.chat;
 
 import com.example.chat_service.clients.UserClient;
 import com.example.chat_service.dto.MessageRequestDTO;
