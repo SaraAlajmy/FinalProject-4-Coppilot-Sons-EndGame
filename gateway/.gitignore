@@ -14,7 +14,17 @@ target/
 .sts4-cache
 
 ### IntelliJ IDEA ###
+<<<<<<<< HEAD:.gitignore
+.idea/
+-.idea/
++/.idea/*
++!.idea/misc.xml
++!.idea/modules.xml
++!.idea/vcs.xml
++!.idea/inspectionProfiles
+========
 .idea
+>>>>>>>> origin/main:gateway/.gitignore
 *.iws
 *.iml
 *.ipr

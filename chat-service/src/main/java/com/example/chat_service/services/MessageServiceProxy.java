@@ -1,7 +1,7 @@
 package com.example.chat_service.services;
 
 import com.example.chat_service.clients.UserClient;
-import com.example.chat_service.expections.UnauthorizedOperationException;
+import com.example.chat_service.exceptions.UnauthorizedOperationException;
 import com.example.chat_service.models.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
