@@ -18,11 +18,11 @@ public class MessageController {
     private MessageServiceProxy messageService;
 
     @PostMapping("/send")
-    public void sendMessage(@RequestBody MessageRequestDTO dto, @RequestHeader("userId") String userId) {
+    public void sendMessage(@RequestBody MessageRequestDTO dto, @RequestHeader("userId") String userId, @RequestHeader("userName") String userName) {
         if (!dto.getSenderId().equals(userId)) {
             throw new IllegalArgumentException("Sender ID does not match the authenticated user ID.");
         }
-        messageService.sendMessage(dto.getSenderId(), dto.getReceiverId(), dto.getContent());
+        messageService.sendMessage(dto, userName);
     }
 
     @DeleteMapping("/{messageId}")
