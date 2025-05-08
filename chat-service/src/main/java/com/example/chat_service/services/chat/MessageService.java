@@ -1,13 +1,14 @@
-package com.example.chat_service.services;
+package com.example.chat_service.services.chat;
 
 
+import com.example.chat_service.dto.MessageRequestDTO;
 import com.example.chat_service.models.Message;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 public interface MessageService {
-    void sendMessage(String senderId, String receiverId, String content);
+    void sendMessage(MessageRequestDTO dto, String senderUserName);
 
     void deleteMessage(String messageId, String userId);
 
@@ -23,4 +24,5 @@ public interface MessageService {
 
     List<Message> filterByDate(String receiverId, LocalDateTime startDate, LocalDateTime endDate);
 
+    List<Message> searchMessages(String userId, String keyword);
 }

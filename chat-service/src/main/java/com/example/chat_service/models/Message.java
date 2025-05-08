@@ -21,6 +21,8 @@ public class Message {
 
     private String senderId;
 
+    private String senderUserName;
+
     private String receiverId;
 
     private String content;
@@ -34,9 +36,10 @@ public class Message {
     private LocalDateTime updatedAt;
 
 
-    public Message(String chatId, String senderId, String receiverId, String content) {
+    public Message(String chatId, String senderId, String senderUserName, String receiverId, String content) {
         this.chatId = chatId;
         this.senderId = senderId;
+        this.senderUserName = senderUserName;
         this.receiverId = receiverId;
         this.content = content;
         this.isFavorite = false;

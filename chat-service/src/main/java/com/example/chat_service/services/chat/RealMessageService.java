@@ -1,27 +1,43 @@
-package com.example.chat_service.services;
+package com.example.chat_service.services.chat;
 
+import com.example.chat_service.dto.MessageRequestDTO;
 import com.example.chat_service.models.Message;
 import com.example.chat_service.repositories.MessageRepository;
+import com.example.chat_service.services.observer.MessageSubject;
+import com.example.chat_service.services.observer.Observer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class RealMessageService implements MessageService {
+public class RealMessageService implements MessageService, MessageSubject {
     MessageRepository messageRepository;
+    List<Observer> observers;
+
 
     @Autowired
     public RealMessageService(MessageRepository messageRepository) {
         this.messageRepository = messageRepository;
+        observers = new ArrayList<>();
     }
 
     @Override
-    public void sendMessage(String senderId, String receiverId, String content) {
+    public void sendMessage(MessageRequestDTO dto, String senderUserName) {
         //TODO: use chat service to get chatId
-        String chatId = senderId + "_" + receiverId;
-        messageRepository.save(new Message(chatId,senderId, receiverId, content));
+        String chatId = dto.getChatId();
+        Message message = new Message(
+                chatId,
+                dto.getSenderId(),
+                senderUserName,
+                dto.getReceiverId(),
+                dto.getContent()
+        );
+
+        messageRepository.save(message);
+        notifyObservers(message);
     }
 
     @Override
@@ -72,4 +88,25 @@ public class RealMessageService implements MessageService {
         return true;
     }
 
+    @Override
+    public List<Message> searchMessages(String userId, String keyword) {
+        return messageRepository.searchMessages(userId, keyword);
+    }
+
+    @Override
+    public void addObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers(Message message) {
+        for (Observer observer : observers) {
+            observer.update(message);
+        }
+    }
 }

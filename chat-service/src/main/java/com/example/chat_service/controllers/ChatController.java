@@ -2,7 +2,8 @@ package com.example.chat_service.controllers;
 
 import com.example.chat_service.dto.CreateChatRequestDTO;
 import com.example.chat_service.models.Chat;
-import com.example.chat_service.services.ChatService;
+import com.example.chat_service.models.Message;
+import com.example.chat_service.services.chat.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,5 +44,12 @@ public class ChatController {
     public ResponseEntity<List<Chat>> getChatsForUser(@PathVariable String userId) {
         List<Chat> chats = chatService.getChatsForUser(userId);
         return ResponseEntity.ok(chats);
+    }
+
+
+    @GetMapping("/{chatId}/messages/{lastMessageId}")
+    public ResponseEntity<List<Message>> getLatestMessages(@PathVariable String chatId, @PathVariable String lastMessageId) {
+        List<Message> messages = chatService.getLatestMessages(chatId, lastMessageId);
+        return ResponseEntity.ok(messages);
     }
 }
