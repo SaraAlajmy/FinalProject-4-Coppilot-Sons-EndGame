@@ -49,4 +49,8 @@ public class ChatService {
         }
         return messageRepository.findByChatIdAndCreatedAtAfter(chatId, lastMessage.get().getCreatedAt());
     }
+
+    public Chat getChatById(String chatId) {
+        return chatRepository.findById(chatId).orElseThrow(() -> new RuntimeException("Chat not found"));
+    }
 }
