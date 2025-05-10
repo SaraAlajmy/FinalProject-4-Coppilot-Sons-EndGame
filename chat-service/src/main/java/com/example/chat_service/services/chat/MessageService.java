@@ -12,6 +12,8 @@ public interface MessageService {
 
     void deleteMessage(String messageId, String userId);
 
+    void editMessage(String messageId, String userId, String newContent);
+
 
     void markAsFavorite(String messageId, String userId);
 

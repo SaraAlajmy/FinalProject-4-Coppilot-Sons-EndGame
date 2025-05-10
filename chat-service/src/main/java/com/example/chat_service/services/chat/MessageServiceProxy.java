@@ -33,6 +33,14 @@ public class MessageServiceProxy implements MessageService {
     }
 
     @Override
+    public void editMessage(String messageId, String userId, String newContent) {
+        if (!realMessageService.isMessageOwner(messageId, userId)) {
+            throw new UnauthorizedOperationException("User not authorized to edit this message");
+        }
+        realMessageService.editMessage(messageId, userId, newContent);
+    }
+
+    @Override
     public void deleteMessage(String messageId, String userId) {
 
         if (!realMessageService.isMessageOwner(messageId, userId)) {
