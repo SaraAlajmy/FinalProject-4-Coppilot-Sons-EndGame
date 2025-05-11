@@ -31,4 +31,4 @@ debug:
   notification_recipient_email: "mathew.hanybb@gmail.com"
 
 user-service:
-  url: http://localhost:8080 #TODO: Change this when other services are ready
+  url: http://localhost:8086

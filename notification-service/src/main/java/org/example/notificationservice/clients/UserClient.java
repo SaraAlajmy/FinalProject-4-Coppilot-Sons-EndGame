@@ -7,9 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @FeignClient(name = "user-service", url = "${user-service.url}")
 public interface UserClient {
-
-//TODO: Uncomment and implement the methods and use in NotificationService when user-service is ready
-
-//    @GetMapping("/user/getUserEmail/{userId}")
-//    ResponseEntity<String> getUserEmailById(@PathVariable("userId") String userId);
+    @GetMapping("/user/getUserEmail/{userId}")
+    ResponseEntity<String> getUserEmailById(@PathVariable("userId") String userId);
 }

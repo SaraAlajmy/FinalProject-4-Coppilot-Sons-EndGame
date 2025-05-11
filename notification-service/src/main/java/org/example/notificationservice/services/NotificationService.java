@@ -1,6 +1,7 @@
 package org.example.notificationservice.services;
 
 import lombok.extern.slf4j.Slf4j;
+import org.example.notificationservice.clients.UserClient;
 import org.example.notificationservice.factories.UserDTOFactory;
 import org.example.notificationservice.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,26 +13,26 @@ import java.time.LocalDateTime;
 @Slf4j
 public class NotificationService {
     private final NotificationDeliveryService notificationDeliveryService;
-    private final UserDTOFactory userDTOFactory;
     private final NotificationSettingsService notificationSettingsService;
+    private final UserClient userClient;
 
     @Autowired
     public NotificationService(
         NotificationDeliveryService notificationDeliveryService,
         UserDTOFactory userDTOFactory,
-        NotificationSettingsService notificationSettingsService
+        NotificationSettingsService notificationSettingsService,
+        UserClient userClient
     ) {
         this.notificationDeliveryService = notificationDeliveryService;
-        this.userDTOFactory = userDTOFactory;
         this.notificationSettingsService = notificationSettingsService;
+        this.userClient = userClient;
     }
 
     //TODO: Change to listen to the notification queue
     public boolean createNotification(Notification notification) {
-
-        //TODO: GET the user Info from the UserClient when user-service is ready
-        UserDTO receiver = userDTOFactory.createUserDTO(notification.getRecipientUserId());
-        notification.setRecipientEmail(receiver.getEmail());
+        String userMail=userClient.getUserEmailById(notification.getRecipientUserId()).getBody();
+        log.info("User email: {}", userMail);
+        notification.setRecipientEmail(userMail);
         notification.setTimestamp(LocalDateTime.now());
 
         boolean success = true;
