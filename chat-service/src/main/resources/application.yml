@@ -1,5 +1,5 @@
 server:
-  port: 8090
+  port: 8080
 
 spring:
   application:
@@ -17,3 +17,6 @@ spring:
       password: example
       authentication-database: admin
       database: chat-db
+
+user-service:
+  url: http://localhost:8086
