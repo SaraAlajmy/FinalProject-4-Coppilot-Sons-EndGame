@@ -6,6 +6,7 @@ import com.example.repositories.UserRepository;
 import com.example.services.loginStrategies.LoginStrategy;
 import com.example.services.loginStrategies.PhoneLoginStrategy;
 import com.example.services.loginStrategies.UsernameLoginStrategy;
+import org.example.shared.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,17 +84,12 @@ public class UserService {
     }
 
     public User updateUser(UUID id, User user) {
-        User existingUser = userRepository.findById(id).orElseThrow(() -> {
-            logger.error("User with ID {} not found", id);
-            return new RuntimeException("User not found");
-        });
+        User existingUser = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
-        existingUser.setUsername(user.getUsername() != null ? user.getUsername() : existingUser.getUsername());
-        existingUser.setPassword(user.getPassword() != null ? user.getPassword() : existingUser.getPassword());
+        Utils.copyPropertiesWithReflection(user, existingUser);
 
-        User updated = userRepository.save(existingUser);
-        logger.info("User with ID {} updated successfully", id);
-        return updated;
+        return userRepository.save(existingUser);
     }
 
     public void deleteUser(UUID id) {
