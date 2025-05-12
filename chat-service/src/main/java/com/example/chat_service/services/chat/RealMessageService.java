@@ -65,10 +65,6 @@ public class RealMessageService implements MessageService, MessageSubject {
     public void markAsFavorite(String messageId, String userId) {
         Message message = messageRepository.findById(messageId)
                 .orElseThrow(() -> new FavouriteMessageException("Message not found"));
-        
-        if (!isMessageOwner(messageId, userId)) {
-            throw new FavouriteMessageException("User is not authorized to favorite this message");
-        }
 
         if (favouriteMessageRepository.existsByMessageIdAndUserId(messageId, userId)) {
             throw new FavouriteMessageException("Message is already favorited by this user");

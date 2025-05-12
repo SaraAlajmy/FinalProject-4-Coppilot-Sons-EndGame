@@ -20,6 +20,6 @@ public class FavouriteMessage {
     @DBRef
     private Message message;
     
-    @Indexed(unique = true)
+    @Indexed
     private String userId;
 }
