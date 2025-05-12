@@ -17,8 +17,6 @@ public interface MessageRepository extends MongoRepository<Message, String> {
             String receiverId, LocalDateTime startDate, LocalDateTime endDate
     );
 
-    List<Message> findBySenderIdOrReceiverIdAndIsFavoriteTrueAndIsDeletedFalse(String userId);
-
 
     List<Message> findByChatIdAndCreatedAtAfter(String chatId, LocalDateTime createdAt);
 

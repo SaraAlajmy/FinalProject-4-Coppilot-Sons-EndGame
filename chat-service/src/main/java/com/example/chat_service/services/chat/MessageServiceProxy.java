@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class MessageServiceProxy implements MessageService {
@@ -25,11 +26,19 @@ public class MessageServiceProxy implements MessageService {
     @Override
     public void sendMessage(MessageRequestDTO dto ,String senderUserName) {
 
-        if(userClient.isBlocked(dto.getSenderId(), dto.getReceiverId())) {
+        if(userClient.isBlocked(UUID.fromString(dto.getReceiverId()), UUID.fromString(dto.getSenderId()))) {
             throw new RuntimeException("Sender is blocked by the receiver");
         }
 
         realMessageService.sendMessage(dto, senderUserName);
+    }
+
+    @Override
+    public void editMessage(String messageId, String userId, String newContent) {
+        if (!realMessageService.isMessageOwner(messageId, userId)) {
+            throw new UnauthorizedOperationException("User not authorized to edit this message");
+        }
+        realMessageService.editMessage(messageId, userId, newContent);
     }
 
     @Override

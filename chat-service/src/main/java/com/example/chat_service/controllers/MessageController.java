@@ -40,11 +40,13 @@ public class MessageController {
         messageService.unmarkAsFavorite(messageId, userId);
     }
 
+    @ResponseBody
     @GetMapping("/chat/{chatId}")
     public List<Message> getMessages(@PathVariable String chatId, @RequestHeader("userId") String userId) {
         return messageService.getMessages(chatId, userId);
     }
 
+    @ResponseBody
     @GetMapping("/favorites")
     public List<Message> getFavoriteMessages(@RequestHeader("userId") String userId) {
         return messageService.getFavoriteMessages(userId);
@@ -61,6 +63,7 @@ public class MessageController {
         return messageService.filterByDate(userId, start, end);
     }
 
+    @ResponseBody
     @GetMapping("/search")
     public List<Message> searchMessages(
             @RequestHeader("userId") String userId,
