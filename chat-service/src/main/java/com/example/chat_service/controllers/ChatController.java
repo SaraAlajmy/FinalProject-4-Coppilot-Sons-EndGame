@@ -29,6 +29,7 @@ public class ChatController {
      * @return ResponseEntity containing the created or fetched Chat and HTTP status.
      */
     @PostMapping
+    @ResponseBody
     public ResponseEntity<Chat> createOrGetChat(@RequestBody CreateChatRequestDTO request) {
         Chat chat = chatService.createOrGetChat(request.getUserId1(), request.getUserId2());
         return ResponseEntity.ok(chat);
@@ -41,6 +42,7 @@ public class ChatController {
      * @return ResponseEntity containing a list of Chats and HTTP status.
      */
     @GetMapping("/user/{userId}") // Changed path to be relative to /chats
+    @ResponseBody
     public ResponseEntity<List<Chat>> getChatsForUser(@PathVariable String userId) {
         List<Chat> chats = chatService.getChatsForUser(userId);
         return ResponseEntity.ok(chats);
@@ -48,6 +50,7 @@ public class ChatController {
 
 
     @GetMapping("/{chatId}/messages/{lastMessageId}")
+    @ResponseBody
     public ResponseEntity<List<Message>> getLatestMessages(@PathVariable String chatId, @PathVariable String lastMessageId) {
         List<Message> messages = chatService.getLatestMessages(chatId, lastMessageId);
         return ResponseEntity.ok(messages);

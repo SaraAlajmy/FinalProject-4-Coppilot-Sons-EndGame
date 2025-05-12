@@ -17,6 +17,11 @@ spring:
       password: example
       authentication-database: admin
       database: chat-db
+  # Add Jackson configuration for better JSON handling
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    default-property-inclusion: NON_NULL
 
 user-service:
   url: http://localhost:8086
