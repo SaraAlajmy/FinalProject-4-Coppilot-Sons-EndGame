@@ -62,6 +62,7 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
     }
+
     @PostMapping("/forgotPassword")
     public ResponseEntity<?> forgotPassword(@RequestBody Map<String, String> request) {
         String identifier = request.get("identifier");
@@ -73,6 +74,7 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
     }
+
     @PostMapping("/resetPassword")
     public ResponseEntity<?> resetPassword(@RequestBody Map<String, String> request) {
         String token = request.get("token");

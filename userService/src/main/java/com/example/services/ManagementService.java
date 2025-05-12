@@ -23,9 +23,9 @@ public class ManagementService {
         this.userService = userService;
     }
 
-    public void blockUser(UUID userBlockingId, UUID userToBlockId) {
+    public void blockUser(String userBlockingId, UUID userToBlockId) {
         try {
-            User userBlocking = userService.getUserById(userBlockingId);
+            User userBlocking = userService.getUserById(UUID.fromString(userBlockingId));
             User userToBlock = userService.getUserById(userToBlockId);
             if (userBlocking.getBlockedUsers() == null) {
                 userBlocking.setBlockedUsers(new HashSet<>());
@@ -39,9 +39,9 @@ public class ManagementService {
         }
     }
 
-    public void unBlockUser(UUID userBlockingId, UUID userToUnBlockId) {
+    public void unBlockUser(String userBlockingId, UUID userToUnBlockId) {
         try {
-            User userBlocking = userService.getUserById(userBlockingId);
+            User userBlocking = userService.getUserById(UUID.fromString(userBlockingId));
             User userToUnBlock = userService.getUserById(userToUnBlockId);
             if (userBlocking.getBlockedUsers() != null) {
                 userBlocking.getBlockedUsers().remove(userToUnBlock);

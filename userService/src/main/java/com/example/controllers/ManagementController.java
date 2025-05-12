@@ -19,8 +19,8 @@ public class ManagementController {
         this.managementService = managementService;
     }
 
-    @PutMapping("/block/{blockerId}/{blockedId}")
-    public ResponseEntity<String> blockUser(@PathVariable UUID blockerId, @PathVariable UUID blockedId) {
+    @PutMapping("/block/{blockedId}")
+    public ResponseEntity<String> blockUser(@RequestHeader String blockerId, @PathVariable UUID blockedId) {
         try {
             managementService.blockUser(blockerId, blockedId);
             return ResponseEntity.ok("User blocked successfully");
@@ -29,8 +29,8 @@ public class ManagementController {
         }
     }
 
-    @PutMapping("/unblock/{blockerId}/{blockedId}")
-    public ResponseEntity<String> unblockUser(@PathVariable UUID blockerId, @PathVariable UUID blockedId) {
+    @PutMapping("/unblock/{blockedId}")
+    public ResponseEntity<String> unblockUser(@RequestHeader String blockerId, @PathVariable UUID blockedId) {
         try {
             managementService.unBlockUser(blockerId, blockedId);
             return ResponseEntity.ok("User unblocked successfully");

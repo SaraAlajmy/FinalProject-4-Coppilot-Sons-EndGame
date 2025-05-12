@@ -1,6 +1,7 @@
 package com.example.services;
 
 import com.example.clients.EmailClient;
+import com.example.models.EmailRequest;
 import com.example.models.User;
 import com.example.repositories.UserRepository;
 import com.example.services.loginStrategies.LoginStrategy;
@@ -194,14 +195,8 @@ public class UserService {
         }
 
         String resetToken = jwtService.generateResetToken(user.getUsername());
-//        String link = "http://localhost:8080/auth/resetPassword?token=" + resetToken;
-//        EmailRequest request = new EmailRequest(
-//                user.getEmail(),
-//                "Reset Your Password",
-//                "Click here to reset: " + link
-//        );
-//
-//        emailClient.sendEmail(request);
+
+        emailClient.sendEmail(resetToken, user.getEmail(), user.getUsername());
 
         logger.info("Password reset token generated successfully");
     }
