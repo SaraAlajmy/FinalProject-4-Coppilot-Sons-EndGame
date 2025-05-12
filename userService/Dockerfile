@@ -5,7 +5,7 @@ ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} app.jar
 
 # Expose port
-EXPOSE 8080
+EXPOSE 8086
 
 # Run the jar
 ENTRYPOINT ["java", "-jar", "app.jar"]
