@@ -173,8 +173,8 @@ public class UserService {
         );
     }
 
-    public void logout(String userId, String token) {
-       User user = userRepository.findById(UUID.fromString(userId)).orElse(null);
+    public void logout(UUID userId, String token) {
+       User user = userRepository.findById(userId).orElse(null);
         if (user != null) {
             user.setRefreshToken(null);
             userRepository.save(user);

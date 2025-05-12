@@ -12,7 +12,7 @@ public  class Routing {
     public RouteLocator myRoutes(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route(p -> p
-                        .path("/auth/**", "/user/**")
+                        .path("/auth/**", "/user/**", "/manageUser/**")
                         .uri("http://localhost:8086"))
                 .build();
     }

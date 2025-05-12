@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
     public interface EmailClient {
 
         @PostMapping("/notifications/reset-password")
-        void sendEmail(@RequestParam String resetPasswordToken,
+        void sendEmail(@RequestParam String resetLink,
                        @RequestParam String recipientEmail,
                        @RequestParam String recipientName);
     }

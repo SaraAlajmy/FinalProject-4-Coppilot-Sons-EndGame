@@ -20,9 +20,9 @@ public class ManagementController {
     }
 
     @PutMapping("/block/{blockedId}")
-    public ResponseEntity<String> blockUser(@RequestHeader String blockerId, @PathVariable UUID blockedId) {
+    public ResponseEntity<String> blockUser(@RequestHeader UUID userId, @PathVariable UUID blockedId) {
         try {
-            managementService.blockUser(blockerId, blockedId);
+            managementService.blockUser(userId, blockedId);
             return ResponseEntity.ok("User blocked successfully");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error blocking user: " + e.getMessage());
@@ -30,9 +30,9 @@ public class ManagementController {
     }
 
     @PutMapping("/unblock/{blockedId}")
-    public ResponseEntity<String> unblockUser(@RequestHeader String blockerId, @PathVariable UUID blockedId) {
+    public ResponseEntity<String> unblockUser(@RequestHeader UUID userId, @PathVariable UUID blockedId) {
         try {
-            managementService.unBlockUser(blockerId, blockedId);
+            managementService.unBlockUser(userId, blockedId);
             return ResponseEntity.ok("User unblocked successfully");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error unblocking user: " + e.getMessage());

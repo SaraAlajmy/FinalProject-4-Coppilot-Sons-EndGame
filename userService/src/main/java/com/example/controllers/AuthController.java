@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/auth")
@@ -23,6 +24,7 @@ public class AuthController {
 
 
     }
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
         String identifier = request.getIdentifier();
@@ -54,7 +56,7 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(@RequestHeader String userId, @RequestHeader("Authorization") String token){
+    public ResponseEntity<?> logout(@RequestHeader UUID userId, @RequestHeader("Authorization") String token){
         try {
             userService.logout(userId, token);
             return ResponseEntity.ok("Logged out successfully");
