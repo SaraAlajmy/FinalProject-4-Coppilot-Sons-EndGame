@@ -32,10 +32,12 @@ public class AuthService {
 
     public Mono<ResponseEntity<Map<String, Object>>> validateToken(String token) {
 
+
         if (isTokenBlacklisted(token)) {
             log.warn("🚫 Token is blacklisted: {}", token);
             return Mono.just(ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Unauthorized", "message", "Token is logged out")));
         }
+
         String redisKey = "token::" + token;
 
         try {
