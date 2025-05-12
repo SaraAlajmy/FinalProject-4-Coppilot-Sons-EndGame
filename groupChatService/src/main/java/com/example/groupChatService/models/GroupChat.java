@@ -140,6 +140,22 @@ public class GroupChat {
         public void setId(String id) {
             this.id = id;
         }
+        public groupChatBuilder addMember(String memberId){
+            this.members.add(memberId);
+            return this;
+        }
+        public groupChatBuilder removeMember(String memberId){
+            this.members.remove(memberId);
+            return this;
+        }
+        public groupChatBuilder makeAdmin(String memberId){
+            this.admins.add(memberId);
+            return this;
+        }
+        public groupChatBuilder removeAdmin(String memberId){
+            this.admins.remove(memberId);
+            return this;
+        }
 
 
         public GroupChat build() {
