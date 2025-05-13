@@ -2,9 +2,15 @@ spring:
   application:
     name: api-gateway
   cloud:
-    spring:
-      cloud:
-        gateway:
+    kubernetes:
+      discovery:
+        enabled: true
+        namespace: chat-app
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lowerCaseServiceId: true
       routes:
         - id: user-service
           uri: lb://user-service
@@ -12,18 +18,33 @@ spring:
             - Path=/user/**
             - Path=/auth/**
           filters:
-              - AuthenticationFilter
+            - AuthenticationFilter
 
         - id: chat-service
           uri: lb://chat-service
           predicates:
             - Path=/chat/**
+            - Path=/messages/**
+
+        - id: group-chat-service
+          uri: lb://group-chat-service
+          predicates:
+            - Path=/group/**
+
+        - id: notification-service
+          uri: lb://notification-service
+          predicates:
+            - Path=/notifications/**
+
   data:
     redis:
-      host: redis_cache
+      host: redis-service
       port: 6379
   cache: 
     type: redis
+
+server:
+  port: 8080
 
 #    need to be updated with the rest also for each service it has
 #  to have euroko client in its pom.xml file to be
