@@ -21,6 +21,20 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping("/")
+    public ResponseEntity<User> getUserById(@RequestHeader UUID userId) {
+        try {
+            User user = userService.getUserById(userId);
+            if (user != null) {
+                return ResponseEntity.ok(user);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
     @GetMapping("/getAll")
     public ResponseEntity<List<User>> getAllUsers() {
         try {
