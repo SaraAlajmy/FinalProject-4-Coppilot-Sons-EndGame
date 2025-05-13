@@ -31,10 +31,11 @@ public class RedisCacheConfig {
         Map<String, RedisCacheConfiguration> cacheConfigurations = new HashMap<>();
 
         // Cache configuration for Tokens
-        cacheConfigurations.put("token",
-                defaultConfig.serializeValuesWith(
-                        RedisSerializationContext.SerializationPair.fromSerializer(
-                                new Jackson2JsonRedisSerializer<>(Map.class))));
+
+        cacheConfigurations.put("blacklistedTokens", defaultConfig.serializeValuesWith(
+                RedisSerializationContext.SerializationPair.fromSerializer(
+                        new Jackson2JsonRedisSerializer<>(Map.class))));
+
 
         return RedisCacheManager.builder(redisConnectionFactory)
                 .cacheDefaults(defaultConfig) // Default settings
