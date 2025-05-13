@@ -1,6 +1,7 @@
 package com.example.gateway.services;
 
-import com.example.gateway.clients.AuthClient;
+
+import com.example.gateway.clients.WebClientAuthClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +21,11 @@ public class AuthService {
 
     private static final Logger log = LoggerFactory.getLogger(AuthService.class);
 
-    private final AuthClient authClient;
+    private final WebClientAuthClient authClient;
     private final RedisTemplate<String, Map<String, Object>> redisTemplate;
     private TokenBlacklistService tokenBlacklistService;
 
-    public AuthService(AuthClient authClient, RedisTemplate<String, Map<String, Object>> redisTemplate, TokenBlacklistService tokenBlacklistService) {
+    public AuthService(WebClientAuthClient authClient, RedisTemplate<String, Map<String, Object>> redisTemplate, TokenBlacklistService tokenBlacklistService) {
         this.authClient = authClient;
         this.redisTemplate = redisTemplate;
         this.tokenBlacklistService = tokenBlacklistService;
@@ -52,29 +53,30 @@ public class AuthService {
             log.error("⚠️ Redis GET failed for key '{}': {}", redisKey, e.getMessage(), e);
         }
 
-        return Mono.fromCallable(() -> {
-            log.info("🔐 Calling auth service to validate token: {}", token);
-            ResponseEntity<Map<String, Object>> response = authClient.validateToken(token);
-            log.info("🔍 Token response body: {}", response.getBody());
-            Long exp = extractExpiry(response.getBody());
-            if (exp != null) {
-                long ttl = exp - Instant.now().getEpochSecond();
-                if (ttl > 0) {
-                    try {
-                        redisTemplate.opsForValue().set(redisKey, response.getBody(), Duration.ofSeconds(ttl));
-                        log.info("📝 Cached token with TTL {} seconds (exp={}): {}", ttl, exp, redisKey);
-                    } catch (Exception e) {
-                        log.error("⚠️ Redis SET failed for key '{}': {}", redisKey, e.getMessage(), e);
+        return authClient.validateToken(token)
+                .doOnNext(response -> {
+                    log.info("🔍 Token response body: {}", response.getBody());
+                    Long exp = extractExpiry(response.getBody());
+                    if (exp != null) {
+                        long ttl = exp - Instant.now().getEpochSecond();
+                        if (ttl > 0) {
+                            try {
+                                redisTemplate.opsForValue().set(redisKey, response.getBody(), Duration.ofSeconds(ttl));
+                                log.info("📝 Cached token with TTL {} seconds (exp={}): {}", ttl, exp, redisKey);
+                            } catch (Exception e) {
+                                log.error("⚠️ Redis SET failed for key '{}': {}", redisKey, e.getMessage(), e);
+                            }
+                        } else {
+                            log.warn("⏳ Token already expired or TTL too short (exp={}, now={})", exp, Instant.now().getEpochSecond());
+                        }
+                    } else {
+                        log.warn("⚠️ Could not extract 'exp' from token response body");
                     }
-                } else {
-                    log.warn("⏳ Token already expired or TTL too short (exp={}, now={})", exp, Instant.now().getEpochSecond());
-                }
-            } else {
-                log.warn("⚠️ Could not extract 'exp' from token response body");
-            }
-
-            return response;
-        }).subscribeOn(Schedulers.boundedElastic());
+                })
+                .onErrorResume(e -> {
+                    log.error("⚠️ Token validation failed: {}", e.getMessage(), e);
+                    return Mono.just(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
+                });
     }
 
     private Long extractExpiry(Map<String, Object> body) {

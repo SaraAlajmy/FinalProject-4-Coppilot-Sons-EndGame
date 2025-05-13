@@ -1,37 +1,53 @@
+server:
+  port: 8765
 spring:
-  application:
-    name: api-gateway
+  main:
+    web-application-type: reactive
   cloud:
-    spring:
-      cloud:
-        gateway:
+    gateway:
+      inetutils:
+        default-hostname: localhost
+        default-ip-address: 127.0.0.1
       routes:
         - id: user-service
-          uri: lb://user-service
+          uri: http://localhost:8086
           predicates:
-            - Path=/user/**
-            - Path=/auth/**
+            - Path=/auth/**,/user/**,/manageUser/**
           filters:
-              - AuthenticationFilter
+            - StripPrefix=0
 
         - id: chat-service
-          uri: lb://chat-service
+          uri: http://localhost:8080
           predicates:
-            - Path=/chat/**
+            - Path=/api/messages/**,/chats/**
+          filters:
+            - StripPrefix=0
+
+        - id: notification-service
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/notification-settings/**,/debug/**,/api/seed/notifications/**,/notifications/**
+          filters:
+            - StripPrefix=0
+        - id: groupChatService
+          uri: http://localhost:8083
+          predicates:
+            - Path=/groupChat/**,/groupMessage/**
+          filters:
+            - StripPrefix=0
+      httpclient:
+        connect-timeout: 1000
+        response-timeout: 5s
+
+  cache:
+    type: redis
   data:
     redis:
-      host: redis_cache
+      host: localhost
       port: 6379
-  cache: 
-    type: redis
 
-#    need to be updated with the rest also for each service it has
-#  to have euroko client in its pom.xml file to be
-#  noticied by the
-#registery
+jwt:
+  blacklist:
+    expiration-time: 300
 
-
-feign:
-  hystrix:
-    enabled: true
 
