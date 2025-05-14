@@ -26,7 +26,8 @@ public class TokenBlacklistService {
         token = token.startsWith("Bearer ")
                 ? token.substring(7)
                 : token;
-        redisTemplate.opsForValue().set(token, new HashMap<>(), blacklistExpirationTime, TimeUnit.SECONDS);
+        String redisKey = "blacklist::" + token;
+        redisTemplate.opsForValue().set(redisKey, new HashMap<>(), blacklistExpirationTime, TimeUnit.SECONDS);
     }
 
     // Check if a token is blacklisted

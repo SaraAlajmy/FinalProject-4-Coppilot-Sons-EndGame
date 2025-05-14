@@ -36,6 +36,11 @@ public class RedisCacheConfig {
                         RedisSerializationContext.SerializationPair.fromSerializer(
                                 new Jackson2JsonRedisSerializer<>(Map.class))));
 
+        cacheConfigurations.put("blacklistedTokens", defaultConfig.serializeValuesWith(
+                RedisSerializationContext.SerializationPair.fromSerializer(
+                        new Jackson2JsonRedisSerializer<>(Map.class))));
+
+
         return RedisCacheManager.builder(redisConnectionFactory)
                 .cacheDefaults(defaultConfig) // Default settings
                 .withInitialCacheConfigurations(cacheConfigurations) // Custom per-cache configurations
