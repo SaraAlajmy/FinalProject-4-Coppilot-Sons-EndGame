@@ -46,10 +46,10 @@ public class UserController {
 
     // TODO: when adding get userbyid endpoint remember it returns null if user not found
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable UUID id, @RequestBody User user) {
+    @PutMapping("/update")
+    public ResponseEntity<User> updateUser(@RequestHeader UUID userId, @RequestBody User user) {
         try {
-            return ResponseEntity.ok(userService.updateUser(id, user));
+            return ResponseEntity.ok(userService.updateUser(userId, user));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
@@ -85,8 +85,8 @@ public class UserController {
         }
     }
 
-    @GetMapping("/getUserEmail/{userId}")
-    public ResponseEntity<String> getUserEmail(@PathVariable UUID userId){
+    @GetMapping("/getUserEmail")
+    public ResponseEntity<String> getUserEmail(@RequestHeader UUID userId){
         try{
             String email = userService.getUserEmail(userId);
             return ResponseEntity.ok(email);
