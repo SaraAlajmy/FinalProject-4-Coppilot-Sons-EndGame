@@ -93,7 +93,8 @@ public class UserService {
         return userRepository.save(existingUser);
     }
 
-    public void deleteUser(UUID id) {
+    public void deleteUser(UUID id, String token) {
+
         try {
             userRepository.deleteById(id);
             logger.info("User with ID {} deleted successfully", id);
@@ -101,6 +102,15 @@ public class UserService {
             logger.error("Error deleting trip: {}", e.getMessage());
             throw e;
         }
+
+        try{
+            tokenBlacklistService.blacklist(token);
+            logger.info("Token blacklisted successfully");
+        } catch (Exception e) {
+            logger.error("Error logging out user: {}", e.getMessage());
+            throw e;
+        }
+
     }
 
     public User getUserByUsername(String username) {
