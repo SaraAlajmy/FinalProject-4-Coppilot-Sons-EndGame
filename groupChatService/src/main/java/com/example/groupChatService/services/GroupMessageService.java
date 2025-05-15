@@ -91,43 +91,6 @@ public class GroupMessageService {
 
 
     @AdminOnly
-//    public GroupMessage sendMessage(SendMessageRequest request) { //notify
-//        GroupChat group = groupChatRepo.findById(request.getGroupId())
-//                .orElseThrow(() -> new RuntimeException("Group not found"));
-//
-//        if (!group.getMembers().contains(request.getSenderId())) {
-//            throw new RuntimeException("Sender is not a member of the group");
-//        }
-//
-//        try {
-//            Method method = this.getClass().getMethod("sendMessage", SendMessageRequest.class);
-//            if (method.isAnnotationPresent(AdminOnly.class)) {
-//                if (group.isAdminOnlyMessages() && !group.getAdmins().contains(request.getSenderId())) {
-//                    throw new RuntimeException("Access denied: Only admins can send messages in this group");
-//                }
-//            }
-//        } catch (NoSuchMethodException e) {
-//            throw new RuntimeException("Reflection error: " + e.getMessage());
-//        }
-//
-//        List<String> mentionedUserIds = extractMentions(request.getContent());
-//        for (String mentioned : mentionedUserIds) {
-//            if (!group.getMembers().contains(mentioned)) {
-//                throw new RuntimeException("Mentioned user @" + mentioned + " is not in the group");
-//            }
-//
-//        }
-//
-//        GroupMessage message = new GroupMessage(request.getGroupId(), request.getSenderId(), request.getContent());
-//        GroupMessage saved = groupMessageRepo.save(message);
-//
-//        for (MessageListener listener : listeners) {
-//            listener.onNewMessage(saved);
-//        }
-//
-//        return saved;
-//    }
-
     public GroupMessage sendMessage(SendMessageRequest request) { //notify
         GroupChat group = groupChatRepo.findById(request.getGroupId())
                 .orElseThrow(() -> new RuntimeException("Group not found"));
@@ -155,11 +118,11 @@ public class GroupMessageService {
 
         }
 
-        GroupMessage message = new GroupMessage(request.getGroupId(), request.getSenderId(), request.getContent());
+        GroupMessage message = new GroupMessage(request.getGroupId(), request.getSenderId(), request.getContent(), mentionedUserIds);
         GroupMessage saved = groupMessageRepo.save(message);
 
         for (MessageListener listener : listeners) {
-            listener.onNewMessage(saved);
+            listener.onNewMessage(saved, request.getSenderUsername());
         }
 
         return saved;
