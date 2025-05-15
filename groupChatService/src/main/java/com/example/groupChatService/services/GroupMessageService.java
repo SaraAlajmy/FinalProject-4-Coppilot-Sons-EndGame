@@ -27,6 +27,7 @@ public class GroupMessageService {
         this.groupMessageRepo = groupMessageRepo;
         this.groupChatRepo = groupChatRepo;
     }
+
     public void addListener(MessageListener listener) {
         listeners.add(listener);
     }
@@ -34,14 +35,17 @@ public class GroupMessageService {
     public void removeListener(MessageListener listener) {
         listeners.remove(listener);
     }
+
     public GroupMessage addGroupMessage(GroupMessage groupMessage) {
         return groupMessageRepo.save(groupMessage);
     }
+
     public List<GroupMessage> getAllGroupMessages() {
         return groupMessageRepo.findAll();
     }
+
     public GroupMessage getGroupMessageById(String id) {
-        GroupMessage groupMessage=groupMessageRepo.findById(id).orElseThrow(() -> new RuntimeException("Group message not found with id:" + id));
+        GroupMessage groupMessage = groupMessageRepo.findById(id).orElseThrow(() -> new RuntimeException("Group message not found with id:" + id));
         return groupMessage;
     }
 
@@ -50,6 +54,7 @@ public class GroupMessageService {
         existingGroupMessage.setContent(content);
         return groupMessageRepo.save(existingGroupMessage);
     }
+
     public String deleteGroupMessage(String id) {
         GroupMessage groupMessage = groupMessageRepo.findById(id).orElseThrow(() -> new RuntimeException("Group message not found with id:" + id));
         groupMessageRepo.deleteById(id);
@@ -63,6 +68,7 @@ public class GroupMessageService {
         groupMessageRepo.save(groupMessage);
         return "Group message with id: " + id + " archived successfully";
     }
+
     public String unarchiveGroupMessage(String id) {
         GroupMessage groupMessage = groupMessageRepo.findById(id).orElseThrow(() -> new RuntimeException("Group message not found with id:" + id));
         // TODO: validate user is in this group
@@ -70,55 +76,94 @@ public class GroupMessageService {
         groupMessageRepo.save(groupMessage);
         return "Group message with id: " + id + " unarchived successfully";
     }
+
     public List<GroupMessage> getArchivedGroupMessages(String groupId) {
         return groupMessageRepo.findByGroupIdAndArchived(groupId, true);
     }
+
     public List<GroupMessage> getUnarchivedGroupMessages(String groupId) {
         return groupMessageRepo.findByGroupIdAndArchived(groupId, false);
     }
+
     public List<GroupMessage> filterGroupMessagesBySenderId(String groupId, String senderId) {
         return groupMessageRepo.findByGroupIdAndSenderId(groupId, senderId);
     }
 
 
-   
     @AdminOnly
-public GroupMessage sendMessage(SendMessageRequest request) { //notify
-    GroupChat group = groupChatRepo.findById(request.getGroupId())
-            .orElseThrow(() -> new RuntimeException("Group not found"));
+//    public GroupMessage sendMessage(SendMessageRequest request) { //notify
+//        GroupChat group = groupChatRepo.findById(request.getGroupId())
+//                .orElseThrow(() -> new RuntimeException("Group not found"));
+//
+//        if (!group.getMembers().contains(request.getSenderId())) {
+//            throw new RuntimeException("Sender is not a member of the group");
+//        }
+//
+//        try {
+//            Method method = this.getClass().getMethod("sendMessage", SendMessageRequest.class);
+//            if (method.isAnnotationPresent(AdminOnly.class)) {
+//                if (group.isAdminOnlyMessages() && !group.getAdmins().contains(request.getSenderId())) {
+//                    throw new RuntimeException("Access denied: Only admins can send messages in this group");
+//                }
+//            }
+//        } catch (NoSuchMethodException e) {
+//            throw new RuntimeException("Reflection error: " + e.getMessage());
+//        }
+//
+//        List<String> mentionedUserIds = extractMentions(request.getContent());
+//        for (String mentioned : mentionedUserIds) {
+//            if (!group.getMembers().contains(mentioned)) {
+//                throw new RuntimeException("Mentioned user @" + mentioned + " is not in the group");
+//            }
+//
+//        }
+//
+//        GroupMessage message = new GroupMessage(request.getGroupId(), request.getSenderId(), request.getContent());
+//        GroupMessage saved = groupMessageRepo.save(message);
+//
+//        for (MessageListener listener : listeners) {
+//            listener.onNewMessage(saved);
+//        }
+//
+//        return saved;
+//    }
 
-    if (!group.getMembers().contains(request.getSenderId())) {
-        throw new RuntimeException("Sender is not a member of the group");
-    }
+    public GroupMessage sendMessage(SendMessageRequest request) { //notify
+        GroupChat group = groupChatRepo.findById(request.getGroupId())
+                .orElseThrow(() -> new RuntimeException("Group not found"));
 
-    try {
-        Method method = this.getClass().getMethod("sendMessage", SendMessageRequest.class);
-        if (method.isAnnotationPresent(AdminOnly.class)) {
-            if (group.isAdminOnlyMessages() && !group.getAdmins().contains(request.getSenderId())) {
-                throw new RuntimeException("Access denied: Only admins can send messages in this group");
+        if (!group.getMembers().contains(request.getSenderId())) {
+            throw new RuntimeException("Sender is not a member of the group");
+        }
+
+        try {
+            Method method = this.getClass().getMethod("sendMessage", SendMessageRequest.class);
+            if (method.isAnnotationPresent(AdminOnly.class)) {
+                if (group.isAdminOnlyMessages() && !group.getAdmins().contains(request.getSenderId())) {
+                    throw new RuntimeException("Access denied: Only admins can send messages in this group");
+                }
             }
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException("Reflection error: " + e.getMessage());
         }
-    } catch (NoSuchMethodException e) {
-        throw new RuntimeException("Reflection error: " + e.getMessage());
-    }
 
-    List<String> mentionedUserIds = extractMentions(request.getContent());
-    for (String mentioned : mentionedUserIds) {
-        if (!group.getMembers().contains(mentioned)) {
-            throw new RuntimeException("Mentioned user @" + mentioned + " is not in the group");
+        List<String> mentionedUserIds = extractMentions(request.getContent());
+        for (String mentioned : mentionedUserIds) {
+            if (!group.getMembers().contains(mentioned)) {
+                throw new RuntimeException("Mentioned user @" + mentioned + " is not in the group");
+            }
+
         }
+
+        GroupMessage message = new GroupMessage(request.getGroupId(), request.getSenderId(), request.getContent());
+        GroupMessage saved = groupMessageRepo.save(message);
+
+        for (MessageListener listener : listeners) {
+            listener.onNewMessage(saved);
+        }
+
+        return saved;
     }
-
-    GroupMessage message = new GroupMessage(request.getGroupId(), request.getSenderId(), request.getContent());
-    GroupMessage saved = groupMessageRepo.save(message);
-
-    for (MessageListener listener : listeners) {
-        listener.onNewMessage(saved);
-    }
-
-    return saved;
-}
-
 
     private List<String> extractMentions(String content) {
         List<String> mentions = new ArrayList<>();

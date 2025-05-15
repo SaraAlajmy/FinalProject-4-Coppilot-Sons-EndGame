@@ -18,8 +18,9 @@ public class NotificationListener implements MessageListener {
     public NotificationListener(RabbitTemplate rabbitTemplate) {
         this.rabbitTemplate = rabbitTemplate;
         this.objectMapper = new ObjectMapper();
-        this.objectMapper.registerModule(new JavaTimeModule()); 
+        this.objectMapper.registerModule(new JavaTimeModule());
     }
+
 
     @Override
     public void onNewMessage(GroupMessage message) {
