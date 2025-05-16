@@ -41,6 +41,8 @@ public class Message {
         this.receiverId = receiverId;
         this.content = content;
         this.isDeleted = false;
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = this.createdAt;
     }
 
 
