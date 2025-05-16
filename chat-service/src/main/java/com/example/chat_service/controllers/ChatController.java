@@ -41,9 +41,9 @@ public class ChatController {
      * @param userId The ID of the user whose chats are to be retrieved.
      * @return ResponseEntity containing a list of Chats and HTTP status.
      */
-    @GetMapping("/user/{userId}") // Changed path to be relative to /chats
+    @GetMapping("/user") // Changed path to be relative to /chats
     @ResponseBody
-    public ResponseEntity<List<Chat>> getChatsForUser(@PathVariable String userId) {
+    public ResponseEntity<List<Chat>> getChatsForUser(@RequestHeader("userId") String userId) {
         List<Chat> chats = chatService.getChatsForUser(userId);
         return ResponseEntity.ok(chats);
     }
