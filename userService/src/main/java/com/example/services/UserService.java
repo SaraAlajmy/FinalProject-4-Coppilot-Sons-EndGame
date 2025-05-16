@@ -88,6 +88,10 @@ public class UserService {
         User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
+        if(user.getId() != null && !user.getId().equals(existingUser.getId())) {
+            throw new RuntimeException("User ID mismatch");
+        }
+
         Utils.copyPropertiesWithReflection(user, existingUser);
 
         return userRepository.save(existingUser);
