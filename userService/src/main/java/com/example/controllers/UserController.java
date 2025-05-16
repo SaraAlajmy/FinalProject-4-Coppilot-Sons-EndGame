@@ -75,11 +75,11 @@ public class UserController {
 //        }
 //    }
 
-    @GetMapping("/isBlocked/{blockerId}/{blockedId}")
-    public ResponseEntity<Boolean> isBlocked(@PathVariable UUID blockerId, @PathVariable UUID blockedId){
+    @GetMapping("/areBlocking/{firstUser}/{secondUser}")
+    public ResponseEntity<Boolean> areBlocking(@PathVariable UUID firstUser, @PathVariable UUID secondUser){
         try{
-            boolean isBlocked = userService.isBlocked(blockerId, blockedId);
-            return ResponseEntity.ok(isBlocked);
+            boolean areBlocking = userService.areBlocking(firstUser, secondUser);
+            return ResponseEntity.ok(areBlocking);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
         }

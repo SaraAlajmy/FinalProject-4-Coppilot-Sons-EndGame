@@ -247,15 +247,19 @@ public class UserService {
 
     }
 
-    public boolean isBlocked(UUID userBlockingId, UUID userToCheckId) {
-        try {
-            User userBlocking = getUserById(userBlockingId);
-            User userToCheck = getUserById(userToCheckId);
-            if (userBlocking.getBlockedUsers() != null) {
-                return userBlocking.getBlockedUsers().contains(userToCheck);
-            }
-            return false;
-        } catch (Exception e) {
+    private boolean isBlocked(User userBlocking, User userToCheck) {
+        if (userBlocking.getBlockedUsers() != null) {
+            return userBlocking.getBlockedUsers().contains(userToCheck);
+        }
+        return false;
+    }
+
+    public boolean areBlocking(UUID firstUserId, UUID secondUserId){
+        try{
+            User firstUser = getUserById(firstUserId);
+            User secondUser = getUserById(secondUserId);
+            return isBlocked(firstUser, secondUser) || isBlocked(secondUser, firstUser);
+        } catch (Exception e){
             logger.error("Error checking block status: {}", e.getMessage());
             throw e;
         }
