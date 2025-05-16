@@ -24,7 +24,7 @@ public class NotificationListener implements MessageListener {
 
 
     @Override
-    public void onNewMessage(GroupMessage message, String senderUsername) {
+    public void onNewMessage(GroupMessage message, GroupChat groupChat, String senderUsername) {
         // get all users other than the sender of the message
         GroupChat group = groupChatRepo.findById(message.getGroupId()).orElseThrow(() -> new RuntimeException("Group not found with id:" + message.getGroupId()));
 
@@ -56,7 +56,7 @@ public class NotificationListener implements MessageListener {
                 } catch (Exception e) {
                     throw new RuntimeException("Error sending notification: " + e.getMessage());
                 }
-            } 
+            }
         }
 
         notification.setType("group_message");

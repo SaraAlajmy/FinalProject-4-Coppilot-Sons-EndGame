@@ -119,8 +119,11 @@ public class GroupMessageController {
 
 
     @PostMapping("/send")
-    public GroupMessage sendMessage(@RequestBody SendMessageRequest request) {
-        return groupMessageService.sendMessage(request); 
+    public GroupMessage sendMessage(
+        @RequestBody SendMessageRequest request,
+        @RequestHeader("userName") String userName
+    ) {
+        return groupMessageService.sendMessage(request, userName);
     }
     
 
