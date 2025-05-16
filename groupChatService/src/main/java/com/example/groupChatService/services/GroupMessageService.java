@@ -109,7 +109,12 @@ public GroupMessage sendMessage(SendMessageRequest request) { //notify
         }
     }
 
-    GroupMessage message = new GroupMessage(request.getGroupId(), request.getSenderId(), request.getContent());
+    GroupMessage message = new GroupMessage(
+        request.getGroupId(),
+        request.getSenderId(),
+        request.getContent(),
+        mentionedUserIds
+    );
     GroupMessage saved = groupMessageRepo.save(message);
 
     for (MessageListener listener : listeners) {

@@ -30,6 +30,14 @@ public class GroupMessage {
         this.archived = false;
     }
 
+    public GroupMessage(String groupId, String senderId, String content, List<String> mentionedUserIds) {
+        this.groupId = groupId;
+        this.senderId = senderId;
+        this.content = content;
+        this.mentionedUserIds = mentionedUserIds;
+        this.archived = false;
+    }
+
     public String getGroupId() {
         return groupId;
     }
@@ -74,5 +82,9 @@ public class GroupMessage {
 
     public void setArchived(boolean archived) {
         this.archived = archived;
+    }
+
+    public List<String> getMentionedUserIds() {
+        return mentionedUserIds;
     }
 }
