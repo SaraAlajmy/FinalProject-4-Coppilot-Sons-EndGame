@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: group-chat-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: group-chat-service
+  template:
+    metadata:
+      labels:
+        app: group-chat-service
+    spec:
+      containers:
+        - name: group-chat-service
+          image: farahalfawzy/group-chat-service:latest  # Replace with the actual image for your app
+          ports:
+            - containerPort: 8086  # Exposed port inside the container
+          env:
+            - name: SPRING_DATA_MONGODB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret
+                  key: URI
+            - name: SPRING_DATA_MONGODB_DATABASE
+              value: group_chat_db
+            - name: SPRING_RABBITMQ_HOST
+              value: rabbitmq
+            - name: SPRING_RABBITMQ_PORT
+              value: "5672"
+            - name: SPRING_RABBITMQ_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: rabbitmq-secret
+                  key: RABBITMQ_DEFAULT_USER
+            - name: SPRING_RABBITMQ_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: rabbitmq-secret
+                  key: RABBITMQ_DEFAULT_PASS
+            - name: SPRING_CACHE_TYPE
+              value: "redis"
+            - name: SPRING_DATA_REDIS_HOST
+              value: "redis-service"
+            - name: SPRING_DATA_REDIS_PORT
+              value: "6379"
+
+
+
