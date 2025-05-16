@@ -13,4 +13,5 @@ public interface FavouriteMessageRepository extends MongoRepository<FavouriteMes
     Optional<FavouriteMessage> findByMessageIdAndUserId(String messageId, String userId);
     void deleteByMessageIdAndUserId(String messageId, String userId);
     boolean existsByMessageIdAndUserId(String messageId, String userId);
+    void deleteAllByMessageId(String messageId);
 }

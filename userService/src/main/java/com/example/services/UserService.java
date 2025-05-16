@@ -88,6 +88,10 @@ public class UserService {
         User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
+        if(user.getId() != null && !user.getId().equals(existingUser.getId())) {
+            throw new RuntimeException("User ID mismatch");
+        }
+
         Utils.copyPropertiesWithReflection(user, existingUser);
 
         return userRepository.save(existingUser);
@@ -125,9 +129,14 @@ public class UserService {
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
     public User register(User user) {
-        user.setPassword(encoder.encode(user.getPassword()));
-        userRepository.save(user);
-        return user;
+        try{
+            user.setPassword(encoder.encode(user.getPassword()));
+            userRepository.save(user);
+            return user;
+        } catch (Exception e) {
+            logger.error("Error registering user: {}", e.getMessage());
+            throw e;
+        }
     }
 
     public Map<String,String> verify(String identifier, String password, String loginType) {
@@ -238,15 +247,19 @@ public class UserService {
 
     }
 
-    public boolean isBlocked(UUID userBlockingId, UUID userToCheckId) {
-        try {
-            User userBlocking = getUserById(userBlockingId);
-            User userToCheck = getUserById(userToCheckId);
-            if (userBlocking.getBlockedUsers() != null) {
-                return userBlocking.getBlockedUsers().contains(userToCheck);
-            }
-            return false;
-        } catch (Exception e) {
+    private boolean isBlocked(User userBlocking, User userToCheck) {
+        if (userBlocking.getBlockedUsers() != null) {
+            return userBlocking.getBlockedUsers().contains(userToCheck);
+        }
+        return false;
+    }
+
+    public boolean areBlocking(UUID firstUserId, UUID secondUserId){
+        try{
+            User firstUser = getUserById(firstUserId);
+            User secondUser = getUserById(secondUserId);
+            return isBlocked(firstUser, secondUser) || isBlocked(secondUser, firstUser);
+        } catch (Exception e){
             logger.error("Error checking block status: {}", e.getMessage());
             throw e;
         }

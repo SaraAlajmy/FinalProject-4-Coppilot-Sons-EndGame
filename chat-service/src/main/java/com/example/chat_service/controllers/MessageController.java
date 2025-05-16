@@ -1,49 +1,67 @@
 package com.example.chat_service.controllers;
 
 import com.example.chat_service.dto.MessageRequestDTO;
+import com.example.chat_service.exceptions.UnauthorizedOperationException;
 import com.example.chat_service.models.Message;
 import com.example.chat_service.services.chat.MessageServiceProxy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/messages") // Base route
+@RequestMapping("/api/messages")
 public class MessageController {
+    private static final Logger logger = LoggerFactory.getLogger(MessageController.class);
 
     @Autowired
     private MessageServiceProxy messageService;
 
     @PostMapping("/send")
-    public void sendMessage(@RequestBody MessageRequestDTO dto, @RequestHeader("userId") String userId, @RequestHeader("userName") String userName) {
+    public ResponseEntity<?> sendMessage(@RequestBody MessageRequestDTO dto, @RequestHeader("userId") String userId, @RequestHeader("userName") String userName) {
+        logger.info("Received message send request from user {} to user {}", dto.getSenderId(), dto.getReceiverId());
+        
         if (!dto.getSenderId().equals(userId)) {
-            throw new IllegalArgumentException("Sender ID does not match the authenticated user ID.");
+            logger.warn("Unauthorized attempt: Sender ID {} does not match authenticated user ID {}", dto.getSenderId(), userId);
+            throw new UnauthorizedOperationException("Sender ID does not match the authenticated user ID.");
         }
-        messageService.sendMessage(dto, userName);
+        
+        Message message = messageService.sendMessage(dto, userName);
+        logger.info("Message sent successfully from {} to {}", dto.getSenderId(), dto.getReceiverId());
+        return new ResponseEntity<>(message, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{messageId}")
-        public void deleteMessage(@PathVariable String messageId, @RequestHeader("userId") String userId) {
-            messageService.deleteMessage(messageId, userId);
+    public ResponseEntity<?> deleteMessage(@PathVariable String messageId, @RequestHeader("userId") String userId) {
+        messageService.deleteMessage(messageId, userId);
+        return new ResponseEntity<>("Message deleted successfully", HttpStatus.OK);
     }
 
     @PostMapping("/{messageId}/favorite")
-    public void markAsFavorite(@PathVariable String messageId, @RequestHeader("userId") String userId) {
+    public ResponseEntity<?> markAsFavorite(@PathVariable String messageId, @RequestHeader("userId") String userId) {
         messageService.markAsFavorite(messageId, userId);
+        return new ResponseEntity<>("Message marked as favorite successfully", HttpStatus.OK);
     }
 
     @DeleteMapping("/{messageId}/favorite")
-    public void unmarkAsFavorite(@PathVariable String messageId, @RequestHeader("userId") String userId) {
+    public ResponseEntity<?> unmarkAsFavorite(@PathVariable String messageId, @RequestHeader("userId") String userId) {
         messageService.unmarkAsFavorite(messageId, userId);
+        return new ResponseEntity<>("Message unmarked as favorite successfully", HttpStatus.OK);
     }
 
     @ResponseBody
-    @GetMapping("/chat/{chatId}")
-    public List<Message> getMessages(@PathVariable String chatId, @RequestHeader("userId") String userId) {
+    @GetMapping("/by-chat/{chatId}")
+    public List<Message> getMessagesByChat(@PathVariable String chatId, @RequestHeader("userId") String userId) {
+        logger.info("Getting all messages for chat {}", chatId);
         return messageService.getMessages(chatId, userId);
+       
     }
 
     @ResponseBody

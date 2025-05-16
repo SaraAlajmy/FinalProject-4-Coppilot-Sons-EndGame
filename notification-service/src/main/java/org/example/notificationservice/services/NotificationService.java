@@ -2,7 +2,6 @@ package org.example.notificationservice.services;
 
 import lombok.extern.slf4j.Slf4j;
 import org.example.notificationservice.clients.UserClient;
-import org.example.notificationservice.factories.UserDTOFactory;
 import org.example.notificationservice.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,6 @@ public class NotificationService {
     @Autowired
     public NotificationService(
         NotificationDeliveryService notificationDeliveryService,
-        UserDTOFactory userDTOFactory,
         NotificationSettingsService notificationSettingsService,
         UserClient userClient
     ) {

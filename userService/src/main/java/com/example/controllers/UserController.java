@@ -35,21 +35,21 @@ public class UserController {
         }
     }
 
-    @GetMapping("/getAll")
-    public ResponseEntity<List<User>> getAllUsers() {
-        try {
-            return ResponseEntity.ok(userService.getAllUsers());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
-    }
+//    @GetMapping("/getAll")
+//    public ResponseEntity<List<User>> getAllUsers() {
+//        try {
+//            return ResponseEntity.ok(userService.getAllUsers());
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+//        }
+//    }
 
     // TODO: when adding get userbyid endpoint remember it returns null if user not found
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable UUID id, @RequestBody User user) {
+    @PutMapping("/update")
+    public ResponseEntity<User> updateUser(@RequestHeader UUID userId, @RequestBody User user) {
         try {
-            return ResponseEntity.ok(userService.updateUser(id, user));
+            return ResponseEntity.ok(userService.updateUser(userId, user));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
@@ -65,28 +65,28 @@ public class UserController {
         }
     }
     //delete all users
-    @DeleteMapping("/deleteAll")
-    public String deleteAllUsers() {
-        try {
-            userService.deleteAllUsers();
-            return "All users deleted successfully";
-        } catch (Exception e) {
-            return "Error deleting users: " + e.getMessage();
-        }
-    }
+//    @DeleteMapping("/deleteAll")
+//    public String deleteAllUsers() {
+//        try {
+//            userService.deleteAllUsers();
+//            return "All users deleted successfully";
+//        } catch (Exception e) {
+//            return "Error deleting users: " + e.getMessage();
+//        }
+//    }
 
-    @GetMapping("/isBlocked/{blockerId}/{blockedId}")
-    public ResponseEntity<Boolean> isBlocked(@PathVariable UUID blockerId, @PathVariable UUID blockedId){
+    @GetMapping("/areBlocking/{firstUser}/{secondUser}")
+    public ResponseEntity<Boolean> areBlocking(@PathVariable UUID firstUser, @PathVariable UUID secondUser){
         try{
-            boolean isBlocked = userService.isBlocked(blockerId, blockedId);
-            return ResponseEntity.ok(isBlocked);
+            boolean areBlocking = userService.areBlocking(firstUser, secondUser);
+            return ResponseEntity.ok(areBlocking);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
         }
     }
 
-    @GetMapping("/getUserEmail/{userId}")
-    public ResponseEntity<String> getUserEmail(@PathVariable UUID userId){
+    @GetMapping("/getUserEmail")
+    public ResponseEntity<String> getUserEmail(@RequestHeader UUID userId){
         try{
             String email = userService.getUserEmail(userId);
             return ResponseEntity.ok(email);

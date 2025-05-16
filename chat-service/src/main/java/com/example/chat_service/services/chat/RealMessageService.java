@@ -33,7 +33,7 @@ public class RealMessageService implements MessageService, MessageSubject {
     }
 
     @Override
-    public void sendMessage(MessageRequestDTO dto, String senderUserName) {
+    public Message sendMessage(MessageRequestDTO dto, String senderUserName) {
         String chatId = chatService.createOrGetChat(dto.getSenderId(), dto.getReceiverId()).getChatId();
         Message message = new Message(
                 chatId,
@@ -45,7 +45,10 @@ public class RealMessageService implements MessageService, MessageSubject {
 
         messageRepository.save(message);
         notifyObservers(message);
+        return message;
+        
     }
+
 
     @Override
     public void editMessage(String messageId, String userId, String newContent) {
@@ -56,9 +59,16 @@ public class RealMessageService implements MessageService, MessageSubject {
 
     @Override
     public void deleteMessage(String messageId, String userId) {
-        Message message = messageRepository.findById(messageId).orElseThrow(() -> new RuntimeException("Message not found"));
-        message.setDeleted(true);
-        messageRepository.save(message);
+        try {
+            messageRepository.deleteById(messageId);
+            deleteFavouriteMessage(messageId, userId);
+        } catch (Exception e) {
+            throw new FavouriteMessageException("Failed to delete message", e);
+        }
+    }
+
+    public void deleteFavouriteMessage(String messageId, String userId) {
+        favouriteMessageRepository.deleteByMessageIdAndUserId(messageId, userId);
     }
 
     @Override
@@ -123,6 +133,11 @@ public class RealMessageService implements MessageService, MessageSubject {
     public boolean isChatParticipant(String chatId, String userId) {
         Chat chat = chatService.getChatById(chatId);
         return chat.getParticipantOneId().equals(userId) || chat.getParticipantTwoId().equals(userId);
+    }
+
+    public boolean isMessageSender(String messageId, String userId) {
+        Message message = messageRepository.findById(messageId).orElseThrow(() -> new RuntimeException("Message not found"));
+        return message.getSenderId().equals(userId);
     }
 
     @Override
