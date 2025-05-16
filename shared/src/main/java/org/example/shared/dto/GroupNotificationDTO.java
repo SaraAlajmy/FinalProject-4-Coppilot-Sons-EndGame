@@ -1,16 +1,40 @@
 package org.example.shared.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
+
+import java.time.LocalDateTime;
 
 @Data
-@SuperBuilder
 @NoArgsConstructor
-@AllArgsConstructor
 public abstract class GroupNotificationDTO extends MessageNotificationDTO {
     private String groupId;
     private String groupName;
     private String groupIcon;
+
+    public GroupNotificationDTO(
+        String recipientUserId,
+        String type,
+        String senderUserId,
+        String senderUsername,
+        String messageId,
+        String messageText,
+        LocalDateTime messageTimestamp,
+        String groupId,
+        String groupName,
+        String groupIcon
+    ) {
+        super(
+            recipientUserId,
+            type,
+            senderUserId,
+            senderUsername,
+            messageId,
+            messageText,
+            messageTimestamp
+        );
+        this.groupId = groupId;
+        this.groupName = groupName;
+        this.groupIcon = groupIcon;
+    }
 }

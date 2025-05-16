@@ -21,17 +21,14 @@ public class NotificationObserver implements Observer {
 
 
     private DirectMessageNotificationDTO messageToNotification(Message message) {
-        return DirectMessageNotificationDTO
-            .builder()
-            .recipientUserId(message.getReceiverId())
-            .senderUserId(message.getSenderId())
-            .senderUsername(message.getSenderUserName())
-            .messageId(message.getId())
-            .messageText(message.getContent())
-            .messageTimestamp(message.getCreatedAt())
-            .chatId(message.getChatId())
-            .build();
+        return new DirectMessageNotificationDTO(
+            message.getReceiverId(),
+            message.getSenderId(),
+            message.getSenderUserName(),
+            message.getId(),
+            message.getContent(),
+            message.getCreatedAt(),
+            message.getChatId()
+        );
     }
-
-
 }
