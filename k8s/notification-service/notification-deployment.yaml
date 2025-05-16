@@ -1,30 +1,40 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: group-chat-deployment
+  name: notification-deployment
+  labels:
+    app: notification-service
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: group-chat-service
+      app: notification-service
   template:
     metadata:
       labels:
-        app: group-chat-service
+        app: notification-service
     spec:
       containers:
-        - name: group-chat-service
-          image: farahalfawzy/group-chat-service:latest  # Replace with the actual image for your app
+        - name: notification-container
+          image: malakelwassif/notification-service:latest
           ports:
-            - containerPort: 8083  # Exposed port inside the container
+            - containerPort: 8082
           env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: k8s
+            - name: SPRING_CACHE_TYPE
+              value: "redis"
+            - name: SPRING_DATA_REDIS_HOST
+              value: "redis-service"
+            - name: SPRING_DATA_REDIS_PORT
+              value: "6379"
             - name: SPRING_DATA_MONGODB_URI
               valueFrom:
                 secretKeyRef:
                   name: mongo-secret
-                  key:  Groupchat_service_URI
+                  key:  Notification_service_URI
             - name: SPRING_DATA_MONGODB_DATABASE
-              value: group_chat_db
+              value: notification_db
             - name: SPRING_RABBITMQ_HOST
               value: rabbitmq
             - name: SPRING_RABBITMQ_PORT
@@ -39,12 +49,13 @@ spec:
                 secretKeyRef:
                   name: rabbitmq-secret
                   key: RABBITMQ_DEFAULT_PASS
-            - name: SPRING_CACHE_TYPE
-              value: "redis"
-            - name: SPRING_DATA_REDIS_HOST
-              value: "redis-service"
-            - name: SPRING_DATA_REDIS_PORT
-              value: "6379"
+            - name: USER_SERVICE_URL
+              value: http://user-service:8086
+
+
+
+
+
 
 
 

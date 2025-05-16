@@ -7,5 +7,5 @@ spec:
   selector:
     app: group-chat-Service
   ports:
-    - port: 8080
-      targetPort: 8082
+    - port: 8083
+      targetPort: 8083

@@ -7,5 +7,5 @@ spec:
   selector:
     app: notification-service
   ports:
-    - port: 8080
-      targetPort: 8083
+    - port: 8082
+      targetPort: 8082
