@@ -18,13 +18,15 @@ public class NotificationListener implements MessageListener {
     @Override
     public void onNewMessage(GroupMessage message, GroupChat groupChat, String senderUsername) {
         groupChat.getMembers().forEach(memberId -> {
-            NotificationDTO notificationDTO = notificationDtoFromGroupMessage(
-                message,
-                groupChat,
-                senderUsername,
-                memberId
-            );
-            notificationProducer.sendMessage(notificationDTO);
+            if (!memberId.equals(message.getSenderId())) {
+                NotificationDTO notificationDTO = notificationDtoFromGroupMessage(
+                    message,
+                    groupChat,
+                    senderUsername,
+                    memberId
+                );
+                notificationProducer.sendMessage(notificationDTO);
+            }
         });
     }
 
