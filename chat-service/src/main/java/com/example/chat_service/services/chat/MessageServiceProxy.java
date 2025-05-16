@@ -3,6 +3,7 @@ package com.example.chat_service.services.chat;
 import com.example.chat_service.clients.UserClient;
 import com.example.chat_service.dto.MessageRequestDTO;
 import com.example.chat_service.exceptions.UnauthorizedOperationException;
+import com.example.chat_service.exceptions.UserBlockedException;
 import com.example.chat_service.models.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,13 +25,20 @@ public class MessageServiceProxy implements MessageService {
     }
 
     @Override
-    public void sendMessage(MessageRequestDTO dto ,String senderUserName) {
-
-        if(userClient.isBlocked(UUID.fromString(dto.getReceiverId()), UUID.fromString(dto.getSenderId()))) {
-            throw new RuntimeException("Sender is blocked by the receiver");
+    public Message sendMessage(MessageRequestDTO dto, String senderUserName) {
+        try {
+            if(userClient.isBlocked(UUID.fromString(dto.getReceiverId()), UUID.fromString(dto.getSenderId()))) {
+                throw new UserBlockedException("Sender is blocked by the receiver");
+            }
+            Message message = realMessageService.sendMessage(dto, senderUserName);
+            return message;
+        } catch (Exception e) {
+            if (e instanceof UserBlockedException) {
+                throw e;
+            }
+            throw new UserBlockedException("Error checking user block status", e);
         }
-
-        realMessageService.sendMessage(dto, senderUserName);
+        
     }
 
     @Override

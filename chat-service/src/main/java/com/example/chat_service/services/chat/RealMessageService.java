@@ -33,7 +33,7 @@ public class RealMessageService implements MessageService, MessageSubject {
     }
 
     @Override
-    public void sendMessage(MessageRequestDTO dto, String senderUserName) {
+    public Message sendMessage(MessageRequestDTO dto, String senderUserName) {
         String chatId = chatService.createOrGetChat(dto.getSenderId(), dto.getReceiverId()).getChatId();
         Message message = new Message(
                 chatId,
@@ -45,7 +45,10 @@ public class RealMessageService implements MessageService, MessageSubject {
 
         messageRepository.save(message);
         notifyObservers(message);
+        return message;
+        
     }
+
 
     @Override
     public void editMessage(String messageId, String userId, String newContent) {
