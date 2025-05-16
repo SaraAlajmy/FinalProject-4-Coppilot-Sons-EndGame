@@ -1,11 +1,4 @@
-FROM openjdk:25-ea-4-jdk-oraclelinux9
-
-# Add app jar
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
-
-# Expose port
-EXPOSE 8765
-
-# Run the jar
-ENTRYPOINT ["java", "-jar", "app.jar"]
+FROM openjdk:17-slim
+VOLUME /tmp
+COPY target/api-gateway.jar app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
