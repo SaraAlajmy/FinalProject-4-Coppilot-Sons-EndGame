@@ -1,14 +1,33 @@
 package org.example.shared.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
+
+import java.time.LocalDateTime;
 
 @Data
-@SuperBuilder
 @NoArgsConstructor
-@AllArgsConstructor
 public class DirectMessageNotificationDTO extends MessageNotificationDTO {
     private String chatId;
+
+    public DirectMessageNotificationDTO(
+        String recipientUserId,
+        String senderUserId,
+        String senderUsername,
+        String messageId,
+        String messageText,
+        LocalDateTime messageTimestamp,
+        String chatId
+    ) {
+        super(
+            recipientUserId,
+            NotificationType.DIRECT_MESSAGE,
+            senderUserId,
+            senderUsername,
+            messageId,
+            messageText,
+            messageTimestamp
+        );
+        this.chatId = chatId;
+    }
 }

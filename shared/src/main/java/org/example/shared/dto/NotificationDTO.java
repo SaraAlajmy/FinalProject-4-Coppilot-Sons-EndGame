@@ -5,12 +5,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
-
-import java.time.LocalDateTime;
 
 @Data
-@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type", visible = true)
@@ -24,6 +20,5 @@ import java.time.LocalDateTime;
 
 public abstract class NotificationDTO {
     private String recipientUserId;
-    private String recipientEmail;
     private String type;
 }
