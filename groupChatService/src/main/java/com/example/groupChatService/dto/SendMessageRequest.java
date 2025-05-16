@@ -4,7 +4,6 @@ public class SendMessageRequest {
     private String groupId;
     private String senderId;
     private String content;
-    private String senderUsername;
 
     public String getGroupId() {
         return groupId;
@@ -28,11 +27,5 @@ public class SendMessageRequest {
 
     public void setContent(String content) {
         this.content = content;
-    }
-    public String getSenderUsername() {
-        return senderUsername;
-    }
-    public void setSenderUsername(String senderUsername) {
-        this.senderUsername = senderUsername;
     }
 }
