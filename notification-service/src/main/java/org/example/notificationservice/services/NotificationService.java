@@ -1,37 +1,29 @@
 package org.example.notificationservice.services;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.notificationservice.clients.UserClient;
 import org.example.notificationservice.models.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.example.shared.config.RabbitMQConfig;
+import org.example.shared.dto.NotificationDTO;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class NotificationService {
     private final NotificationDeliveryService notificationDeliveryService;
     private final NotificationSettingsService notificationSettingsService;
     private final UserClient userClient;
+    private final ObjectMapper objectMapper;
 
-    @Autowired
-    public NotificationService(
-        NotificationDeliveryService notificationDeliveryService,
-        NotificationSettingsService notificationSettingsService,
-        UserClient userClient
-    ) {
-        this.notificationDeliveryService = notificationDeliveryService;
-        this.notificationSettingsService = notificationSettingsService;
-        this.userClient = userClient;
-    }
-
-    //TODO: Change to listen to the notification queue
-    public boolean createNotification(Notification notification) {
-        String userMail=userClient.getUserEmailById(notification.getRecipientUserId()).getBody();
-        log.info("User email: {}", userMail);
-        notification.setRecipientEmail(userMail);
-        notification.setTimestamp(LocalDateTime.now());
+    @RabbitListener(queues = RabbitMQConfig.NOTIFICATION_QUEUE)
+    public boolean createNotification(NotificationDTO notificationDto) {
+        Notification notification = convertDtoToNotification(notificationDto);
 
         boolean success = true;
         for (String strategyType : NotificationStrategyType.getAllTypes()) {
@@ -56,6 +48,18 @@ public class NotificationService {
         }
 
         return success;
+    }
+
+    private Notification convertDtoToNotification(NotificationDTO notificationDto) {
+        // This would be better with a factory, but for simplicity, object mapping
+        Notification notification = objectMapper.convertValue(notificationDto, Notification.class);
+
+        var email = userClient.getUserEmailById(notificationDto.getRecipientUserId()).getBody();
+
+        notification.setRecipientEmail(email);
+        notification.setTimestamp(LocalDateTime.now());
+
+        return notification;
     }
 
     public boolean sendResetPasswordNotification(
