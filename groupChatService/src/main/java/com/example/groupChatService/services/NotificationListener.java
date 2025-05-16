@@ -1,5 +1,6 @@
 package com.example.groupChatService.services;
 
+import com.example.groupChatService.models.GroupChat;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
 
@@ -22,7 +23,7 @@ public class NotificationListener implements MessageListener {
     }
 
     @Override
-    public void onNewMessage(GroupMessage message) {
+    public void onNewMessage(GroupMessage message, GroupChat groupChat, String senderUsername) {
         try {
             String json = objectMapper.writeValueAsString(message);
             System.out.println("🔔 NotificationListener received new message: " + json);

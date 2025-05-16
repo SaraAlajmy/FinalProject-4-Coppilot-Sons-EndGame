@@ -83,7 +83,7 @@ public class GroupMessageService {
 
    
     @AdminOnly
-public GroupMessage sendMessage(SendMessageRequest request) { //notify
+public GroupMessage sendMessage(SendMessageRequest request, String senderUsername) { //notify
     GroupChat group = groupChatRepo.findById(request.getGroupId())
             .orElseThrow(() -> new RuntimeException("Group not found"));
 
@@ -118,7 +118,7 @@ public GroupMessage sendMessage(SendMessageRequest request) { //notify
     GroupMessage saved = groupMessageRepo.save(message);
 
     for (MessageListener listener : listeners) {
-        listener.onNewMessage(saved);
+        listener.onNewMessage(saved, group, senderUsername);
     }
 
     return saved;
