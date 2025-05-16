@@ -129,9 +129,14 @@ public class UserService {
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
     public User register(User user) {
-        user.setPassword(encoder.encode(user.getPassword()));
-        userRepository.save(user);
-        return user;
+        try{
+            user.setPassword(encoder.encode(user.getPassword()));
+            userRepository.save(user);
+            return user;
+        } catch (Exception e) {
+            logger.error("Error registering user: {}", e.getMessage());
+            throw e;
+        }
     }
 
     public Map<String,String> verify(String identifier, String password, String loginType) {

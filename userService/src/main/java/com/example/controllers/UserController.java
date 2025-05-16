@@ -35,14 +35,14 @@ public class UserController {
         }
     }
 
-    @GetMapping("/getAll")
-    public ResponseEntity<List<User>> getAllUsers() {
-        try {
-            return ResponseEntity.ok(userService.getAllUsers());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
-    }
+//    @GetMapping("/getAll")
+//    public ResponseEntity<List<User>> getAllUsers() {
+//        try {
+//            return ResponseEntity.ok(userService.getAllUsers());
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+//        }
+//    }
 
     // TODO: when adding get userbyid endpoint remember it returns null if user not found
 
@@ -65,15 +65,15 @@ public class UserController {
         }
     }
     //delete all users
-    @DeleteMapping("/deleteAll")
-    public String deleteAllUsers() {
-        try {
-            userService.deleteAllUsers();
-            return "All users deleted successfully";
-        } catch (Exception e) {
-            return "Error deleting users: " + e.getMessage();
-        }
-    }
+//    @DeleteMapping("/deleteAll")
+//    public String deleteAllUsers() {
+//        try {
+//            userService.deleteAllUsers();
+//            return "All users deleted successfully";
+//        } catch (Exception e) {
+//            return "Error deleting users: " + e.getMessage();
+//        }
+//    }
 
     @GetMapping("/isBlocked/{blockerId}/{blockedId}")
     public ResponseEntity<Boolean> isBlocked(@PathVariable UUID blockerId, @PathVariable UUID blockedId){
