@@ -21,7 +21,6 @@ public class GroupMessageService {
     private final GroupChatRepo groupChatRepo;
     private final List<MessageListener> listeners = new ArrayList<>();
 
-
     @Autowired
     public GroupMessageService(GroupMessageRepo groupMessageRepo, GroupChatRepo groupChatRepo) {
         this.groupMessageRepo = groupMessageRepo;
@@ -46,32 +45,32 @@ public class GroupMessageService {
 
     public GroupMessage getGroupMessageById(String id) {
         GroupMessage groupMessage = groupMessageRepo.findById(id)
-                                                    .orElseThrow(() -> new RuntimeException(
-                                                        "Group message not found with id:" + id));
+                .orElseThrow(() -> new RuntimeException(
+                        "Group message not found with id:" + id));
         return groupMessage;
     }
 
     public GroupMessage editGroupMessage(String id, String content) {
         GroupMessage existingGroupMessage = groupMessageRepo.findById(id)
-                                                            .orElseThrow(() -> new RuntimeException(
-                                                                "Group message not found with id:" +
-                                                                id));
+                .orElseThrow(() -> new RuntimeException(
+                        "Group message not found with id:" +
+                                id));
         existingGroupMessage.setContent(content);
         return groupMessageRepo.save(existingGroupMessage);
     }
 
     public String deleteGroupMessage(String id) {
         GroupMessage groupMessage = groupMessageRepo.findById(id)
-                                                    .orElseThrow(() -> new RuntimeException(
-                                                        "Group message not found with id:" + id));
+                .orElseThrow(() -> new RuntimeException(
+                        "Group message not found with id:" + id));
         groupMessageRepo.deleteById(id);
         return "Group message with id: " + id + " deleted successfully";
     }
 
     public String archiveGroupMessage(String id) {
         GroupMessage groupMessage = groupMessageRepo.findById(id)
-                                                    .orElseThrow(() -> new RuntimeException(
-                                                        "Group message not found with id:" + id));
+                .orElseThrow(() -> new RuntimeException(
+                        "Group message not found with id:" + id));
         // TODO: validate user is in this group
         groupMessage.setArchived(true);
         groupMessageRepo.save(groupMessage);
@@ -80,8 +79,8 @@ public class GroupMessageService {
 
     public String unarchiveGroupMessage(String id) {
         GroupMessage groupMessage = groupMessageRepo.findById(id)
-                                                    .orElseThrow(() -> new RuntimeException(
-                                                        "Group message not found with id:" + id));
+                .orElseThrow(() -> new RuntimeException(
+                        "Group message not found with id:" + id));
         // TODO: validate user is in this group
         groupMessage.setArchived(false);
         groupMessageRepo.save(groupMessage);
@@ -100,27 +99,17 @@ public class GroupMessageService {
         return groupMessageRepo.findByGroupIdAndSenderId(groupId, senderId);
     }
 
-
-    @AdminOnly
-    public GroupMessage sendMessage(SendMessageRequest request, String senderUsername) { //notify
+    public GroupMessage sendMessage(SendMessageRequest request, String senderUsername, String senderId,
+            String groupId) {
         GroupChat group = groupChatRepo.findById(request.getGroupId())
-                                       .orElseThrow(() -> new RuntimeException("Group not found"));
+                .orElseThrow(() -> new RuntimeException("Group not found"));
 
         if (!group.getMembers().contains(request.getSenderId())) {
             throw new RuntimeException("Sender is not a member of the group");
         }
 
-        try {
-            Method method = this.getClass().getMethod("sendMessage", SendMessageRequest.class);
-            if (method.isAnnotationPresent(AdminOnly.class)) {
-                if (group.isAdminOnlyMessages() &&
-                    !group.getAdmins().contains(request.getSenderId())) {
-                    throw new RuntimeException(
-                        "Access denied: Only admins can send messages in this group");
-                }
-            }
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException("Reflection error: " + e.getMessage());
+        if (group.isAdminOnlyMessages() && !group.getAdmins().contains(request.getSenderId())) {
+            throw new RuntimeException("Only admins can send messages in this group");
         }
 
         List<String> mentionedUserIds = extractMentions(request.getContent());
@@ -130,19 +119,16 @@ public class GroupMessageService {
             }
 
         }
-
         GroupMessage message = new GroupMessage(
-            request.getGroupId(),
-            request.getSenderId(),
-            request.getContent(),
-            mentionedUserIds
-        );
+                groupId,
+                senderId,
+                request.getContent(),
+                mentionedUserIds);
         GroupMessage saved = groupMessageRepo.save(message);
 
         for (MessageListener listener : listeners) {
             listener.onNewMessage(saved, group, senderUsername);
         }
-
         return saved;
     }
 
@@ -155,6 +141,5 @@ public class GroupMessageService {
         }
         return mentions;
     }
-
 
 }
