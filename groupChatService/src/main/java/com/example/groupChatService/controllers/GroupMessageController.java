@@ -66,8 +66,8 @@ public class GroupMessageController {
     @PostMapping("/send/{groupId}")
     public GroupMessage sendMessage(
         @RequestBody SendMessageRequest request,
-        @RequestHeader("userName") String userName,
-        @RequestHeader("senderId") String senderId,
+        @RequestHeader("username") String userName,
+        @RequestHeader("userId") String senderId,
         @PathVariable String groupId
     ) {
         return groupMessageService.sendMessage(request, userName, senderId, groupId);
