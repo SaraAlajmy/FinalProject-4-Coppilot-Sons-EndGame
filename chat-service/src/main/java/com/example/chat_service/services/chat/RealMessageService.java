@@ -45,9 +45,7 @@ public class RealMessageService implements MessageService, MessageSubject {
         );
 
         messageRepository.save(message);
-        log.info("Message with id: "+ message.getId()+" is saved");
         notifyObservers(message);
-        log.info("Obsrvers are notified with message with id: "+message.getId());
         return message;
         
     }

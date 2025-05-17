@@ -30,10 +30,8 @@ public class MessageServiceProxy implements MessageService {
         try {
             boolean areBlocking=Boolean.TRUE.equals(userClient.areBlocking(UUID.fromString(dto.getReceiverId()), UUID.fromString(dto.getSenderId())).getBody());
             if(areBlocking) {
-                logger.info("User: " + senderUserName + " and User " + dto.getReceiverId() +" are blocking each other");
                 throw new UserBlockedException("Sender is blocked by the receiver");
             }
-            log.info("User: " + senderUserName + " and User " + dto.getReceiverId() +" are not blocking each other");
             Message message = realMessageService.sendMessage(dto, senderUserName);
             return message;
         } catch (Exception e) {
