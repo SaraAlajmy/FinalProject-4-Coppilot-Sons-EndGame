@@ -5,6 +5,12 @@ public class SendMessageRequest {
     private String senderId;
     private String content;
 
+    public SendMessageRequest(String groupId, String senderId, String content) {
+        this.groupId = groupId;
+        this.senderId = senderId;
+        this.content = content;
+    }
+
     public String getGroupId() {
         return groupId;
     }
