@@ -31,9 +31,7 @@ public class NotificationSettingsApiTests extends BaseApiTest {
 
     @BeforeEach
     public void setUp() {
-        // Create a test user to use in notification tests
-        Map<String, Object> createdUser = userTestService.registerUser();
-        testUserId = createdUser.get("id").toString();
+        testUserId = loggedInUser.get("id").toString();
     }
 
     @Test
