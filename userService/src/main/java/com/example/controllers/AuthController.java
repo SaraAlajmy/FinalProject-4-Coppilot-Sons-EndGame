@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -106,6 +107,15 @@ public class AuthController {
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
+    }
+    @GetMapping
+    public String hello(@RequestHeader UUID userId){
+
+        return userId.toString();
+    }
+    @GetMapping("/allUsers")
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
     }
 
 }

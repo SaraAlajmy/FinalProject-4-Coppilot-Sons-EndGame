@@ -63,7 +63,7 @@ public class AuthenticationFilter implements GlobalFilter {
                 })
                 .onErrorResume(e -> {
                     System.out.print(e.getMessage());
-                    exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+                    exchange.getResponse();
                     return exchange.getResponse().setComplete();
                 });
     }

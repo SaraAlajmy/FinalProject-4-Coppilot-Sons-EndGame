@@ -49,7 +49,7 @@ spring:
 jwt:
   blacklist:
     expiration-time: 300
-user-service:
+userService:
   url: http://localhost:8086
 
 

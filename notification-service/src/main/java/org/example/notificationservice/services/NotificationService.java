@@ -22,6 +22,7 @@ public class NotificationService {
     private final ObjectMapper objectMapper;
 
     public boolean createNotification(NotificationDTO notificationDto) {
+        log.info("Received notification DTO: {}", notificationDto);
         Notification notification = convertDtoToNotification(notificationDto);
 
         boolean success = true;
@@ -46,6 +47,7 @@ public class NotificationService {
             }
         }
 
+
         return success;
     }
 
@@ -54,7 +56,7 @@ public class NotificationService {
         Notification notification = objectMapper.convertValue(notificationDto, Notification.class);
 
         var email = userClient.getUserEmailById(notificationDto.getRecipientUserId()).getBody();
-
+        log.info("Email for user {} is {}", notificationDto.getRecipientUserId(), email);
         notification.setRecipientEmail(email);
         notification.setTimestamp(LocalDateTime.now());
 

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: notification-container
-          image: malakelwassif/notification-service:latest
+          image: farahalfawzy/notification-service
           ports:
             - containerPort: 8082
           env:
