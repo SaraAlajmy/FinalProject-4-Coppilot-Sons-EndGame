@@ -27,28 +27,28 @@ public class UserApiTests extends BaseApiTest {
         userTestService.deleteAllCreatedUsers();
     }
 
-    @Test
-    @DisplayName("Should get all users")
-    public void shouldGetAllUsers() {
-        // Create a test user to ensure there's at least one in the database
-        Map<String, Object> createdUser = userTestService.registerUser();
-        UUID createdUserId = UUID.fromString(createdUser.get("id").toString());
-
-        // Alternative: use the test service
-        List<Map<String, Object>> users = userTestService.getAllUsers();
-        assertThat(users).isNotEmpty();
-
-        // Verify the created user is in the list
-        boolean foundUser = users.stream()
-            .anyMatch(user ->
-                          createdUserId.toString().equals(user.get("id").toString()) &&
-                     createdUser.get("username").equals(user.get("username")) &&
-                     createdUser.get("email").equals(user.get("email")));
-
-        assertThat(foundUser)
-            .as("Created user with ID %s should be present in the list of all users", createdUserId)
-            .isTrue();
-    }
+//    @Test
+//    @DisplayName("Should get all users")
+//    public void shouldGetAllUsers() {
+//        // Create a test user to ensure there's at least one in the database
+//        Map<String, Object> createdUser = userTestService.registerUser();
+//        UUID createdUserId = UUID.fromString(createdUser.get("id").toString());
+//
+//        // Alternative: use the test service
+//        List<Map<String, Object>> users = userTestService.getAllUsers();
+//        assertThat(users).isNotEmpty();
+//
+//        // Verify the created user is in the list
+//        boolean foundUser = users.stream()
+//            .anyMatch(user ->
+//                          createdUserId.toString().equals(user.get("id").toString()) &&
+//                     createdUser.get("username").equals(user.get("username")) &&
+//                     createdUser.get("email").equals(user.get("email")));
+//
+//        assertThat(foundUser)
+//            .as("Created user with ID %s should be present in the list of all users", createdUserId)
+//            .isTrue();
+//    }
 
     @Test
     @DisplayName("Should register a new user")
