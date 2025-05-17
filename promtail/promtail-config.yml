@@ -1,0 +1,46 @@
+
+# Promtail configuration file for scraping logs from various services
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+# Positions configuration
+# This is where Promtail stores the last read position of each log file
+positions:
+  filename: /tmp/positions.yaml
+
+# Client configuration
+# This is where Promtail sends the scraped logs
+clients:
+  - url: http://loki:3100/loki/api/v1/push
+
+# Scrape configuration
+# This is where Promtail defines the jobs to scrape logs from
+scrape_configs:
+  - job_name: chat-service
+    static_configs:
+      - targets: [localhost]
+        labels:
+          job: chat-service
+          __path__: /var/log/chat-service/app.log
+
+  - job_name: user-service
+    static_configs:
+      - targets: [localhost]
+        labels:
+          job: user-service
+          __path__: /var/log/user-service/app.log
+
+  - job_name: gateway
+    static_configs:
+      - targets: [localhost]
+        labels:
+          job: gateway
+          __path__: /var/log/gateway/app.log
+
+  - job_name: notification-service
+    static_configs:
+      - targets: [localhost]
+        labels:
+          job: notification-service
+          __path__: /var/log/notification-service/app.log
