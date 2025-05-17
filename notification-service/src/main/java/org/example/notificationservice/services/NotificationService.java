@@ -21,7 +21,6 @@ public class NotificationService {
     private final UserClient userClient;
     private final ObjectMapper objectMapper;
 
-    @RabbitListener(queues = RabbitMQConfig.NOTIFICATION_QUEUE)
     public boolean createNotification(NotificationDTO notificationDto) {
         Notification notification = convertDtoToNotification(notificationDto);
 
