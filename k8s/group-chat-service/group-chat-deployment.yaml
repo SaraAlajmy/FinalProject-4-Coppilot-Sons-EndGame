@@ -39,6 +39,8 @@ spec:
                 secretKeyRef:
                   name: rabbitmq-secret
                   key: RABBITMQ_DEFAULT_PASS
+            - name: USER-SERVICE_URL
+              value: http://user-service:8086
 
 
 
