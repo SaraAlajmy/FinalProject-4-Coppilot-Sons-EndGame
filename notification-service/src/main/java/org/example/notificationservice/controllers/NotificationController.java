@@ -46,26 +46,38 @@ public ResponseEntity<String> sendResetPasswordNotification(@RequestParam String
 
 
     @GetMapping("/AllNotifications")
-    public List<Notification> getAllNotifications(@RequestHeader String userId) {
-        return notificationQueryService.getAllNotifications(userId);
+    public ResponseEntity<List<Notification>> getAllNotifications(@RequestHeader String userId) {
+        return ResponseEntity.ok(notificationQueryService.getAllNotifications(userId));
     }
 
 
     @GetMapping("/unread/count")
-    public int getUnreadNotificationCount(@RequestHeader String userId) {
-        return notificationQueryService.getUnreadNotificationCount(userId);
+    public ResponseEntity<Integer> getUnreadNotificationCount(@RequestHeader String userId) {
+        return ResponseEntity.ok(notificationQueryService.getUnreadNotificationCount(userId));
     }
 
 
     @PostMapping("/read")
-    public String markNotificationAsRead(@RequestParam String notificationId) {
-        return notificationQueryService.markNotificationAsRead(notificationId);
+    public ResponseEntity<String> markNotificationAsRead(@RequestParam String notificationId) {
+        return ResponseEntity.ok(notificationQueryService.markNotificationAsRead(notificationId));
     }
 
 
     @PostMapping("/markAllRead")
-    public String markAllNotificationsAsRead(@RequestHeader String userId) {
-       return notificationQueryService.markAllNotificationsAsRead(userId);
+    public ResponseEntity<String> markAllNotificationsAsRead(@RequestHeader String userId) {
+       return ResponseEntity.ok(notificationQueryService.markAllNotificationsAsRead(userId));
     }
+    @DeleteMapping()
+    public ResponseEntity<String> deleteNotification(@RequestParam String notificationId) {
+        notificationQueryService.deleteNotification(notificationId);
+        return ResponseEntity.status(200).body("Notification deleted successfully");
+    }
+    @PutMapping()
+    public ResponseEntity<Notification> updateNotification(@RequestParam String notificationId,
+                                                     @RequestParam Notification newNotification) {
+        Notification updatedNotfication=notificationQueryService.updateNotification(notificationId, newNotification);
+        return ResponseEntity.status(200).body(updatedNotfication);
+    }
+
 
 }
