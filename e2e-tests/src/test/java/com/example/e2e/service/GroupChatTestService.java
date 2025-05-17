@@ -115,7 +115,7 @@ public class GroupChatTestService {
                       .when()
                       .post("/groupChat/addGroupChat")
                       .then()
-                      .statusCode(200)
+                      .statusCode(201)
                       .extract()
                       .body()
                       .as(Map.class);
