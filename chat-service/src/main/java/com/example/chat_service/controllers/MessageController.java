@@ -38,6 +38,13 @@ public class MessageController {
         return new ResponseEntity<>(message, HttpStatus.CREATED);
     }
 
+    @PostMapping("/edit/{messageId}")
+    public ResponseEntity<?> editMessage(@PathVariable String messageId, @RequestBody String newContent, @RequestHeader("userId") String userId) {
+        messageService.editMessage(messageId, userId, newContent);
+        logger.info("Message with ID {} edited successfully by user {}", messageId, userId);
+        return new ResponseEntity<>("Message edited successfully", HttpStatus.OK);
+    }
+
     @DeleteMapping("/{messageId}")
     public ResponseEntity<?> deleteMessage(@PathVariable String messageId, @RequestHeader("userId") String userId) {
         messageService.deleteMessage(messageId, userId);
