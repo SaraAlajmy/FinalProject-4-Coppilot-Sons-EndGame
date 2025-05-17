@@ -52,16 +52,16 @@ spec:
           value: StripPrefix=0
 
         - name: SPRING_CLOUD_GATEWAY_ROUTES_3_ID
-          value: groupChatService
+          value: group-chat-service
         - name: SPRING_CLOUD_GATEWAY_ROUTES_3_URI
-          value: http://groupChatService:8083
+          value: http://group-chat-service:8083
         - name: SPRING_CLOUD_GATEWAY_ROUTES_3_PREDICATES_0
           value: Path=/groupChat/**,/groupMessage/**
         - name: SPRING_CLOUD_GATEWAY_ROUTES_3_FILTERS_0
           value: StripPrefix=0
 
         - name: SPRING_DATA_REDIS_HOST
-          value: "redis-service"
+          value: "redis"
         - name: SPRING_DATA_REDIS_PORT
           value: "6379"
         - name: USER_SERVICE_URL

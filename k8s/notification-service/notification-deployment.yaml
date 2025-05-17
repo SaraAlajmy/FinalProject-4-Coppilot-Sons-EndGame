@@ -22,12 +22,6 @@ spec:
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: k8s
-            - name: SPRING_CACHE_TYPE
-              value: "redis"
-            - name: SPRING_DATA_REDIS_HOST
-              value: "redis-service"
-            - name: SPRING_DATA_REDIS_PORT
-              value: "6379"
             - name: SPRING_DATA_MONGODB_URI
               valueFrom:
                 secretKeyRef:

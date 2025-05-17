@@ -39,12 +39,7 @@ spec:
                 secretKeyRef:
                   name: rabbitmq-secret
                   key: RABBITMQ_DEFAULT_PASS
-            - name: SPRING_CACHE_TYPE
-              value: "redis"
-            - name: SPRING_DATA_REDIS_HOST
-              value: "redis-service"
-            - name: SPRING_DATA_REDIS_PORT
-              value: "6379"
+
 
 
 
