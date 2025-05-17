@@ -5,6 +5,8 @@ import com.example.groupChatService.dto.GroupUpdateRequest;
 import com.example.groupChatService.models.GroupChat;
 import com.example.groupChatService.services.GroupChatService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,115 +22,157 @@ public class GroupChatController {
         this.groupChatService = groupChatService;
     }
     @GetMapping("/allGroupChat")
-    public List<GroupChat> getAllGroupChat() {
+    public ResponseEntity<?> getAllGroupChat() {
         try {
-            return groupChatService.getAllGroupChat();
+            List<GroupChat> groupChats = groupChatService.getAllGroupChat();
+            return ResponseEntity.ok(groupChats);
         } catch (Exception e) {
-            System.out.println("Error fetching group chats: " + e.getMessage());
-            return null;
+            System.err.println("Error fetching group chats: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went wrong: " + e.getMessage());
         }
-
     }
     @GetMapping("/{id}")
-    public GroupChat getGroupChatById(@PathVariable String id) {
+    public ResponseEntity<?> getGroupChatById(@PathVariable String id) {
         try {
-            return groupChatService.getGroupChatById(id);
+            GroupChat groupChat = groupChatService.getGroupChatById(id);
+            return ResponseEntity.ok(groupChat); // 200 OK
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(e.getMessage()); // 404 Not Found with message
         } catch (Exception e) {
-            System.out.println("Error fetching group chat by ID: " + e.getMessage());
-            return null;
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Unexpected error: " + e.getMessage()); // 500
         }
     }
-    @DeleteMapping("/{id}")
-    public String deleteGroupChatById(@PathVariable String id,@RequestHeader("userId") String userId) {
+    public ResponseEntity<?> deleteGroupChatById(@PathVariable String id, @RequestHeader("userId") String userId) {
         try {
-            return groupChatService.deleteGroupChat(id,userId);
+            String result = groupChatService.deleteGroupChat(id, userId);
+            return ResponseEntity.ok(result); // 200 OK with success message
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {
-            return "Error deleting group chat by ID: " + e.getMessage();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error deleting group chat: " + e.getMessage());
         }
     }
     @PostMapping("/addGroupChat")
-    public GroupChat addGroupChat(@RequestBody GroupChatRequest groupChatRequest,@RequestHeader("userId") String userId){
+    public ResponseEntity<?> addGroupChat(@RequestBody GroupChatRequest groupChatRequest, @RequestHeader("userId") String userId) {
         try {
-            return groupChatService.addGroupChat(groupChatRequest,userId);
+            GroupChat createdGroupChat = groupChatService.addGroupChat(groupChatRequest, userId);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdGroupChat); // 201 Created with created object
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {
-            System.out.println("Error adding group chat: " + e.getMessage());
-            return null;
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error adding group chat: " + e.getMessage());
         }
     }
     @PutMapping("/update/{id}")
-    public GroupChat updateGroupChat(@PathVariable String id,@RequestBody GroupUpdateRequest groupUpdateRequest){
-        try{
-            return groupChatService.updateGroupChat(id,groupUpdateRequest);
-        }catch (Exception e) {
-            System.out.println("Error updating group chat: " + e.getMessage());
-            return null;
+    public ResponseEntity<?> updateGroupChat(@PathVariable String id,@RequestHeader("userId") String userId, @RequestBody GroupUpdateRequest groupUpdateRequest) {
+        try {
+            GroupChat updatedGroupChat = groupChatService.updateGroupChat(id, userId,groupUpdateRequest);
+            return ResponseEntity.ok(updatedGroupChat); // 200 OK with updated object
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error updating group chat: " + e.getMessage());
         }
     }
     @PutMapping("/activateAdminOnlyMessages/{id}")
-    public GroupChat activateAdminOnlyMessages(@PathVariable String id,@RequestHeader("userId") String userId){
-        try{
-            return groupChatService.activateAdminOnlyMessages(id,userId);
-        }catch (Exception e) {
-            System.out.println("Error activateAdminOnlyMessages for group chat: " + e.getMessage());
-            return null;
-        }
-    }
-    @PutMapping("/unactivateAdminOnlyMessages/{id}")
-    public GroupChat unactivateAdminOnlyMessages(@PathVariable String id,@RequestHeader("userId") String userId){
-        try{
-            return groupChatService.unactivateAdminOnlyMessages(id,userId);
-        }catch (Exception e) {
-            System.out.println("Error unactivate AdminOnlyMessages for group chat: " + e.getMessage());
-            return null;
-        }
-    }
-    @PutMapping("/addMember/{id}")
-    public GroupChat addMember(@PathVariable String id,@RequestHeader("userId") String userId,@RequestBody Map<String, String> body){
-        try{
-            String memberId = body.get("memberId");
-            return groupChatService.addMember(id,userId,memberId);
-        }catch (Exception e) {
-            System.out.println("Error adding member for group chat: " + e.getMessage());
-            return null;
-        }
-    }
-    @PutMapping("/removeMember/{id}")
-    public GroupChat removeMember(@PathVariable String id,@RequestHeader("userId") String userId,@RequestBody Map<String, String> body){
-        try{
-            String memberId = body.get("memberId");
-            return groupChatService.removeMember(id,userId,memberId);
-        }catch (Exception e) {
-            System.out.println("Error removing member for group chat: " + e.getMessage());
-            return null;
-        }
-    }
-    @PutMapping("/makeAdmin/{id}")
-    public GroupChat makeAdmin(@PathVariable String id,@RequestHeader("userId") String userId,@RequestBody Map<String, String> body){
-        try{
-            String memberId = body.get("memberId");
-            return groupChatService.makeAdmin(id,userId,memberId);
-        }catch (Exception e) {
-            System.out.println("Error making admin for group chat: " + e.getMessage());
-            return null;
-        }
-    }
-    @PutMapping("/removeAdmin/{id}")
-    public GroupChat removeAdmin(@PathVariable String id,@RequestHeader("userId") String userId,@RequestBody Map<String, String> body){
-        try{
-            String memberId = body.get("memberId");
-            return groupChatService.removeAdmin(id,userId,memberId);
-        }catch (Exception e) {
-            System.out.println("Error making admin for group chat: " + e.getMessage());
-            return null;
-        }
-    }
-    @GetMapping("/getGroupChatByMemberId/{id}")
-    public List<GroupChat> getGroupChatByMemberId(@PathVariable String id) {
+    public ResponseEntity<?> activateAdminOnlyMessages(@PathVariable String id, @RequestHeader("userId") String userId) {
         try {
-            return groupChatService.getMemberGroupChats(id);
+            GroupChat updatedGroupChat = groupChatService.activateAdminOnlyMessages(id, userId);
+            return ResponseEntity.ok(updatedGroupChat);  // 200 OK with updated group chat
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {
-            System.out.println("Error fetching group chat by member ID: " + e.getMessage());
-            return null;
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error activating admin-only messages: " + e.getMessage());
         }
     }
+
+    @PutMapping("/unactivateAdminOnlyMessages/{id}")
+    public ResponseEntity<?> unactivateAdminOnlyMessages(@PathVariable String id, @RequestHeader("userId") String userId) {
+        try {
+            GroupChat updatedGroupChat = groupChatService.unactivateAdminOnlyMessages(id, userId);
+            return ResponseEntity.ok(updatedGroupChat);  // 200 OK with updated group chat
+        } catch (RuntimeException e) {
+            // e.g. group chat not found or unauthorized action
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error unactivating admin-only messages: " + e.getMessage());
+        }
+    }
+
+    @PutMapping("/addMember/{id}")
+    public ResponseEntity<?> addMember(@PathVariable String id, @RequestHeader("userId") String userId, @RequestBody Map<String, String> body) {
+        try {
+            String memberId = body.get("memberId");
+            GroupChat updatedGroupChat = groupChatService.addMember(id, userId, memberId);
+            return ResponseEntity.ok(updatedGroupChat);  // 200 OK with updated group chat
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error adding member to group chat: " + e.getMessage());
+        }
+    }
+
+    @PutMapping("/removeMember/{id}")
+    public ResponseEntity<?> removeMember(@PathVariable String id, @RequestHeader("userId") String userId, @RequestBody Map<String, String> body) {
+        try {
+            String memberId = body.get("memberId");
+            GroupChat updatedGroupChat = groupChatService.removeMember(id, userId, memberId);
+            return ResponseEntity.ok(updatedGroupChat);  // 200 OK with updated group chat
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error removing member from group chat: " + e.getMessage());
+        }
+    }
+
+    @PutMapping("/makeAdmin/{id}")
+    public ResponseEntity<?> makeAdmin(@PathVariable String id, @RequestHeader("userId") String userId, @RequestBody Map<String, String> body) {
+        try {
+            String memberId = body.get("memberId");
+            GroupChat updatedGroupChat = groupChatService.makeAdmin(id, userId, memberId);
+            return ResponseEntity.ok(updatedGroupChat);  // 200 OK with updated group chat
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error making admin for group chat: " + e.getMessage());
+        }
+    }
+
+    @PutMapping("/removeAdmin/{id}")
+    public ResponseEntity<?> removeAdmin(@PathVariable String id, @RequestHeader("userId") String userId, @RequestBody Map<String, String> body) {
+        try {
+            String memberId = body.get("memberId");
+            GroupChat updatedGroupChat = groupChatService.removeAdmin(id, userId, memberId);
+            return ResponseEntity.ok(updatedGroupChat);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error removing admin for group chat: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/getGroupChatByMemberId/{id}")
+    public ResponseEntity<?> getGroupChatByMemberId(@PathVariable String id) {
+        try {
+            List<GroupChat> groupChats = groupChatService.getMemberGroupChats(id);
+            return ResponseEntity.ok(groupChats);  // 200 OK with the list
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error fetching group chats by member ID: " + e.getMessage());
+        }
+    }
+
 }
