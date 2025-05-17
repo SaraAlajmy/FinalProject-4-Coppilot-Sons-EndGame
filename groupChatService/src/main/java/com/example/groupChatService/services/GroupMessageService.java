@@ -107,14 +107,14 @@ public class GroupMessageService {
 
     public GroupMessage sendMessage(SendMessageRequest request, String senderUsername, String senderId,
             String groupId) {
-        GroupChat group = groupChatRepo.findById(request.getGroupId())
+        GroupChat group = groupChatRepo.findById(groupId)
                 .orElseThrow(() -> new RuntimeException("Group not found"));
 
-        if (!group.getMembers().contains(request.getSenderId())) {
+        if (!group.getMembers().contains(senderId)) {
             throw new RuntimeException("Sender is not a member of the group");
         }
 
-        if (group.isAdminOnlyMessages() && !group.getAdmins().contains(request.getSenderId())) {
+        if (group.isAdminOnlyMessages() && !group.getAdmins().contains(senderId)) {
             throw new RuntimeException("Only admins can send messages in this group");
         }
 
