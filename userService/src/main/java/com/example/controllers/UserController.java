@@ -95,4 +95,14 @@ public class UserController {
         }
     }
 
+    @PostMapping("/seed")
+    public ResponseEntity<List<User>> seedUsers() {
+        try {
+            List<User> seededUsers = userService.seedUsers();
+            return ResponseEntity.ok(seededUsers);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
 }
