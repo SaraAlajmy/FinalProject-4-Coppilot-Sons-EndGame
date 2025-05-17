@@ -95,4 +95,14 @@ public class UserController {
         }
     }
 
+    @GetMapping("/bulk-get-ids-by-usernames")
+    public ResponseEntity<?> getUsersIdsByUsernames(@RequestParam List<String> usernames){
+        try{
+            var result = userService.getUsersIdsByUsernames(usernames);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error getting user usernames: " + e.getMessage());
+        }
+    }
+
 }
