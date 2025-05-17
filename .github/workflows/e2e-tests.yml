@@ -1,0 +1,41 @@
+name: End-to-End Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  e2e-tests:
+    runs-on: ubuntu-latest
+    services:
+      docker:
+        image: docker:24.0.5
+        options: --privileged
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Build all jars
+        run: mvn clean install -DskipTests
+
+      - name: Navigate to e2e-tests and start Docker Compose
+        working-directory: e2e-tests
+        run: docker-compose up -d
+
+      - name: Wait for services to be ready
+        run: sleep 20  # or use wait-for-it.sh for smarter health check
+
+      - name: Run integration tests
+        working-directory: e2e-tests
+        run: |
+          mvn install
+          mvn verify
