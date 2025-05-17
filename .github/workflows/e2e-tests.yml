@@ -29,7 +29,7 @@ jobs:
 
       - name: Navigate to e2e-tests and start Docker Compose
         working-directory: e2e-tests
-        run: docker-compose up -d
+        run: docker compose up -d
 
       - name: Wait for services to be ready
         run: sleep 20  # or use wait-for-it.sh for smarter health check
