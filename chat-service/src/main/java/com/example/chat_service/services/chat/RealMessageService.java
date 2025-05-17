@@ -59,9 +59,16 @@ public class RealMessageService implements MessageService, MessageSubject {
 
     @Override
     public void deleteMessage(String messageId, String userId) {
-        Message message = messageRepository.findById(messageId).orElseThrow(() -> new RuntimeException("Message not found"));
-        message.setDeleted(true);
-        messageRepository.save(message);
+        try {
+            messageRepository.deleteById(messageId);
+            deleteFavouriteMessage(messageId, userId);
+        } catch (Exception e) {
+            throw new FavouriteMessageException("Failed to delete message", e);
+        }
+    }
+
+    public void deleteFavouriteMessage(String messageId, String userId) {
+        favouriteMessageRepository.deleteByMessageIdAndUserId(messageId, userId);
     }
 
     @Override
@@ -126,6 +133,11 @@ public class RealMessageService implements MessageService, MessageSubject {
     public boolean isChatParticipant(String chatId, String userId) {
         Chat chat = chatService.getChatById(chatId);
         return chat.getParticipantOneId().equals(userId) || chat.getParticipantTwoId().equals(userId);
+    }
+
+    public boolean isMessageSender(String messageId, String userId) {
+        Message message = messageRepository.findById(messageId).orElseThrow(() -> new RuntimeException("Message not found"));
+        return message.getSenderId().equals(userId);
     }
 
     @Override
