@@ -25,7 +25,7 @@ spring:
     from: noreply.copilotsons@gmail.com
 
 server:
-  port: 8082  # TODO: Change this when other services are ready
+  port: 8082
 
 debug:
   notification_recipient_email: "mathew.hanybb@gmail.com"
