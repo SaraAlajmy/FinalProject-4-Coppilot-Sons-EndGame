@@ -1,7 +1,6 @@
 package com.example.services;
 
 import com.example.clients.EmailClient;
-import com.example.models.EmailRequest;
 import com.example.models.User;
 import com.example.repositories.UserRepository;
 import com.example.services.loginStrategies.LoginStrategy;
@@ -17,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -275,4 +275,21 @@ public class UserService {
         }
     }
 
+    public Map<String, String> getUsersIdsByUsernames(List<String> usernames) {
+        List<User> users = userRepository.findByUsernameIn(usernames);
+
+        Map<String, String> usernamesToIds = new HashMap<>();
+        for (User user : users) {
+            usernamesToIds.put(user.getUsername(), user.getId().toString());
+        }
+
+        for (String username : usernames) {
+            if (!usernamesToIds.containsKey(username)) {
+                logger.error("User not found with username: {}", username);
+                throw new RuntimeException("User not found with username: " + username);
+            }
+        }
+
+        return usernamesToIds;
+    }
 }
