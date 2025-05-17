@@ -66,8 +66,11 @@ public class GroupChatService {
         return groupChat;
     }
 
-    public GroupChat updateGroupChat(String id, GroupUpdateRequest groupUpdateRequest) {
+    public GroupChat updateGroupChat(String id,String userId, GroupUpdateRequest groupUpdateRequest) {
         GroupChat groupChat = groupChatRepo.findById(id).orElseThrow(() -> new RuntimeException("Group chat not found with id:" + id));
+        if (!groupChat.getMembers().contains(userId)) {
+            throw new RuntimeException("You are not a member of this group chat");
+        }
         GroupChat.groupChatBuilder builder = groupChat.toBuilder();
         builder.setId(id);
         Utils.copyPropertiesWithReflection(groupUpdateRequest, builder);
