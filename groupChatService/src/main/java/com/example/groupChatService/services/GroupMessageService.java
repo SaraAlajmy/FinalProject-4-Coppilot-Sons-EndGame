@@ -1,9 +1,11 @@
 package com.example.groupChatService.services;
 
+import com.example.groupChatService.clients.UserClient;
 import com.example.groupChatService.models.GroupChat;
 import com.example.groupChatService.models.GroupMessage;
 import com.example.groupChatService.repositories.GroupChatRepo;
 import com.example.groupChatService.repositories.GroupMessageRepo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.groupChatService.dto.SendMessageRequest;
@@ -20,11 +22,15 @@ public class GroupMessageService {
     private final GroupMessageRepo groupMessageRepo;
     private final GroupChatRepo groupChatRepo;
     private final List<MessageListener> listeners = new ArrayList<>();
+    private final UserClient userClient;
 
     @Autowired
-    public GroupMessageService(GroupMessageRepo groupMessageRepo, GroupChatRepo groupChatRepo) {
+    public GroupMessageService(GroupMessageRepo groupMessageRepo, GroupChatRepo groupChatRepo,
+                               UserClient userClient
+    ) {
         this.groupMessageRepo = groupMessageRepo;
         this.groupChatRepo = groupChatRepo;
+        this.userClient = userClient;
     }
 
     public void addListener(MessageListener listener) {
@@ -115,9 +121,8 @@ public class GroupMessageService {
         List<String> mentionedUserIds = extractMentions(request.getContent());
         for (String mentioned : mentionedUserIds) {
             if (!group.getMembers().contains(mentioned)) {
-                throw new RuntimeException("Mentioned user @" + mentioned + " is not in the group");
+                throw new RuntimeException("Mentioned user with id " + mentioned + " is not in the group");
             }
-
         }
         GroupMessage message = new GroupMessage(
                 groupId,
@@ -133,13 +138,23 @@ public class GroupMessageService {
     }
 
     private List<String> extractMentions(String content) {
-        List<String> mentions = new ArrayList<>();
+        List<String> mentionsUsernames = new ArrayList<>();
         Pattern pattern = Pattern.compile("@(\\w+)");
         Matcher matcher = pattern.matcher(content);
         while (matcher.find()) {
-            mentions.add(matcher.group(1));
+            mentionsUsernames.add(matcher.group(1));
         }
-        return mentions;
+        List<String> mentionedIds = new ArrayList<>();
+        var usernamesToIds = userClient.getUsersIdsByUsernames(mentionsUsernames);
+        for (String username : mentionsUsernames) {
+            if (usernamesToIds.containsKey(username)) {
+                mentionedIds.add(usernamesToIds.get(username));
+            } else {
+                throw new RuntimeException("User with username " + username + " not found");
+            }
+        }
+
+        return mentionedIds;
     }
 
 }
