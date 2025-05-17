@@ -1,4 +1,3 @@
-version: '3'
 services:
   mongo:
     image: mongo:latest
@@ -9,8 +8,6 @@ services:
       MONGO_INITDB_DATABASE: notification-db
     ports:
       - "27017:27017"
-    networks:
-      - mongo_network
 
   mongo-express:
     image: mongo-express:latest
@@ -25,9 +22,22 @@ services:
       - "8081:8081"
     depends_on:
       - mongo
-    networks:
-      - mongo_network
 
-networks:
-  mongo_network:
-    driver: bridge
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+

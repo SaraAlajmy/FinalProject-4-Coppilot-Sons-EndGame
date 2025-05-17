@@ -1,34 +1,66 @@
 package com.example.groupChatService.services;
-
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import com.example.groupChatService.models.GroupChat;
+import lombok.RequiredArgsConstructor;
+import org.example.shared.dto.GroupMentionNotificationDTO;
+import org.example.shared.dto.GroupMessageNotificationDTO;
+import org.example.shared.dto.NotificationDTO;
+import org.example.shared.producer.NotificationProducer;
 import org.springframework.stereotype.Component;
 
 import com.example.groupChatService.models.GroupMessage;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 @Component
+@RequiredArgsConstructor
 public class NotificationListener implements MessageListener {
-
-    private final RabbitTemplate rabbitTemplate;
-    private final ObjectMapper objectMapper;
-
-    public NotificationListener(RabbitTemplate rabbitTemplate) {
-        this.rabbitTemplate = rabbitTemplate;
-        this.objectMapper = new ObjectMapper();
-        this.objectMapper.registerModule(new JavaTimeModule()); 
-    }
+    private final NotificationProducer notificationProducer;
 
     @Override
-    public void onNewMessage(GroupMessage message) {
-        try {
-            String json = objectMapper.writeValueAsString(message);
-            System.out.println("🔔 NotificationListener received new message: " + json);
-            rabbitTemplate.convertAndSend("notificationQueue", json);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+    public void onNewMessage(GroupMessage message, GroupChat groupChat, String senderUsername) {
+        groupChat.getMembers().forEach(memberId -> {
+            if (!memberId.equals(message.getSenderId())) {
+                NotificationDTO notificationDTO = notificationDtoFromGroupMessage(
+                    message,
+                    groupChat,
+                    senderUsername,
+                    memberId
+                );
+                notificationProducer.sendMessage(notificationDTO);
+            }
+        });
     }
+
+    private NotificationDTO notificationDtoFromGroupMessage(
+        GroupMessage groupMessage,
+        GroupChat groupChat,
+        String senderUsername,
+        String receiverId
+    ) {
+        if (groupMessage.getMentionedUserIds().contains(receiverId)) {
+            return new GroupMentionNotificationDTO(
+                receiverId,
+                groupMessage.getSenderId(),
+                senderUsername,
+                groupMessage.getId(),
+                groupMessage.getContent(),
+                groupMessage.getCreatedAt(),
+                groupChat.getId(),
+                groupChat.getName(),
+                groupChat.getEmoji()
+            );
+        }
+
+        return new GroupMessageNotificationDTO(
+            receiverId,
+            groupMessage.getSenderId(),
+            senderUsername,
+            groupMessage.getId(),
+            groupMessage.getContent(),
+            groupMessage.getCreatedAt(),
+            groupChat.getId(),
+            groupChat.getName(),
+            groupChat.getEmoji()
+        );
+
+    }
+
 }
