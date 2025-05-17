@@ -63,7 +63,7 @@ public class GroupMessageController {
         return groupMessageService.filterGroupMessagesBySenderId(groupId, senderId);
     }
 
-    @PostMapping("/send/{grpoupId}")
+    @PostMapping("/send/{groupId}")
     public GroupMessage sendMessage(
         @RequestBody SendMessageRequest request,
         @RequestHeader("userName") String userName,

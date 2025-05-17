@@ -1,8 +1,6 @@
 package com.example.e2e.notification;
 
 import com.example.e2e.base.BaseApiTest;
-import com.example.e2e.service.*;
-import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -13,12 +11,6 @@ import java.util.Map;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DirectMessageNotificationTests extends BaseApiTest {
-    private UserTestService userTestService;
-    private ChatTestService chatTestService;
-    private MessageTestService messageTestService;
-    private NotificationTestService notificationTestService;
-    private MailhogService maildropService;
-
     private static final String MAILDROP_DOMAIN = "@maildrop.cc";
     private static final String MAILDROP_MAILBOX1 = "mathew1";
     private static final String MAILDROP_MAILBOX2 = "mathew2";
@@ -42,19 +34,6 @@ public class DirectMessageNotificationTests extends BaseApiTest {
     private String chatId;
     private String messageContent;
     private Map<String, Object> expectedNotification;
-
-    @Override
-    protected void setupServiceSpecificConfig() {
-        RequestSpecification userServiceSpec = getSpecForService(USER_SERVICE_PORT);
-        RequestSpecification chatServiceSpec = getSpecForService(CHAT_SERVICE_PORT);
-        RequestSpecification notificationServiceSpec = getSpecForService(NOTIFICATION_SERVICE_PORT);
-
-        userTestService = new UserTestService(userServiceSpec);
-        chatTestService = new ChatTestService(chatServiceSpec, userTestService);
-        messageTestService = new MessageTestService(chatServiceSpec);
-        notificationTestService = new NotificationTestService(notificationServiceSpec);
-        maildropService = new MailhogService();
-    }
 
     @BeforeEach
     public void setUp() {
@@ -85,22 +64,22 @@ public class DirectMessageNotificationTests extends BaseApiTest {
         );
 
         // By default mute email notifications
-        notificationTestService.disableNotification(recipientId, "direct_message", "email");
-        notificationTestService.disableNotification(senderId, "direct_message", "email");
+        notificationTestService.disableNotification("direct_message", "email");
+        notificationTestService.disableNotification("direct_message", "email");
     }
 
     @AfterEach
     public void cleanup() {
         userTestService.cleanup();
         notificationTestService.cleanup();
-        maildropService.emptyMailbox();
+        mailhogService.emptyMailbox();
     }
 
     @Test
     @DisplayName("When a user sends a direct message, and both inbox and email are enabled for direct messages, recipient should receive both notification types")
     public void shouldReceiveNotificationForNewDirectMessageWhenBothEnabled() {
-        notificationTestService.enableNotification(recipientId, "direct_message", "inbox");
-        notificationTestService.enableNotification(recipientId, "direct_message", "email");
+        notificationTestService.enableNotification("direct_message", "inbox");
+        notificationTestService.enableNotification("direct_message", "email");
 
         sendDirectMessage();
 
@@ -113,11 +92,11 @@ public class DirectMessageNotificationTests extends BaseApiTest {
     @Test
     @DisplayName("When a direct notification is read, the unread count changes")
     public void shouldChangeUnreadCountWhenDirectNotificationReceived() {
-        var unreadCountBefore = notificationTestService.getUnreadNotificationCount(recipientId);
+        var unreadCountBefore = notificationTestService.getUnreadNotificationCount();
 
         sendDirectMessage();
 
-        var unreadCount = notificationTestService.getUnreadNotificationCount(recipientId);
+        var unreadCount = notificationTestService.getUnreadNotificationCount();
 
         assertThat(unreadCount).isEqualTo(unreadCountBefore + 1);
     }
@@ -131,10 +110,10 @@ public class DirectMessageNotificationTests extends BaseApiTest {
         assertThat(unreadNotification).isNotNull();
         var notificationId = unreadNotification.get("id").toString();
 
-        var unreadCountBefore = notificationTestService.getUnreadNotificationCount(recipientId);
+        var unreadCountBefore = notificationTestService.getUnreadNotificationCount();
         notificationTestService.markNotificationAsRead(notificationId);
 
-        var unreadCountAfter = notificationTestService.getUnreadNotificationCount(recipientId);
+        var unreadCountAfter = notificationTestService.getUnreadNotificationCount();
 
         assertThat(unreadCountAfter).isEqualTo(unreadCountBefore - 1);
     }
@@ -143,8 +122,8 @@ public class DirectMessageNotificationTests extends BaseApiTest {
     @DisplayName("When a user sends a direct message, and only inbox is enabled but email is disabled, recipient should only receive inbox notification")
     public void shouldReceiveOnlyInboxNotificationWhenEmailDisabled() {
         // Enable inbox but disable email notifications
-        notificationTestService.enableNotification(recipientId, "direct_message", "inbox");
-        notificationTestService.disableNotification(recipientId, "direct_message", "email");
+        notificationTestService.enableNotification("direct_message", "inbox");
+        notificationTestService.disableNotification("direct_message", "email");
 
         sendDirectMessage();
 
@@ -158,8 +137,8 @@ public class DirectMessageNotificationTests extends BaseApiTest {
     @DisplayName("When a user sends a direct message, and only email is enabled but inbox is disabled, recipient should only receive email notification")
     public void shouldReceiveOnlyEmailNotificationWhenInboxDisabled() {
         // Enable email but disable inbox notifications
-        notificationTestService.disableNotification(recipientId, "direct_message", "inbox");
-        notificationTestService.enableNotification(recipientId, "direct_message", "email");
+        notificationTestService.disableNotification("direct_message", "inbox");
+        notificationTestService.enableNotification("direct_message", "email");
 
         sendDirectMessage();
 
@@ -173,8 +152,8 @@ public class DirectMessageNotificationTests extends BaseApiTest {
     @DisplayName("When a user sends a direct message, and both inbox and email are disabled for direct messages, recipient should receive no notifications")
     public void shouldReceiveNoNotificationsWhenBothDisabled() {
         // Disable both inbox and email notifications
-        notificationTestService.disableNotification(recipientId, "direct_message", "inbox");
-        notificationTestService.disableNotification(recipientId, "direct_message", "email");
+        notificationTestService.disableNotification("direct_message", "inbox");
+        notificationTestService.disableNotification("direct_message", "email");
 
         sendDirectMessage();
 
@@ -188,9 +167,9 @@ public class DirectMessageNotificationTests extends BaseApiTest {
     @DisplayName("When all notifications are muted, recipient should receive no notifications even if individual settings are enabled")
     public void shouldReceiveNoNotificationsWhenMuted() {
         // Enable notifications but then mute all
-        notificationTestService.enableNotification(recipientId, "direct_message", "inbox");
-        notificationTestService.enableNotification(recipientId, "direct_message", "email");
-        notificationTestService.muteAllNotifications(recipientId);
+        notificationTestService.enableNotification("direct_message", "inbox");
+        notificationTestService.enableNotification("direct_message", "email");
+        notificationTestService.muteAllNotifications();
 
         sendDirectMessage();
 
@@ -206,9 +185,9 @@ public class DirectMessageNotificationTests extends BaseApiTest {
     @DisplayName("When notifications are unmuted after being muted, recipient should receive notifications again")
     public void shouldReceiveNotificationsAfterUnmuting() {
         // First mute all notifications
-        notificationTestService.enableNotification(recipientId, "direct_message", "inbox");
-        notificationTestService.enableNotification(recipientId, "direct_message", "email");
-        notificationTestService.muteAllNotifications(recipientId);
+        notificationTestService.enableNotification("direct_message", "inbox");
+        notificationTestService.enableNotification("direct_message", "email");
+        notificationTestService.muteAllNotifications();
 
         sendDirectMessage();
 
@@ -218,7 +197,7 @@ public class DirectMessageNotificationTests extends BaseApiTest {
         assertNotificationNotReceivedInEmail(senderEmail);
 
         // Now unmute all notifications
-        notificationTestService.unmuteAllNotifications(recipientId);
+        notificationTestService.unmuteAllNotifications();
 
         sendDirectMessage();
 
@@ -229,7 +208,6 @@ public class DirectMessageNotificationTests extends BaseApiTest {
     private Map<String, Object> sendDirectMessage() {
         var message = messageTestService.sendDirectMessage(
             senderId,
-            senderUsername,
             recipientId,
             messageContent
         );
@@ -250,7 +228,7 @@ public class DirectMessageNotificationTests extends BaseApiTest {
     }
 
     private void assertNotificationReceivedInEmail(String email) {
-        var foundMail = maildropService.getMatchingMail(
+        var foundMail = mailhogService.getMatchingMail(
             email,
             "New direct message from " + senderUsername,
             messageContent
@@ -273,7 +251,7 @@ public class DirectMessageNotificationTests extends BaseApiTest {
     }
 
     private void assertNotificationNotReceivedInEmail(String email) {
-        var foundMail = maildropService.getMatchingMail(
+        var foundMail = mailhogService.getMatchingMail(
             email,
             "New direct message from " + senderUsername,
             messageContent
@@ -298,7 +276,7 @@ public class DirectMessageNotificationTests extends BaseApiTest {
     }
 
     private Map<String, Object> getNotificationFromAllNotifications(String userId) {
-        var notifications = notificationTestService.getAllNotifications(userId);
+        var notifications = notificationTestService.getAllNotifications();
         if (notifications.isEmpty()) {
             return null;
         }
@@ -313,7 +291,7 @@ public class DirectMessageNotificationTests extends BaseApiTest {
 
     private Map<String, Object> getNotificationFromUnread(String userId) {
         var notifications =
-            notificationTestService.getUnreadNotifications(userId);
+            notificationTestService.getUnreadNotifications();
 
         if (notifications.isEmpty()) {
             return null;

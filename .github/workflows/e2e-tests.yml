@@ -25,7 +25,10 @@ jobs:
           distribution: 'temurin'
 
       - name: Build all jars
-        run: mvn clean install -DskipTests
+        run: |
+          mvn clean install -DskipTests
+          mvn package -DskipTests
+        
 
       - name: Navigate to e2e-tests and start Docker Compose
         working-directory: e2e-tests
@@ -37,5 +40,4 @@ jobs:
       - name: Run integration tests
         working-directory: e2e-tests
         run: |
-          mvn install
           mvn verify

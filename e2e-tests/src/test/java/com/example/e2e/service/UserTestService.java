@@ -14,26 +14,20 @@ import java.util.UUID;
 
 import static io.restassured.RestAssured.given;
 
-/**
- * Service class for user-related test operations.
- * Centralizes common test operations like user creation and deletion.
- */
 public class UserTestService {
+    public static final String PASSWORD = "Password123!";
 
     private static final Logger logger = LoggerFactory.getLogger(UserTestService.class);
-    private final RequestSpecification userServiceSpec;
+    private final RequestSpecification authorizedSpec;
+    private final RequestSpecification unauthorizedSpec;
     private final List<UUID> createdUserIds = new ArrayList<>();
     private Map<UUID, String> userTokens = new HashMap<>();
 
-    public UserTestService(RequestSpecification userServiceSpec) {
-        this.userServiceSpec = userServiceSpec;
+    public UserTestService(RequestSpecification authorizedSpec, RequestSpecification unauthorizedSpec) {
+        this.authorizedSpec = authorizedSpec;
+        this.unauthorizedSpec = unauthorizedSpec;
     }
 
-    /**
-     * Registers a new test user with random data
-     *
-     * @return Map containing the created user data including ID
-     */
     public Map<String, Object> registerUser() {
         Map<String, Object> userData = generateRandomUserData();
         return registerUser(userData);
@@ -45,15 +39,9 @@ public class UserTestService {
         return registerUser(userData);
     }
 
-    /**
-     * Registers a user with the provided data
-     *
-     * @param userData The user data to register
-     * @return Map containing the created user data including ID
-     */
     public Map<String, Object> registerUser(Map<String, Object> userData) {
         Response response = given()
-            .spec(userServiceSpec)
+            .spec(unauthorizedSpec)
             .contentType(ContentType.JSON)
             .body(userData)
         .when()
@@ -72,35 +60,29 @@ public class UserTestService {
         return responseData;
     }
 
-    /**
-     * Generates random user data to prevent test conflicts
-     *
-     * @return Map with random user data
-     */
     public Map<String, Object> generateRandomUserData() {
         long timestamp = System.currentTimeMillis();
         Map<String, Object> userData = new HashMap<>();
         userData.put("username", "testuser" + timestamp);
         userData.put("email", "test" + timestamp + "@example.com");
-        userData.put("password", "Password123!");
+        userData.put("password", PASSWORD);
         userData.put("phoneNumber", "+1" + (1000000000L + (long)(Math.random() * 9000000000L)));
         return userData;
     }
 
-    /**
-     * Login a user and retrieve authentication tokens
-     *
-     * @param username The username to login with
-     * @param password The password to login with
-     * @return Map containing access and refresh tokens
-     */
-    public Map<String, String> loginUser(String username, String password) {
+
+    public String loginUser(String username) {
+        return loginUser(username, PASSWORD);
+    }
+
+    public String loginUser(String username, String password) {
         Map<String, String> loginData = new HashMap<>();
         loginData.put("identifier", username);
         loginData.put("password", password);
+        loginData.put("type", "username");
 
         Response response = given()
-            .spec(userServiceSpec)
+            .spec(unauthorizedSpec)
             .contentType(ContentType.JSON)
             .body(loginData)
         .when()
@@ -111,17 +93,13 @@ public class UserTestService {
             .response();
 
         Map<String, String> tokens = response.jsonPath().getMap("$");
-        return tokens;
+        var accessToken = tokens.get("accessToken");
+        return accessToken;
     }
 
-    /**
-     * Get all users from the system
-     *
-     * @return List of user data maps
-     */
     public List<Map<String, Object>> getAllUsers() {
         return given()
-            .spec(userServiceSpec)
+            .spec(authorizedSpec)
             .contentType(ContentType.JSON)
         .when()
             .get("/user/getAll")
@@ -133,15 +111,9 @@ public class UserTestService {
             .getList("$");
     }
 
-    /**
-     * Get a specific user by ID
-     *
-     * @param userId The ID of the user to retrieve
-     * @return Map containing user data
-     */
     public Map<String, Object> getUserById(UUID userId) {
         return given()
-            .spec(userServiceSpec)
+            .spec(authorizedSpec)
             .contentType(ContentType.JSON)
         .when()
             .get("/user/" + userId)
@@ -153,17 +125,10 @@ public class UserTestService {
             .getMap("$");
     }
 
-    /**
-     * Delete a specific user by ID
-     *
-     * @param userId The ID of the user to delete
-     * @param token Authentication token (can be null for test environments)
-     * @return True if deletion was successful
-     */
     public boolean deleteUser(UUID userId, String token) {
         try {
             RequestSpecification request = given()
-                .spec(userServiceSpec)
+                .spec(authorizedSpec)
                 .contentType(ContentType.JSON);
 
             // Add token if provided
@@ -185,14 +150,11 @@ public class UserTestService {
         }
     }
 
-    /**
-     * Delete all users created through this service
-     */
     public void deleteAllCreatedUsers() {
         // Check if the service has a convenience method for clean-up
         try {
             given()
-                .spec(userServiceSpec)
+                .spec(authorizedSpec)
                 .contentType(ContentType.JSON)
             .when()
                 .delete("/user/deleteAll")
@@ -211,16 +173,9 @@ public class UserTestService {
         }
     }
 
-    /**
-     * Update an existing user
-     *
-     * @param userId The ID of the user to update
-     * @param updateData The data to update
-     * @return The updated user data
-     */
     public Map<String, Object> updateUser(UUID userId, Map<String, Object> updateData) {
         return given()
-            .spec(userServiceSpec)
+            .spec(authorizedSpec)
             .contentType(ContentType.JSON)
             .body(updateData)
         .when()
@@ -233,16 +188,9 @@ public class UserTestService {
             .getMap("$");
     }
 
-    /**
-     * Check if a user is blocked by another user
-     *
-     * @param blockerId The ID of the user who might be blocking
-     * @param blockedId The ID of the user who might be blocked
-     * @return True if blocked, false otherwise
-     */
     public boolean isUserBlocked(UUID blockerId, UUID blockedId) {
         String response = given()
-            .spec(userServiceSpec)
+            .spec(authorizedSpec)
             .contentType(ContentType.JSON)
         .when()
             .get("/user/isBlocked/{blockerId}/{blockedId}", blockerId, blockedId)
@@ -254,11 +202,6 @@ public class UserTestService {
         return Boolean.parseBoolean(response);
     }
 
-    /**
-     * Get list of users created during tests
-     *
-     * @return List of created user IDs
-     */
     public List<UUID> getCreatedUserIds() {
         return new ArrayList<>(createdUserIds);
     }

@@ -22,17 +22,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  * End-to-end tests for User API.
  */
 public class UserApiTests extends BaseApiTest {
-
-    private RequestSpecification userServiceSpec;
-    private UserTestService userTestService;
-
-    @Override
-    protected void setupServiceSpecificConfig() {
-        // Configure the user service specific request specification
-        userServiceSpec = getSpecForService(USER_SERVICE_PORT);
-        userTestService = new UserTestService(userServiceSpec);
-    }
-
     @AfterAll
     public void cleanupTestData() {
         userTestService.deleteAllCreatedUsers();

@@ -140,6 +140,40 @@ services:
       - SPRING_REDIS_HOST=redisCache
       - NOTIFICATION_SERVICE_URL=http://notification-service:8082
 
+  gateway:
+    build: ../gateway
+    container_name: gateway
+    ports:
+      - "8765:8765"
+    environment:
+      - SPRING_PROFILES_ACTIVE=e2e
+      - USER_SERVICE_URL=http://user-service:8086
+      - SPRING_PROFILES_ACTIVE=k8s
+      - SPRING_MAIN_WEB_APPLICATION_TYPE=reactive
+      - SPRING_CLOUD_GATEWAY_ROUTES_0_ID=user-service
+      - SPRING_CLOUD_GATEWAY_ROUTES_0_URI=http://user-service:8086
+      - SPRING_CLOUD_GATEWAY_ROUTES_0_PREDICATES_0=Path=/auth/**,/user/**,/manageUser/**
+      - SPRING_CLOUD_GATEWAY_ROUTES_0_FILTERS_0=StripPrefix=0
+
+      - SPRING_CLOUD_GATEWAY_ROUTES_1_ID=chat-service
+      - SPRING_CLOUD_GATEWAY_ROUTES_1_URI=http://chat-service:8080
+      - SPRING_CLOUD_GATEWAY_ROUTES_1_PREDICATES_0=Path=/api/messages/**,/chats/**
+      - SPRING_CLOUD_GATEWAY_ROUTES_1_FILTERS_0=StripPrefix=0
+
+      - SPRING_CLOUD_GATEWAY_ROUTES_2_ID=notification-service
+      - SPRING_CLOUD_GATEWAY_ROUTES_2_URI=http://notification-service:8082
+      - SPRING_CLOUD_GATEWAY_ROUTES_2_PREDICATES_0=Path=/api/notification-settings/**,/debug/**,/api/seed/notifications/**,/notifications/**
+      - SPRING_CLOUD_GATEWAY_ROUTES_2_FILTERS_0=StripPrefix=0
+
+      - SPRING_CLOUD_GATEWAY_ROUTES_3_ID=group-chat-service
+      - SPRING_CLOUD_GATEWAY_ROUTES_3_URI=http://group-chat-service:8083
+      - SPRING_CLOUD_GATEWAY_ROUTES_3_PREDICATES_0=Path=/groupChat/**,/groupMessage/**
+      - SPRING_CLOUD_GATEWAY_ROUTES_3_FILTERS_0=StripPrefix=0
+
+      - SPRING_DATA_REDIS_HOST=redis_cache
+      - SPRING_DATA_REDIS_PORT=6379
+      - USERSERVICE_URL=http://user-service:8086
+
 volumes:
   mongodb_data:
   postgres-data:

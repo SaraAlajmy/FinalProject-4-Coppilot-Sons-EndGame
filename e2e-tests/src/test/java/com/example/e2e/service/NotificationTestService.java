@@ -6,7 +6,6 @@ import io.restassured.specification.RequestSpecification;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import static io.restassured.RestAssured.given;
 
@@ -19,10 +18,9 @@ public class NotificationTestService {
         this.notificationServiceSpec = notificationServiceSpec;
     }
 
-    public Map<String, Object> getUserNotificationSettings(String userId) {
+    public Map<String, Object> getUserNotificationSettings() {
         return given()
                 .spec(notificationServiceSpec)
-                .header("userId", userId)
                 .contentType(ContentType.JSON)
                 .when()
                 .get("/api/notification-settings")
@@ -33,10 +31,9 @@ public class NotificationTestService {
                 .as(Map.class);
     }
 
-    public boolean getNotificationStatus(String userId, String notificationType, String strategyType) {
+    public boolean getNotificationStatus(String notificationType, String strategyType) {
         return given()
                 .spec(notificationServiceSpec)
-                .header("userId", userId)
                 .contentType(ContentType.JSON)
                 .when()
                 .get("/api/notification-settings/" + notificationType + "/" + strategyType)
@@ -47,10 +44,9 @@ public class NotificationTestService {
                 .as(Boolean.class);
     }
 
-    public void enableNotification(String userId, String notificationType, String strategyType) {
+    public void enableNotification(String notificationType, String strategyType) {
         given()
                 .spec(notificationServiceSpec)
-                .header("userId", userId)
                 .contentType(ContentType.JSON)
                 .when()
                 .post("/api/notification-settings/" + notificationType + "/" + strategyType + "/enable")
@@ -58,10 +54,9 @@ public class NotificationTestService {
                 .statusCode(200);
     }
 
-    public void disableNotification(String userId, String notificationType, String strategyType) {
+    public void disableNotification(String notificationType, String strategyType) {
         given()
                 .spec(notificationServiceSpec)
-                .header("userId", userId)
                 .contentType(ContentType.JSON)
                 .when()
                 .post("/api/notification-settings/" + notificationType + "/" + strategyType + "/disable")
@@ -69,10 +64,9 @@ public class NotificationTestService {
                 .statusCode(200);
     }
 
-    public void muteAllNotifications(String userId) {
+    public void muteAllNotifications() {
         given()
                 .spec(notificationServiceSpec)
-                .header("userId", userId)
                 .contentType(ContentType.JSON)
                 .when()
                 .post("/api/notification-settings/mute-all")
@@ -80,10 +74,9 @@ public class NotificationTestService {
                 .statusCode(200);
     }
 
-    public void unmuteAllNotifications(String userId) {
+    public void unmuteAllNotifications() {
         given()
                 .spec(notificationServiceSpec)
-                .header("userId", userId)
                 .contentType(ContentType.JSON)
                 .when()
                 .post("/api/notification-settings/unmute-all")
@@ -93,13 +86,11 @@ public class NotificationTestService {
     
     /**
      * Get all notifications for a specific user
-     * @param userId The user ID
      * @return A list of all notifications for the user
      */
-    public List<Map<String, Object>> getAllNotifications(String userId) {
+    public List<Map<String, Object>> getAllNotifications() {
         return given()
                 .spec(notificationServiceSpec)
-                .header("userId", userId)
                 .contentType(ContentType.JSON)
                 .when()
                 .get("/notifications/AllNotifications")
@@ -112,13 +103,11 @@ public class NotificationTestService {
     
     /**
      * Get all unread notifications for a specific user
-     * @param userId The user ID
      * @return A list of unread notifications
      */
-    public List<Map<String, Object>> getUnreadNotifications(String userId) {
+    public List<Map<String, Object>> getUnreadNotifications() {
         return given()
                 .spec(notificationServiceSpec)
-                .header("userId", userId)
                 .contentType(ContentType.JSON)
                 .when()
                 .get("/notifications/unread")
@@ -131,13 +120,11 @@ public class NotificationTestService {
     
     /**
      * Get all unread notifications grouped by sender
-     * @param userId The user ID
      * @return A map with sender IDs as keys and lists of notifications as values
      */
-    public Map<String, List<Map<String, Object>>> getUnreadNotificationsGroupedBySender(String userId) {
+    public Map<String, List<Map<String, Object>>> getUnreadNotificationsGroupedBySender() {
         return given()
                 .spec(notificationServiceSpec)
-                .header("userId", userId)
                 .contentType(ContentType.JSON)
                 .when()
                 .get("/notifications/unread/grouped")
@@ -150,13 +137,11 @@ public class NotificationTestService {
     
     /**
      * Get the count of unread notifications for a user
-     * @param userId The user ID
      * @return The number of unread notifications
      */
-    public int getUnreadNotificationCount(String userId) {
+    public int getUnreadNotificationCount() {
         return given()
                 .spec(notificationServiceSpec)
-                .header("userId", userId)
                 .contentType(ContentType.JSON)
                 .when()
                 .get("/notifications/unread/count")
@@ -188,13 +173,11 @@ public class NotificationTestService {
     
     /**
      * Mark all notifications as read for a user
-     * @param userId The user ID
      * @return The response message
      */
-    public String markAllNotificationsAsRead(String userId) {
+    public String markAllNotificationsAsRead() {
         return given()
                 .spec(notificationServiceSpec)
-                .header("userId", userId)
                 .contentType(ContentType.JSON)
                 .when()
                 .post("/notifications/markAllRead")

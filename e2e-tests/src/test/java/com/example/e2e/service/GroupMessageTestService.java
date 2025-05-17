@@ -60,29 +60,22 @@ public class GroupMessageTestService {
      * Send a new message to a group chat
      *
      * @param groupId    Group ID
-     * @param senderId   Sender user ID
      * @param content    Message content
-     * @param senderUsername Sender name
      * @return Created message
      */
     public Map<String, Object> sendGroupMessage(
-        String senderId,
-        String senderUsername,
         String groupId,
         String content
     ) {
         Map<String, Object> requestBody = new HashMap<>();
-        requestBody.put("groupId", groupId);
-        requestBody.put("senderId", senderId);
         requestBody.put("content", content);
 
         return given()
             .spec(groupChatServiceSpec)
-            .header("userName", senderUsername)
             .contentType(ContentType.JSON)
             .body(requestBody)
             .when()
-            .post("/groupMessage/send")
+            .post("/groupMessage/send/" + groupId)
             .then()
             .statusCode(200)
             .extract()

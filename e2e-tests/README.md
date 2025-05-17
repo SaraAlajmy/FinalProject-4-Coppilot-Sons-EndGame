@@ -6,6 +6,7 @@
 
 ```bash
 mvn clean install -DskipTests
+mvn package -DskipTests
 ```
 
 2. Make sure you are in the `e2e-tests` directory.

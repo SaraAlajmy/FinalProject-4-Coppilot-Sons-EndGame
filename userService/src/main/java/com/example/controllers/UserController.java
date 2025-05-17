@@ -64,16 +64,17 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting user: " + e.getMessage());
         }
     }
-    //delete all users
-//    @DeleteMapping("/deleteAll")
-//    public String deleteAllUsers() {
-//        try {
-//            userService.deleteAllUsers();
-//            return "All users deleted successfully";
-//        } catch (Exception e) {
-//            return "Error deleting users: " + e.getMessage();
-//        }
-//    }
+
+//    delete all users
+    @DeleteMapping("/deleteAll")
+    public String deleteAllUsers() {
+        try {
+            userService.deleteAllUsers();
+            return "All users deleted successfully";
+        } catch (Exception e) {
+            return "Error deleting users: " + e.getMessage();
+        }
+    }
 
     @GetMapping("/areBlocking/{firstUser}/{secondUser}")
     public ResponseEntity<Boolean> areBlocking(@PathVariable UUID firstUser, @PathVariable UUID secondUser){

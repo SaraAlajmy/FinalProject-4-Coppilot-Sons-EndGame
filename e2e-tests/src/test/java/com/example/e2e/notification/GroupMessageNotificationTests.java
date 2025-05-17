@@ -2,8 +2,6 @@ package com.example.e2e.notification;
 
 
 import com.example.e2e.base.BaseApiTest;
-import com.example.e2e.service.*;
-import io.restassured.specification.RequestSpecification;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
@@ -19,12 +17,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
 public class GroupMessageNotificationTests extends BaseApiTest {
-    private UserTestService userTestService;
-    private NotificationTestService notificationTestService;
-    private MailhogService mailhogService;
-    private GroupChatTestService groupChatTestService;
-    private GroupMessageTestService groupMessageTestService;
-
     private static final String MAILDROP_DOMAIN = "@maildrop.cc";
     private static final String MAILDROP_MAILBOX1 = "mathew1";
     private static final String MAILDROP_MAILBOX2 = "mathew2";
@@ -39,7 +31,11 @@ public class GroupMessageNotificationTests extends BaseApiTest {
     private static final String EMAIL5 = MAILDROP_MAILBOX5 + MAILDROP_DOMAIN;
 
     private static final String[] MAILDROP_MAILBOXES = {
-        MAILDROP_MAILBOX1, MAILDROP_MAILBOX2, MAILDROP_MAILBOX3, MAILDROP_MAILBOX4, MAILDROP_MAILBOX5
+        MAILDROP_MAILBOX1,
+        MAILDROP_MAILBOX2,
+        MAILDROP_MAILBOX3,
+        MAILDROP_MAILBOX4,
+        MAILDROP_MAILBOX5
     };
 
     private User creator;
@@ -51,32 +47,17 @@ public class GroupMessageNotificationTests extends BaseApiTest {
     private String groupId;
     private String messageContent;
 
-
-    @Override
-    protected void setupServiceSpecificConfig() {
-        RequestSpecification userServiceSpec = getSpecForService(USER_SERVICE_PORT);
-        RequestSpecification notificationServiceSpec = getSpecForService(NOTIFICATION_SERVICE_PORT);
-        RequestSpecification groupChatServiceSpec = getSpecForService(GROUP_CHAT_SERVICE_PORT);
-
-        userTestService = new UserTestService(userServiceSpec);
-        notificationTestService = new NotificationTestService(notificationServiceSpec);
-        groupChatTestService = new GroupChatTestService(groupChatServiceSpec, userTestService);
-        groupMessageTestService = new GroupMessageTestService(groupChatServiceSpec);
-        mailhogService = new MailhogService();
-    }
-
     @BeforeEach
     public void setUp() {
         // Create chat
         var result = groupChatTestService.createRandomGroupChatWithUsers(
-            EMAIL1,
             List.of(EMAIL2, EMAIL3, EMAIL4, EMAIL5)
         );
 
         creator = User.builder()
-                      .id(result.creator().get("id").toString())
-                      .email(result.creator().get("email").toString())
-                      .username(result.creator().get("username").toString())
+                      .id(loggedInUser.get("id").toString())
+                      .email(loggedInUser.get("email").toString())
+                      .username(loggedInUser.get("username").toString())
                       .build();
 
         members = result.members().stream()
@@ -95,7 +76,7 @@ public class GroupMessageNotificationTests extends BaseApiTest {
         // By default mute email notifications
         for (var member : allMembers()) {
             var memberId = member.id();
-            notificationTestService.disableNotification(memberId, "group_message", "email");
+            notificationTestService.disableNotification("group_message", "email");
         }
     }
 
@@ -152,8 +133,8 @@ public class GroupMessageNotificationTests extends BaseApiTest {
         // Enable inbox but disable email notifications
         for (var member : allMembers()) {
             var memberId = member.id();
-            notificationTestService.enableNotification(memberId, "group_message", "inbox");
-            notificationTestService.disableNotification(memberId, "group_message", "email");
+            notificationTestService.enableNotification("group_message", "inbox");
+            notificationTestService.disableNotification("group_message", "email");
         }
 
         sender = members.getFirst();
@@ -177,8 +158,8 @@ public class GroupMessageNotificationTests extends BaseApiTest {
         // Enable email but disable inbox notifications
         for (var member : allMembers()) {
             var memberId = member.id();
-            notificationTestService.disableNotification(memberId, "group_message", "inbox");
-            notificationTestService.enableNotification(memberId, "group_message", "email");
+            notificationTestService.disableNotification("group_message", "inbox");
+            notificationTestService.enableNotification("group_message", "email");
         }
 
         sender = members.getFirst();
@@ -203,8 +184,8 @@ public class GroupMessageNotificationTests extends BaseApiTest {
         // Disable both inbox and email notifications
         for (var member : allMembers()) {
             var memberId = member.id();
-            notificationTestService.disableNotification(memberId, "group_message", "inbox");
-            notificationTestService.disableNotification(memberId, "group_message", "email");
+            notificationTestService.disableNotification("group_message", "inbox");
+            notificationTestService.disableNotification("group_message", "email");
         }
 
         sender = members.getFirst();
@@ -228,9 +209,9 @@ public class GroupMessageNotificationTests extends BaseApiTest {
         // Enable notifications but then mute all
         for (var member : allMembers()) {
             var memberId = member.id();
-            notificationTestService.enableNotification(memberId, "group_message", "inbox");
-            notificationTestService.enableNotification(memberId, "group_message", "email");
-            notificationTestService.muteAllNotifications(memberId);
+            notificationTestService.enableNotification("group_message", "inbox");
+            notificationTestService.enableNotification("group_message", "email");
+            notificationTestService.muteAllNotifications();
         }
 
         sender = members.getFirst();
@@ -249,7 +230,6 @@ public class GroupMessageNotificationTests extends BaseApiTest {
     }
 
 
-
     @Test
     @DisplayName("When a new member is added, and all notifications are enabled, they should receive notifications")
     public void shouldReceiveNotificationsWhenNewMemberAdded() {
@@ -260,7 +240,7 @@ public class GroupMessageNotificationTests extends BaseApiTest {
                             .email(newMemberData.get("email").toString())
                             .username(newMemberData.get("username").toString())
                             .build();
-        groupChatTestService.addMember(groupId, creator.id(), newMember.id());
+        groupChatTestService.addMember(groupId, newMember.id());
 
         sender = members.getFirst();
         recipients = membersExcept(sender.id());
@@ -268,8 +248,8 @@ public class GroupMessageNotificationTests extends BaseApiTest {
 
         for (var member : allMembers()) {
             var memberId = member.id();
-            notificationTestService.enableNotification(memberId, "group_message", "inbox");
-            notificationTestService.enableNotification(memberId, "group_message", "email");
+            notificationTestService.enableNotification("group_message", "inbox");
+            notificationTestService.enableNotification("group_message", "email");
         }
 
         sendMessage();
@@ -294,17 +274,17 @@ public class GroupMessageNotificationTests extends BaseApiTest {
     @Test
     @DisplayName("When a member sends a message, and users have mix of inbox and email enabled, they should receive notifications accordingly")
     public void shouldReceiveNotificationsAccordingToSettings() {
-        notificationTestService.enableNotification(creator.id(), "group_message", "inbox");
-        notificationTestService.enableNotification(creator.id(), "group_message", "email");
+        notificationTestService.enableNotification("group_message", "inbox");
+        notificationTestService.enableNotification("group_message", "email");
 
-        notificationTestService.enableNotification(members.get(1).id(), "group_message", "inbox");
-        notificationTestService.disableNotification(members.get(1).id(), "group_message", "email");
+        notificationTestService.enableNotification("group_message", "inbox");
+        notificationTestService.disableNotification("group_message", "email");
 
-        notificationTestService.enableNotification(members.get(2).id(), "group_message", "email");
-        notificationTestService.disableNotification(members.get(2).id(), "group_message", "inbox");
+        notificationTestService.enableNotification("group_message", "email");
+        notificationTestService.disableNotification("group_message", "inbox");
 
-        notificationTestService.disableNotification(members.get(3).id(), "group_message", "inbox");
-        notificationTestService.disableNotification(members.get(3).id(), "group_message", "email");
+        notificationTestService.disableNotification("group_message", "inbox");
+        notificationTestService.disableNotification("group_message", "email");
 
         sender = members.getFirst();
         recipients = membersExcept(sender.id());
@@ -341,17 +321,18 @@ public class GroupMessageNotificationTests extends BaseApiTest {
         return membersList;
     }
 
-    private Map<String, Object> sendMessage() {
-        var message = groupMessageTestService.sendGroupMessage(
-            sender.id(),
-            sender.username(),
-            groupId,
-            messageContent
+    private void sendMessage() {
+        loggedAs(
+            sender, () -> {
+                groupMessageTestService.sendGroupMessage(
+                    groupId,
+                    messageContent
+                );
+            }
         );
 
         waitFor(100);
 
-        return message;
     }
 
     private void assertNotificationReceivedInInbox(String userId, User recipient) {
@@ -427,7 +408,7 @@ public class GroupMessageNotificationTests extends BaseApiTest {
     }
 
     private Map<String, Object> getNotificationFromAllNotifications(String userId) {
-        var notifications = notificationTestService.getAllNotifications(userId);
+        var notifications = notificationTestService.getAllNotifications();
         if (notifications.isEmpty()) {
             return null;
         }
@@ -442,7 +423,7 @@ public class GroupMessageNotificationTests extends BaseApiTest {
 
     private Map<String, Object> getNotificationFromUnread(String userId) {
         var notifications =
-            notificationTestService.getUnreadNotifications(userId);
+            notificationTestService.getUnreadNotifications();
 
         if (notifications.isEmpty()) {
             return null;
@@ -458,16 +439,8 @@ public class GroupMessageNotificationTests extends BaseApiTest {
     private void enableNotificationsForAllMembers() {
         for (var member : allMembers()) {
             var memberId = member.id();
-            notificationTestService.enableNotification(memberId, "group_message", "inbox");
-            notificationTestService.enableNotification(memberId, "group_message", "email");
+            notificationTestService.enableNotification("group_message", "inbox");
+            notificationTestService.enableNotification("group_message", "email");
         }
-    }
-
-    @Builder
-    private record User(
-        String id,
-        String email,
-        String username
-    ) {
     }
 }

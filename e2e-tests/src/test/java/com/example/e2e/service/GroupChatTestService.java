@@ -97,14 +97,12 @@ public class GroupChatTestService {
      * @param name        Group chat name
      * @param description Group chat description
      * @param memberIds   List of member IDs to include
-     * @param creatorId   User ID of the creator
      * @return Created group chat
      */
     public Map<String, Object> createGroupChat(
         String name,
         String description,
-        List<String> memberIds,
-        String creatorId
+        List<String> memberIds
     ) {
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("name", name);
@@ -112,7 +110,6 @@ public class GroupChatTestService {
         requestBody.put("members", memberIds);
 
         return given().spec(groupChatServiceSpec)
-                      .header("userId", creatorId)
                       .contentType(ContentType.JSON)
                       .body(requestBody)
                       .when()
@@ -161,12 +158,10 @@ public class GroupChatTestService {
      * Enable admin-only messages in a group chat
      *
      * @param groupChatId Group chat ID
-     * @param userId      User ID (must be admin)
      * @return Updated group chat
      */
-    public Map<String, Object> activateAdminOnlyMessages(String groupChatId, String userId) {
+    public Map<String, Object> activateAdminOnlyMessages(String groupChatId) {
         return given().spec(groupChatServiceSpec)
-                      .header("userId", userId)
                       .contentType(ContentType.JSON)
                       .when()
                       .put("/groupChat/activateAdminOnlyMessages/" + groupChatId)
@@ -181,12 +176,10 @@ public class GroupChatTestService {
      * Disable admin-only messages in a group chat
      *
      * @param groupChatId Group chat ID
-     * @param userId      User ID (must be admin)
      * @return Updated group chat
      */
-    public Map<String, Object> deactivateAdminOnlyMessages(String groupChatId, String userId) {
+    public Map<String, Object> deactivateAdminOnlyMessages(String groupChatId) {
         return given().spec(groupChatServiceSpec)
-                      .header("userId", userId)
                       .contentType(ContentType.JSON)
                       .when()
                       .put("/groupChat/unactivateAdminOnlyMessages/" + groupChatId)
@@ -201,20 +194,17 @@ public class GroupChatTestService {
      * Add a member to a group chat
      *
      * @param groupChatId Group chat ID
-     * @param adminUserId User ID adding the member (must be admin)
      * @param newMemberId User ID of the new member
      * @return Updated group chat
      */
     public Map<String, Object> addMember(
         String groupChatId,
-        String adminUserId,
         String newMemberId
     ) {
         Map<String, String> requestBody = new HashMap<>();
         requestBody.put("memberId", newMemberId);
 
         return given().spec(groupChatServiceSpec)
-                      .header("userId", adminUserId)
                       .contentType(ContentType.JSON)
                       .body(requestBody)
                       .when()
@@ -230,20 +220,17 @@ public class GroupChatTestService {
      * Remove a member from a group chat
      *
      * @param groupChatId      Group chat ID
-     * @param adminUserId      User ID removing the member (must be admin)
      * @param memberIdToRemove User ID of the member to remove
      * @return Updated group chat
      */
     public Map<String, Object> removeMember(
         String groupChatId,
-        String adminUserId,
         String memberIdToRemove
     ) {
         Map<String, String> requestBody = new HashMap<>();
         requestBody.put("memberId", memberIdToRemove);
 
         return given().spec(groupChatServiceSpec)
-                      .header("userId", adminUserId)
                       .contentType(ContentType.JSON)
                       .body(requestBody)
                       .when()
@@ -259,20 +246,17 @@ public class GroupChatTestService {
      * Make a member an admin of a group chat
      *
      * @param groupChatId Group chat ID
-     * @param adminUserId User ID making the change (must be admin)
      * @param newAdminId  User ID to make admin
      * @return Updated group chat
      */
     public Map<String, Object> makeAdmin(
         String groupChatId,
-        String adminUserId,
         String newAdminId
     ) {
         Map<String, String> requestBody = new HashMap<>();
         requestBody.put("memberId", newAdminId);
 
         return given().spec(groupChatServiceSpec)
-                      .header("userId", adminUserId)
                       .contentType(ContentType.JSON)
                       .body(requestBody)
                       .when()
@@ -288,20 +272,17 @@ public class GroupChatTestService {
      * Remove admin status from a member
      *
      * @param groupChatId     Group chat ID
-     * @param adminUserId     User ID making the change (must be admin)
      * @param adminToRemoveId User ID to remove admin status from
      * @return Updated group chat
      */
     public Map<String, Object> removeAdmin(
         String groupChatId,
-        String adminUserId,
         String adminToRemoveId
     ) {
         Map<String, String> requestBody = new HashMap<>();
         requestBody.put("memberId", adminToRemoveId);
 
         return given().spec(groupChatServiceSpec)
-                      .header("userId", adminUserId)
                       .contentType(ContentType.JSON)
                       .body(requestBody)
                       .when()
@@ -334,23 +315,17 @@ public class GroupChatTestService {
     /**
      * Creates a random group chat with specific creator and member emails
      *
-     * @param creatorEmail Email for the creator user
      * @param memberEmails List of emails for the member users
      * @return GroupChatTestResult containing the group chat and all user information
      * @throws IllegalStateException if UserTestService is not set
      */
     public GroupChatTestResult createRandomGroupChatWithUsers(
-        String creatorEmail,
         List<String> memberEmails
     ) {
         if (userTestService == null) {
             throw new IllegalStateException(
                 "UserTestService not initialized. Use constructor with UserTestService parameter.");
         }
-
-        // Create the creator user with the specified email
-        Map<String, Object> creator = userTestService.registerUserWithEmail(creatorEmail);
-        String creatorId = creator.get("id").toString();
 
         // Create members with the specified emails
         List<Map<String, Object>> members = new ArrayList<>();
@@ -369,12 +344,11 @@ public class GroupChatTestService {
 
         // Create the group chat
         Map<String, Object> groupChat =
-            createGroupChat(randomGroupName, randomDescription, memberIds, creatorId);
+            createGroupChat(randomGroupName, randomDescription, memberIds);
 
         // Return result using the record
         return GroupChatTestResult.builder()
                                   .groupChat(groupChat)
-                                  .creator(creator)
                                   .members(members)
                                   .build();
     }
@@ -386,7 +360,6 @@ public class GroupChatTestService {
     @Builder
     public record GroupChatTestResult(
         Map<String, Object> groupChat,
-        Map<String, Object> creator,
         List<Map<String, Object>> members
     ) {
     }
