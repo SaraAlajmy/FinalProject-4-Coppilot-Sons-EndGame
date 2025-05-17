@@ -5,13 +5,14 @@ import com.example.chat_service.dto.MessageRequestDTO;
 import com.example.chat_service.exceptions.UnauthorizedOperationException;
 import com.example.chat_service.exceptions.UserBlockedException;
 import com.example.chat_service.models.Message;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
-
+@Slf4j
 @Service
 public class MessageServiceProxy implements MessageService {
 
@@ -27,9 +28,12 @@ public class MessageServiceProxy implements MessageService {
     @Override
     public Message sendMessage(MessageRequestDTO dto, String senderUserName) {
         try {
-            if(userClient.isBlocked(UUID.fromString(dto.getReceiverId()), UUID.fromString(dto.getSenderId()))) {
+            boolean areBlocking=Boolean.TRUE.equals(userClient.areBlocking(UUID.fromString(dto.getReceiverId()), UUID.fromString(dto.getSenderId())).getBody());
+            if(areBlocking) {
+                logger.info("User: " + senderUserName + " and User " + dto.getReceiverId() +" are blocking each other");
                 throw new UserBlockedException("Sender is blocked by the receiver");
             }
+            log.info("User: " + senderUserName + " and User " + dto.getReceiverId() +" are not blocking each other");
             Message message = realMessageService.sendMessage(dto, senderUserName);
             return message;
         } catch (Exception e) {
