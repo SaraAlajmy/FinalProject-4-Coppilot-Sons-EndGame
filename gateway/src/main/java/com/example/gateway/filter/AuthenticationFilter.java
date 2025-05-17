@@ -27,8 +27,8 @@ public class AuthenticationFilter implements GlobalFilter {
             "/auth/validateToken",
             "/auth/refresh",
             "/auth/forgotPassword",
-            "/auth/resetPassword"
-
+            "/auth/resetPassword",
+            "/user/seed"
     );
 
     @Override

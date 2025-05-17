@@ -1,12 +1,9 @@
 package com.example.groupChatService.controllers;
-
 import com.example.groupChatService.dto.SendMessageRequest;
 import com.example.groupChatService.models.GroupMessage;
 import com.example.groupChatService.services.GroupMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Map;
 
@@ -16,112 +13,65 @@ public class GroupMessageController {
     private final GroupMessageService groupMessageService;
 
     @Autowired
-
     public GroupMessageController(GroupMessageService groupMessageService) {
         this.groupMessageService = groupMessageService;
     }
 
     @GetMapping("/allMessages")
     public List<GroupMessage> getAllGroupMessages() {
-        try {
-            return groupMessageService.getAllGroupMessages();
-        } catch (Exception e) {
-            System.out.println("Error fetching group messages: " + e.getMessage());
-            return null;
-        }
+        return groupMessageService.getAllGroupMessages();
     }
-//    @GetMapping("/{groupId}")
-//    public List<GroupMessage> getGroupMessagesByGroupChatId(@PathVariable String groupId) {
-//        try {
-//            return groupMessageService.getGroupMessagesByGroupId(groupId);
-//        } catch (Exception e) {
-//            System.out.println("Error fetching group messages by group chat ID: " + e.getMessage());
-//            return null;
-//        }
-//    }
+
     @GetMapping("/{groupId}")
     public List<GroupMessage> getGroupMessageById(@PathVariable String groupId) {
-        try {
-            return groupMessageService.getUnarchivedGroupMessages(groupId);
-        } catch (Exception e) {
-            System.out.println("Error fetching group message by ID: " + e.getMessage());
-            return null;
-        }
+        return groupMessageService.getUnarchivedGroupMessages(groupId);
     }
 
     @PostMapping("/")
     public GroupMessage addGroupMessage(@RequestBody GroupMessage groupMessage) {
-        try {
-            return groupMessageService.addGroupMessage(groupMessage);
-        } catch (Exception e) {
-            System.out.println("Error adding group message: " + e.getMessage());
-            return null;
-        }
+        return groupMessageService.addGroupMessage(groupMessage);
     }
 
     @PutMapping("/{id}")
     public GroupMessage editGroupMessage(@PathVariable String id, @RequestBody Map<String, String> body) {
-        try {
-            String content = body.get("content");
-            return groupMessageService.editGroupMessage(id, content);
-        } catch (Exception e) {
-            System.out.println("Error editing group message: " + e.getMessage());
-            return null;
-        }
+        String content = body.get("content");
+        return groupMessageService.editGroupMessage(id, content);
     }
 
     @DeleteMapping("/{id}")
     public void deleteGroupMessage(@PathVariable String id) {
-        try {
-            groupMessageService.deleteGroupMessage(id);
-        } catch (Exception e) {
-            System.out.println("Error deleting group message: " + e.getMessage());
-        }
+        groupMessageService.deleteGroupMessage(id);
     }
+
     @PutMapping("/archive/{id}")
     public void archiveGroupMessage(@PathVariable String id) {
-//        try {
-            groupMessageService.archiveGroupMessage(id);
-//        } catch (Exception e) {
-//            System.out.println("Error archiving group message: " + e.getMessage());
-//        }
+        groupMessageService.archiveGroupMessage(id);
     }
+
     @PutMapping("/unarchive/{id}")
     public void unarchiveGroupMessage(@PathVariable String id) {
-//        try {
-            groupMessageService.unarchiveGroupMessage(id);
-//        } catch (Exception e) {
-//            System.out.println("Error unarchiving group message: " + e.getMessage());
+        groupMessageService.unarchiveGroupMessage(id);
     }
 
     @GetMapping("/archived/{groupId}")
     public List<GroupMessage> getArchivedGroupMessages(@PathVariable String groupId) {
-//        try {
-            return groupMessageService.getArchivedGroupMessages(groupId);
-//        } catch (Exception e) {
-//            System.out.println("Error fetching archived group messages: " + e.getMessage());
-//            return null;
-//        }
+        return groupMessageService.getArchivedGroupMessages(groupId);
     }
 
     @GetMapping("/filter/{groupId}/{senderId}")
     public List<GroupMessage> filterGroupMessagesBySenderId(@PathVariable String groupId, @PathVariable String senderId) {
-//        try {
-                return groupMessageService.filterGroupMessagesBySenderId(groupId, senderId);
-//        } catch (Exception e) {
-//            System.out.println("Error filtering group messages by sender ID: " + e.getMessage());
-//            return null;
-//        }
-
+        return groupMessageService.filterGroupMessagesBySenderId(groupId, senderId);
     }
 
-
-
-
-    @PostMapping("/send")
-    public GroupMessage sendMessage(@RequestBody SendMessageRequest request) {
-        return groupMessageService.sendMessage(request); 
+    @PostMapping("/send/{grpoupId}")
+    public GroupMessage sendMessage(
+        @RequestBody SendMessageRequest request,
+        @RequestHeader("userName") String userName,
+        @RequestHeader("senderId") String senderId,
+        @PathVariable String groupId
+    ) {
+        return groupMessageService.sendMessage(request, userName, senderId, groupId);
     }
     
-
+    
 }

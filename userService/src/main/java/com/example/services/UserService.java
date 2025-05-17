@@ -1,7 +1,6 @@
 package com.example.services;
 
 import com.example.clients.EmailClient;
-import com.example.models.EmailRequest;
 import com.example.models.User;
 import com.example.repositories.UserRepository;
 import com.example.services.loginStrategies.LoginStrategy;
@@ -17,8 +16,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -275,4 +276,44 @@ public class UserService {
         }
     }
 
+    public List<User> seedUsers() {
+        User user1 = new User();
+        user1.setUsername("sara");
+        user1.setPassword(encoder.encode("sara"));
+        user1.setEmail("saraalagami@gmail.com");
+        user1.setPhoneNumber("0777777777");
+
+        User user2 = new User();
+        user2.setUsername("dareen");
+        user2.setPassword(encoder.encode("dareen"));
+        user2.setEmail("dareen@mail.com");
+        user2.setPhoneNumber("0777777778");
+        user2.setBlockedUsers(Set.of(user1));
+
+        User user3 = new User();
+        user3.setUsername("abdelrahman");
+        user3.setPassword(encoder.encode("abdelrahman"));
+        user3.setEmail("abdelrahman@mail.com");
+        user3.setPhoneNumber("0777777779");
+
+        return userRepository.saveAll(List.of(user1, user2, user3));
+    }
+  
+    public Map<String, String> getUsersIdsByUsernames(List<String> usernames) {
+        List<User> users = userRepository.findByUsernameIn(usernames);
+
+        Map<String, String> usernamesToIds = new HashMap<>();
+        for (User user : users) {
+            usernamesToIds.put(user.getUsername(), user.getId().toString());
+        }
+
+        for (String username : usernames) {
+            if (!usernamesToIds.containsKey(username)) {
+                logger.error("User not found with username: {}", username);
+                throw new RuntimeException("User not found with username: " + username);
+            }
+        }
+
+        return usernamesToIds;
+    }
 }

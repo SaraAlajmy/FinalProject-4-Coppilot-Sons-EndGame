@@ -2,6 +2,7 @@ package org.example.notificationservice.strategies.email.stages;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.notificationservice.models.Notification;
 import org.springframework.stereotype.Component;
@@ -11,7 +12,10 @@ import java.util.Map;
 
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class ReplaceEmailBodyPlaceholdersStage extends EmailNotificationChain {
+    private final ObjectMapper mapper;
+
     @Override
     public boolean executeStage(Notification notification, Context context) {
         log.info("Replace email body placeholders...");
@@ -32,10 +36,6 @@ public class ReplaceEmailBodyPlaceholdersStage extends EmailNotificationChain {
         Map<String, String> placeholders = new HashMap<>();
 
         try {
-            // Get an ObjectMapper instance
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.registerModule(new JavaTimeModule());
-
             // Convert the notification object to a Map
             Map<String, Object> map = mapper.convertValue(notification, Map.class);
 
