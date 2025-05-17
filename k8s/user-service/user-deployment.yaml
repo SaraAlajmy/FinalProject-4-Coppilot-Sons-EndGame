@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: user-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: user-service
@@ -33,7 +33,7 @@ spec:
             - name: SPRING_CACHE_TYPE
               value: "redis"
             - name: SPRING_DATA_REDIS_HOST
-              value: "redis-service"
+              value: "redis"
             - name: SPRING_DATA_REDIS_PORT
               value: "6379"
             - name: NOTIFICATION_SERVICE_URL

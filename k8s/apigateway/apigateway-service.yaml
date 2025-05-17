@@ -2,11 +2,16 @@ apiVersion: v1
 kind: Service
 metadata:
   name: apigateway-service
+#  namespace: chat-app
+#  labels:
+#    app: apigateway-service
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: apigateway-service
   ports:
-    - port: 80
-      targetPort: 8085
-      nodePort: 30081
+    - port: 8765
+      targetPort: 8765
+      nodePort: 30080
+      protocol: TCP
+      name: http

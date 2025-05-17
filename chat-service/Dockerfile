@@ -4,8 +4,9 @@ FROM openjdk:25-ea-4-jdk-oraclelinux9
 ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} app.jar
 
+
 # Expose port
 EXPOSE 8080
 
 # Run the jar
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-Dspring.cloud.compatibility-verifier.enabled=false","-jar", "app.jar"]
