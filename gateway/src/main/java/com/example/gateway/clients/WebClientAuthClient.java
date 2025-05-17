@@ -21,11 +21,10 @@ public class WebClientAuthClient  {
     private final WebClient webClient;
 
     @Autowired
-    public WebClientAuthClient(WebClient.Builder webClientBuilder) {
-         String userServiceUrl=System.getenv("USERSERVICE_URL");
-        log.info("WebClientAuthClient initialized with userServiceUrl: {}", userServiceUrl);
+    public WebClientAuthClient(WebClient.Builder webClientBuilder, @Value("${userservice.url}") String baseUrl) {
+        log.info("WebClientAuthClient initialized with userServiceUrl: {}", baseUrl);
         this.webClient = webClientBuilder
-                .baseUrl(userServiceUrl)
+                .baseUrl(baseUrl)
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, "application/json")
                 .build();
     }
