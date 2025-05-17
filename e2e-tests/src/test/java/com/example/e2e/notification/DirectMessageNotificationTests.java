@@ -26,6 +26,9 @@ public class DirectMessageNotificationTests extends BaseApiTest {
         MAILDROP_MAILBOX1, MAILDROP_MAILBOX2, MAILDROP_MAILBOX3, MAILDROP_MAILBOX4,
     };
 
+    private Map<String, Object> sender;
+    private Map<String, Object> recipient;
+
     private String recipientId;
     private String recipientEmail;
     private String senderId;
@@ -40,8 +43,8 @@ public class DirectMessageNotificationTests extends BaseApiTest {
         // Create chat
         var chatTestResult = chatTestService.createRandomChat(EMAIL1, EMAIL2);
 
-        var recipient = chatTestResult.user1();
-        var sender = chatTestResult.user2();
+        recipient = chatTestResult.user1();
+        sender = chatTestResult.user2();
         var chat = chatTestResult.chat();
 
         recipientId = recipient.get("id").toString();
@@ -63,6 +66,8 @@ public class DirectMessageNotificationTests extends BaseApiTest {
             "read", false
         );
 
+        loginAs(recipient);
+
         // By default mute email notifications
         notificationTestService.disableNotification("direct_message", "email");
         notificationTestService.disableNotification("direct_message", "email");
@@ -78,14 +83,15 @@ public class DirectMessageNotificationTests extends BaseApiTest {
     @Test
     @DisplayName("When a user sends a direct message, and both inbox and email are enabled for direct messages, recipient should receive both notification types")
     public void shouldReceiveNotificationForNewDirectMessageWhenBothEnabled() {
+        // Enable inbox and email notifications
         notificationTestService.enableNotification("direct_message", "inbox");
         notificationTestService.enableNotification("direct_message", "email");
 
         sendDirectMessage();
 
-        assertNotificationReceivedInInbox(recipientId);
+        assertNotificationReceivedInInbox(recipient);
         assertNotificationReceivedInEmail(recipientEmail);
-        assertNotificationNotReceivedInInbox(senderId);
+        assertNotificationNotReceivedInInbox(sender);
         assertNotificationNotReceivedInEmail(senderEmail);
     }
 
@@ -106,7 +112,7 @@ public class DirectMessageNotificationTests extends BaseApiTest {
     public void shouldChangeUnreadCountWhenDirectNotificationMarkedAsRead() {
         sendDirectMessage();
 
-        var unreadNotification = getNotificationFromUnread(recipientId);
+        var unreadNotification = getNotificationFromUnread();
         assertThat(unreadNotification).isNotNull();
         var notificationId = unreadNotification.get("id").toString();
 
@@ -127,9 +133,9 @@ public class DirectMessageNotificationTests extends BaseApiTest {
 
         sendDirectMessage();
 
-        assertNotificationReceivedInInbox(recipientId);
+        assertNotificationReceivedInInbox(recipient);
         assertNotificationNotReceivedInEmail(recipientEmail);
-        assertNotificationNotReceivedInInbox(senderId);
+        assertNotificationNotReceivedInInbox(sender);
         assertNotificationNotReceivedInEmail(senderEmail);
     }
 
@@ -142,9 +148,9 @@ public class DirectMessageNotificationTests extends BaseApiTest {
 
         sendDirectMessage();
 
-        assertNotificationNotReceivedInInbox(recipientId);
+        assertNotificationNotReceivedInInbox(recipient);
         assertNotificationReceivedInEmail(recipientEmail);
-        assertNotificationNotReceivedInInbox(senderId);
+        assertNotificationNotReceivedInInbox(sender);
         assertNotificationNotReceivedInEmail(senderEmail);
     }
 
@@ -157,9 +163,9 @@ public class DirectMessageNotificationTests extends BaseApiTest {
 
         sendDirectMessage();
 
-        assertNotificationNotReceivedInInbox(recipientId);
+        assertNotificationNotReceivedInInbox(recipient);
         assertNotificationNotReceivedInEmail(recipientEmail);
-        assertNotificationNotReceivedInInbox(senderId);
+        assertNotificationNotReceivedInInbox(sender);
         assertNotificationNotReceivedInEmail(senderEmail);
     }
 
@@ -175,9 +181,9 @@ public class DirectMessageNotificationTests extends BaseApiTest {
 
         waitFor(500);
 
-        assertNotificationNotReceivedInInbox(recipientId);
+        assertNotificationNotReceivedInInbox(recipient);
         assertNotificationNotReceivedInEmail(recipientEmail);
-        assertNotificationNotReceivedInInbox(senderId);
+        assertNotificationNotReceivedInInbox(sender);
         assertNotificationNotReceivedInEmail(senderEmail);
     }
 
@@ -191,9 +197,9 @@ public class DirectMessageNotificationTests extends BaseApiTest {
 
         sendDirectMessage();
 
-        assertNotificationNotReceivedInInbox(recipientId);
+        assertNotificationNotReceivedInInbox(recipient);
         assertNotificationNotReceivedInEmail(recipientEmail);
-        assertNotificationNotReceivedInInbox(senderId);
+        assertNotificationNotReceivedInInbox(sender);
         assertNotificationNotReceivedInEmail(senderEmail);
 
         // Now unmute all notifications
@@ -201,30 +207,36 @@ public class DirectMessageNotificationTests extends BaseApiTest {
 
         sendDirectMessage();
 
-        assertNotificationReceivedInInbox(recipientId);
+        assertNotificationReceivedInInbox(recipient);
         assertNotificationReceivedInEmail(recipientEmail);
     }
 
-    private Map<String, Object> sendDirectMessage() {
-        var message = messageTestService.sendDirectMessage(
-            senderId,
-            recipientId,
-            messageContent
+    private void sendDirectMessage() {
+        loggedAs(
+            sender, () -> {
+                var message = messageTestService.sendDirectMessage(
+                    senderId,
+                    recipientId,
+                    messageContent
+                );
+            }
         );
 
         waitFor(500);
-
-        return message;
     }
 
-    private void assertNotificationReceivedInInbox(String userId) {
-        // Wait for notification to arrive
-        var unreadNotification = getNotificationFromUnread(userId);
-        var notificationInAllNotifications = getNotificationFromAllNotifications(userId);
+    private void assertNotificationReceivedInInbox(Map<String, Object> user) {
+        loggedAs(
+            user, () -> {
+                // Wait for notification to arrive
+                var unreadNotification = getNotificationFromUnread();
+                var notificationInAllNotifications = getNotificationFromAllNotifications();
 
-        // Assert notification fields
-        assertNotificationFields(unreadNotification);
-        assertNotificationFields(notificationInAllNotifications);
+                // Assert notification fields
+                assertNotificationFields(unreadNotification);
+                assertNotificationFields(notificationInAllNotifications);
+            }
+        );
     }
 
     private void assertNotificationReceivedInEmail(String email) {
@@ -237,17 +249,22 @@ public class DirectMessageNotificationTests extends BaseApiTest {
         assertThat(foundMail).isNotNull();
     }
 
-    private void assertNotificationNotReceivedInInbox(String userId) {
-        try {
-            // Wait for notification to arrive
-            var unreadNotification = getNotificationFromUnread(userId);
-            var notificationInAllNotifications = getNotificationFromAllNotifications(userId);
+    private void assertNotificationNotReceivedInInbox(Map<String, Object> user) {
+        loggedAs(
+            user, () -> {
+                try {
+                    // Wait for notification to arrive
+                    var unreadNotification = getNotificationFromUnread();
+                    var notificationInAllNotifications =
+                        getNotificationFromAllNotifications();
 
-            assertThat(unreadNotification).isNull();
-            assertThat(notificationInAllNotifications).isNull();
-        } catch (Exception e) {
-            // Ignore exception, as we expect no notification to be received
-        }
+                    assertThat(unreadNotification).isNull();
+                    assertThat(notificationInAllNotifications).isNull();
+                } catch (Exception e) {
+                    // Ignore exception, as we expect no notification to be received
+                }
+            }
+        );
     }
 
     private void assertNotificationNotReceivedInEmail(String email) {
@@ -275,7 +292,7 @@ public class DirectMessageNotificationTests extends BaseApiTest {
         }
     }
 
-    private Map<String, Object> getNotificationFromAllNotifications(String userId) {
+    private Map<String, Object> getNotificationFromAllNotifications() {
         var notifications = notificationTestService.getAllNotifications();
         if (notifications.isEmpty()) {
             return null;
@@ -289,7 +306,7 @@ public class DirectMessageNotificationTests extends BaseApiTest {
 
     }
 
-    private Map<String, Object> getNotificationFromUnread(String userId) {
+    private Map<String, Object> getNotificationFromUnread() {
         var notifications =
             notificationTestService.getUnreadNotifications();
 

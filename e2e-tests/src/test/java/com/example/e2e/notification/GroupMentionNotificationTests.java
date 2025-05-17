@@ -2,7 +2,6 @@ package com.example.e2e.notification;
 
 
 import com.example.e2e.base.BaseApiTest;
-import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,7 +30,11 @@ public class GroupMentionNotificationTests extends BaseApiTest {
     private static final String EMAIL5 = MAILDROP_MAILBOX5 + MAILDROP_DOMAIN;
 
     private static final String[] MAILDROP_MAILBOXES = {
-        MAILDROP_MAILBOX1, MAILDROP_MAILBOX2, MAILDROP_MAILBOX3, MAILDROP_MAILBOX4, MAILDROP_MAILBOX5
+        MAILDROP_MAILBOX1,
+        MAILDROP_MAILBOX2,
+        MAILDROP_MAILBOX3,
+        MAILDROP_MAILBOX4,
+        MAILDROP_MAILBOX5
     };
 
     private User creator;
@@ -68,8 +71,9 @@ public class GroupMentionNotificationTests extends BaseApiTest {
         group = result.groupChat();
 
         groupId = group.get("id").toString();
-        messageContent = "This mentions @" + members.get(0).username() + " and @" + members.get(1).username() +
-                        " and @" + creator.username();
+        messageContent =
+            "This mentions @" + members.get(0).username() + " and @" + members.get(1).username() +
+            " and @" + creator.username();
         mentionedMembers = List.of(
             members.get(0),
             members.get(1),
@@ -81,9 +85,12 @@ public class GroupMentionNotificationTests extends BaseApiTest {
         notificationTestService.disableNotification("group_mention", "email");
 
         for (var member : allMembers()) {
-            var memberId = member.id();
-            notificationTestService.disableNotification("group_message", "email");
-            notificationTestService.disableNotification("group_mention", "email");
+            loggedAs(
+                member, () -> {
+                    notificationTestService.disableNotification("group_message", "email");
+                    notificationTestService.disableNotification("group_mention", "email");
+                }
+            );
         }
     }
 
@@ -105,11 +112,11 @@ public class GroupMentionNotificationTests extends BaseApiTest {
         sendMessage();
 
         // Assert that the sender does not receive notifications
-        assertNotificationNotReceivedInInbox(sender.id());
+        assertNotificationNotReceivedInInbox(sender);
         assertNotificationNotReceivedInEmail(sender.email());
 
         for (var recipient : recipients) {
-            assertNotificationReceivedInInbox(recipient.id(), recipient);
+            assertNotificationReceivedInInbox(recipient);
             assertNotificationReceivedInEmail(recipient.email());
         }
     }
@@ -125,11 +132,11 @@ public class GroupMentionNotificationTests extends BaseApiTest {
         sendMessage();
 
         // Assert that the sender does not receive notifications
-        assertNotificationNotReceivedInInbox(sender.id());
+        assertNotificationNotReceivedInInbox(sender);
         assertNotificationNotReceivedInEmail(sender.email());
 
         for (var recipient : recipients) {
-            assertNotificationReceivedInInbox(recipient.id(), recipient);
+            assertNotificationReceivedInInbox(recipient);
             assertNotificationReceivedInEmail(recipient.email());
         }
     }
@@ -139,11 +146,14 @@ public class GroupMentionNotificationTests extends BaseApiTest {
     public void shouldReceiveOnlyInboxNotificationWhenEmailDisabled() {
         // Enable inbox but disable email notifications
         for (var member : allMembers()) {
-            var memberId = member.id();
-            notificationTestService.enableNotification("group_message", "inbox");
-            notificationTestService.disableNotification("group_message", "email");
-            notificationTestService.enableNotification("group_mention", "inbox");
-            notificationTestService.disableNotification("group_mention", "email");
+            loggedAs(
+                member, () -> {
+                    notificationTestService.enableNotification("group_message", "inbox");
+                    notificationTestService.disableNotification("group_message", "email");
+                    notificationTestService.enableNotification("group_mention", "inbox");
+                    notificationTestService.disableNotification("group_mention", "email");
+                }
+            );
         }
 
         sender = members.getFirst();
@@ -152,11 +162,11 @@ public class GroupMentionNotificationTests extends BaseApiTest {
         sendMessage();
 
         // Assert that the sender does not receive notifications
-        assertNotificationNotReceivedInInbox(sender.id());
+        assertNotificationNotReceivedInInbox(sender);
         assertNotificationNotReceivedInEmail(sender.email());
 
         for (var recipient : recipients) {
-            assertNotificationReceivedInInbox(recipient.id(), recipient);
+            assertNotificationReceivedInInbox(recipient);
             assertNotificationNotReceivedInEmail(recipient.email());
         }
     }
@@ -166,11 +176,14 @@ public class GroupMentionNotificationTests extends BaseApiTest {
     public void shouldReceiveOnlyEmailNotificationWhenInboxDisabled() {
         // Enable email but disable inbox notifications
         for (var member : allMembers()) {
-            var memberId = member.id();
-            notificationTestService.disableNotification("group_message", "inbox");
-            notificationTestService.enableNotification("group_message", "email");
-            notificationTestService.disableNotification("group_mention", "inbox");
-            notificationTestService.enableNotification("group_mention", "email");
+            loggedAs(
+                member, () -> {
+                    notificationTestService.disableNotification("group_message", "inbox");
+                    notificationTestService.enableNotification("group_message", "email");
+                    notificationTestService.disableNotification("group_mention", "inbox");
+                    notificationTestService.enableNotification("group_mention", "email");
+                }
+            );
         }
 
         sender = members.getFirst();
@@ -179,11 +192,11 @@ public class GroupMentionNotificationTests extends BaseApiTest {
         sendMessage();
 
         // Assert that the sender does not receive notifications
-        assertNotificationNotReceivedInInbox(sender.id());
+        assertNotificationNotReceivedInInbox(sender);
         assertNotificationNotReceivedInEmail(sender.email());
 
         for (var recipient : recipients) {
-            assertNotificationNotReceivedInInbox(recipient.id());
+            assertNotificationNotReceivedInInbox(recipient);
             assertNotificationReceivedInEmail(recipient.email());
         }
     }
@@ -193,11 +206,14 @@ public class GroupMentionNotificationTests extends BaseApiTest {
     public void shouldReceiveNoNotificationsWhenBothDisabled() {
         // Disable both inbox and email notifications
         for (var member : allMembers()) {
-            var memberId = member.id();
-            notificationTestService.disableNotification("group_message", "inbox");
-            notificationTestService.disableNotification("group_message", "email");
-            notificationTestService.disableNotification("group_mention", "inbox");
-            notificationTestService.disableNotification("group_mention", "email");
+            loggedAs(
+                member, () -> {
+                    notificationTestService.disableNotification("group_message", "inbox");
+                    notificationTestService.disableNotification("group_message", "email");
+                    notificationTestService.disableNotification("group_mention", "inbox");
+                    notificationTestService.disableNotification("group_mention", "email");
+                }
+            );
         }
 
         sender = members.getFirst();
@@ -206,11 +222,11 @@ public class GroupMentionNotificationTests extends BaseApiTest {
         sendMessage();
 
         // Assert that the sender does not receive notifications
-        assertNotificationNotReceivedInInbox(sender.id());
+        assertNotificationNotReceivedInInbox(sender);
         assertNotificationNotReceivedInEmail(sender.email());
 
         for (var recipient : recipients) {
-            assertNotificationNotReceivedInInbox(recipient.id());
+            assertNotificationNotReceivedInInbox(recipient);
             assertNotificationNotReceivedInEmail(recipient.email());
         }
     }
@@ -220,12 +236,15 @@ public class GroupMentionNotificationTests extends BaseApiTest {
     public void shouldReceiveNoNotificationsWhenMuted() {
         // Enable notifications but then mute all
         for (var member : allMembers()) {
-            var memberId = member.id();
-            notificationTestService.enableNotification("group_message", "inbox");
-            notificationTestService.enableNotification("group_message", "email");
-            notificationTestService.enableNotification("group_mention", "inbox");
-            notificationTestService.enableNotification("group_mention", "email");
-            notificationTestService.muteAllNotifications();
+            loggedAs(
+                member, () -> {
+                    notificationTestService.enableNotification("group_message", "inbox");
+                    notificationTestService.enableNotification("group_message", "email");
+                    notificationTestService.enableNotification("group_mention", "inbox");
+                    notificationTestService.enableNotification("group_mention", "email");
+                    notificationTestService.muteAllNotifications();
+                }
+            );
         }
 
         sender = members.getFirst();
@@ -234,15 +253,14 @@ public class GroupMentionNotificationTests extends BaseApiTest {
         sendMessage();
 
         // Assert that the sender does not receive notifications
-        assertNotificationNotReceivedInInbox(sender.id());
+        assertNotificationNotReceivedInInbox(sender);
         assertNotificationNotReceivedInEmail(sender.email());
 
         for (var recipient : recipients) {
-            assertNotificationNotReceivedInInbox(recipient.id());
+            assertNotificationNotReceivedInInbox(recipient);
             assertNotificationNotReceivedInEmail(recipient.email());
         }
     }
-
 
 
     @Test
@@ -262,27 +280,30 @@ public class GroupMentionNotificationTests extends BaseApiTest {
         recipients.add(newMember);
 
         for (var member : allMembers()) {
-            var memberId = member.id();
-            notificationTestService.enableNotification("group_message", "inbox");
-            notificationTestService.enableNotification("group_message", "email");
-            notificationTestService.enableNotification("group_mention", "inbox");
-            notificationTestService.enableNotification("group_mention", "email");
+            loggedAs(
+                member, () -> {
+                    notificationTestService.enableNotification("group_message", "inbox");
+                    notificationTestService.enableNotification("group_message", "email");
+                    notificationTestService.enableNotification("group_mention", "inbox");
+                    notificationTestService.enableNotification("group_mention", "email");
+                }
+            );
         }
 
         sendMessage();
 
         // Assert that the sender does not receive notifications
-        assertNotificationNotReceivedInInbox(sender.id());
+        assertNotificationNotReceivedInInbox(sender);
         assertNotificationNotReceivedInEmail(sender.email());
 
         // Assert that the new member receives notifications
-        assertNotificationReceivedInInbox(newMember.id(), newMember);
+        assertNotificationReceivedInInbox(newMember);
         assertNotificationReceivedInEmail(newMember.email());
 
         //  Assert that other members receive notifications
         for (var recipient : recipients) {
             if (!recipient.id().equals(newMember.id())) {
-                assertNotificationReceivedInInbox(recipient.id(), recipient);
+                assertNotificationReceivedInInbox(recipient);
                 assertNotificationReceivedInEmail(recipient.email());
             }
         }
@@ -291,25 +312,42 @@ public class GroupMentionNotificationTests extends BaseApiTest {
     @Test
     @DisplayName("When a member sends a message, and users have mix of inbox and email enabled, they should receive notifications accordingly")
     public void shouldReceiveNotificationsAccordingToSettings() {
-        notificationTestService.enableNotification("group_message", "inbox");
-        notificationTestService.enableNotification("group_message", "email");
-        notificationTestService.enableNotification("group_mention", "inbox");
-        notificationTestService.enableNotification("group_mention", "email");
+        loggedAs(
+            creator, () -> {
+                notificationTestService.enableNotification("group_message", "inbox");
+                notificationTestService.enableNotification("group_message", "email");
+                notificationTestService.enableNotification("group_mention", "inbox");
+                notificationTestService.enableNotification("group_mention", "email");
+            }
+        );
 
-        notificationTestService.enableNotification("group_message", "inbox");
-        notificationTestService.disableNotification("group_message", "email");
-        notificationTestService.enableNotification("group_mention", "inbox");
-        notificationTestService.disableNotification("group_mention", "email");
+        loggedAs(
+            members.get(1), () -> {
+                notificationTestService.enableNotification("group_message", "inbox");
+                notificationTestService.disableNotification("group_message", "email");
+                notificationTestService.enableNotification("group_mention", "inbox");
+                notificationTestService.disableNotification("group_mention", "email");
+            }
+        );
 
-        notificationTestService.enableNotification("group_message", "email");
-        notificationTestService.disableNotification("group_message", "inbox");
-        notificationTestService.enableNotification("group_mention", "email");
-        notificationTestService.disableNotification("group_mention", "inbox");
+        loggedAs(
+            members.get(2), () -> {
 
-        notificationTestService.disableNotification("group_message", "inbox");
-        notificationTestService.disableNotification("group_message", "email");
-        notificationTestService.disableNotification("group_mention", "inbox");
-        notificationTestService.disableNotification("group_mention", "email");
+                notificationTestService.enableNotification("group_message", "email");
+                notificationTestService.disableNotification("group_message", "inbox");
+                notificationTestService.enableNotification("group_mention", "email");
+                notificationTestService.disableNotification("group_mention", "inbox");
+            }
+        );
+
+        loggedAs(
+            members.get(3), () -> {
+                notificationTestService.disableNotification("group_message", "inbox");
+                notificationTestService.disableNotification("group_message", "email");
+                notificationTestService.disableNotification("group_mention", "inbox");
+                notificationTestService.disableNotification("group_mention", "email");
+            }
+        );
 
         sender = members.getFirst();
         recipients = membersExcept(sender.id());
@@ -317,19 +355,19 @@ public class GroupMentionNotificationTests extends BaseApiTest {
         sendMessage();
 
         // Assert that the sender does not receive notifications
-        assertNotificationNotReceivedInInbox(sender.id());
+        assertNotificationNotReceivedInInbox(sender);
         assertNotificationNotReceivedInEmail(sender.email());
 
-        assertNotificationReceivedInInbox(creator.id(), creator);
+        assertNotificationReceivedInInbox(creator);
         assertNotificationReceivedInEmail(creator.email());
 
-        assertNotificationReceivedInInbox(members.get(1).id(), members.get(1));
+        assertNotificationReceivedInInbox(members.get(1));
         assertNotificationNotReceivedInEmail(members.get(1).email());
 
-        assertNotificationNotReceivedInInbox(members.get(2).id());
+        assertNotificationNotReceivedInInbox(members.get(2));
         assertNotificationReceivedInEmail(members.get(2).email());
 
-        assertNotificationNotReceivedInInbox(members.get(3).id());
+        assertNotificationNotReceivedInInbox(members.get(3));
         assertNotificationNotReceivedInEmail(members.get(3).email());
     }
 
@@ -347,24 +385,30 @@ public class GroupMentionNotificationTests extends BaseApiTest {
     }
 
     private void sendMessage() {
-        loggedAs(sender, () -> {
-            var message = groupMessageTestService.sendGroupMessage(
-                groupId,
-                messageContent
-            );
-        });
+        loggedAs(
+            sender, () -> {
+                var message = groupMessageTestService.sendGroupMessage(
+                    groupId,
+                    messageContent
+                );
 
-        waitFor(500);
+                waitFor(500);
+            }
+        );
     }
 
-    private void assertNotificationReceivedInInbox(String userId, User recipient) {
-        // Wait for notification to arrive
-        var unreadNotification = getNotificationFromUnread(userId);
-        var notificationInAllNotifications = getNotificationFromAllNotifications(userId);
+    private void assertNotificationReceivedInInbox(User recipient) {
+        loggedAs(
+            recipient, () -> {
+                // Wait for notification to arrive
+                var unreadNotification = getNotificationFromUnread();
+                var notificationInAllNotifications = getNotificationFromAllNotifications();
 
-        // Assert notification fields
-        assertNotificationFields(unreadNotification, recipient);
-        assertNotificationFields(notificationInAllNotifications, recipient);
+                // Assert notification fields
+                assertNotificationFields(unreadNotification, recipient);
+                assertNotificationFields(notificationInAllNotifications, recipient);
+            }
+        );
     }
 
     private void assertNotificationReceivedInEmail(String email) {
@@ -381,14 +425,18 @@ public class GroupMentionNotificationTests extends BaseApiTest {
         assertThat(foundMail).isNotNull();
     }
 
-    private void assertNotificationNotReceivedInInbox(String userId) {
+    private void assertNotificationNotReceivedInInbox(User recipient) {
         try {
-            // Wait for notification to arrive
-            var unreadNotification = getNotificationFromUnread(userId);
-            var notificationInAllNotifications = getNotificationFromAllNotifications(userId);
+            loggedAs(
+                recipient, () -> {
+                    // Wait for notification to arrive
+                    var unreadNotification = getNotificationFromUnread();
+                    var notificationInAllNotifications = getNotificationFromAllNotifications();
 
-            assertThat(unreadNotification).isNull();
-            assertThat(notificationInAllNotifications).isNull();
+                    assertThat(unreadNotification).isNull();
+                    assertThat(notificationInAllNotifications).isNull();
+                }
+            );
         } catch (Exception e) {
             // Ignore exception, as we expect no notification to be received
         }
@@ -437,7 +485,7 @@ public class GroupMentionNotificationTests extends BaseApiTest {
         }
     }
 
-    private Map<String, Object> getNotificationFromAllNotifications(String userId) {
+    private Map<String, Object> getNotificationFromAllNotifications() {
         var notifications = notificationTestService.getAllNotifications();
         if (notifications.isEmpty()) {
             return null;
@@ -451,7 +499,7 @@ public class GroupMentionNotificationTests extends BaseApiTest {
 
     }
 
-    private Map<String, Object> getNotificationFromUnread(String userId) {
+    private Map<String, Object> getNotificationFromUnread() {
         var notifications =
             notificationTestService.getUnreadNotifications();
 
@@ -468,11 +516,14 @@ public class GroupMentionNotificationTests extends BaseApiTest {
 
     private void enableNotificationsForAllMembers() {
         for (var member : allMembers()) {
-            var memberId = member.id();
-            notificationTestService.enableNotification("group_message", "inbox");
-            notificationTestService.enableNotification("group_message", "email");
-            notificationTestService.enableNotification("group_mention", "inbox");
-            notificationTestService.enableNotification("group_mention", "email");
+            loggedAs(
+                member, () -> {
+                    notificationTestService.enableNotification("group_message", "inbox");
+                    notificationTestService.enableNotification("group_message", "email");
+                    notificationTestService.enableNotification("group_mention", "inbox");
+                    notificationTestService.enableNotification("group_mention", "email");
+                }
+            );
         }
     }
 }

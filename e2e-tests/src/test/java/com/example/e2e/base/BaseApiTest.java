@@ -14,6 +14,7 @@ import io.restassured.specification.FilterableResponseSpecification;
 import io.restassured.specification.RequestSpecification;
 import lombok.Builder;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInstance;
 
 import java.util.Map;
@@ -75,16 +76,19 @@ public abstract class BaseApiTest {
 
         userTestService = new UserTestService(authorizedSpec, unauthorizedSpec);
 
-        loggedInUser = userTestService.registerUserWithEmail(LOGGED_IN_EMAIL);
-        var username = (String) loggedInUser.get("username");
-        accessToken = userTestService.loginUser(username);
-
         notificationTestService = new NotificationTestService(authorizedSpec);
         groupChatTestService = new GroupChatTestService(authorizedSpec, userTestService);
         groupMessageTestService = new GroupMessageTestService(authorizedSpec);
         mailhogService = new MailhogService();
         chatTestService = new ChatTestService(authorizedSpec, userTestService);
         messageTestService = new MessageTestService(authorizedSpec);
+    }
+
+    @BeforeEach
+    public void login() {
+        loggedInUser = userTestService.registerUserWithEmail(LOGGED_IN_EMAIL);
+        var username = (String) loggedInUser.get("username");
+        accessToken = userTestService.loginUser(username);
     }
 
     /**
@@ -102,18 +106,18 @@ public abstract class BaseApiTest {
 
     protected void loginAs(Map<String, Object> userData) {
         loggedInUser = userData;
+        var userName = (String) userData.get("username");
+        accessToken = userTestService.loginUser(userName);
     }
 
     protected void loggedAs(Map<String, Object> userData, Runnable action) {
         var previousUser = loggedInUser;
-        loggedInUser = userData;
-        var userName = (String) userData.get("username");
-        accessToken = userTestService.loginUser(userName);
+        loginAs(userData);
 
         try {
             action.run();
         } finally {
-            loggedInUser = previousUser;
+            loginAs(previousUser);
         }
     }
 
