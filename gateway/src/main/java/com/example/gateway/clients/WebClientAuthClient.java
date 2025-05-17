@@ -15,7 +15,7 @@ public class WebClientAuthClient  {
 
     public WebClientAuthClient(WebClient.Builder webClientBuilder) {
         this.webClient = webClientBuilder
-                .baseUrl("http://localhost:8086")
+                .baseUrl("${user-service.url}")
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, "application/json")
                 .build();
     }

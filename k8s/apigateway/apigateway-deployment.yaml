@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: apigateway-deployment
-  namespace: chat-app
+#  namespace: chat-app
 spec:
   replicas: 2
   selector:
@@ -14,20 +14,63 @@ spec:
         app: apigateway-service
     spec:
       containers:
-      - name: apigateway
-        image: nairuzy/apigateway:latest
+      - name: api-gateway
+        image: farahalfawzy/api-gateway-service:latest
         imagePullPolicy: Always
         ports:
-        - containerPort: 8080
+        - containerPort: 8765
         env:
         - name: SPRING_PROFILES_ACTIVE
-          value: "prod"
-        - name: SPRING_CLOUD_KUBERNETES_DISCOVERY_NAMESPACE
-          value: "chat-app"
-        resources:
-          limits:
-            cpu: "500m"
-            memory: "512Mi"
-          requests:
-            cpu: "200m"
-            memory: "256Mi" 
+          value: k8s
+        - name: SPRING_MAIN_WEB_APPLICATION_TYPE
+          value: reactive
+        - name: SPRING_CLOUD_GATEWAY_ROUTES_0_ID
+          value: user-service
+        - name: SPRING_CLOUD_GATEWAY_ROUTES_0_URI
+          value: http://user-service:8086
+        - name: SPRING_CLOUD_GATEWAY_ROUTES_0_PREDICATES_0
+          value: Path=/auth/**,/user/**,/manageUser/**
+        - name: SPRING_CLOUD_GATEWAY_ROUTES_0_FILTERS_0
+          value: StripPrefix=0
+
+        - name: SPRING_CLOUD_GATEWAY_ROUTES_1_ID
+          value: chat-service
+        - name: SPRING_CLOUD_GATEWAY_ROUTES_1_URI
+          value: http://chat-service:8080
+        - name: SPRING_CLOUD_GATEWAY_ROUTES_1_PREDICATES_0
+          value: Path=/api/messages/**,/chats/**
+        - name: SPRING_CLOUD_GATEWAY_ROUTES_1_FILTERS_0
+          value: StripPrefix=0
+
+        - name: SPRING_CLOUD_GATEWAY_ROUTES_2_ID
+          value: notification-service
+        - name: SPRING_CLOUD_GATEWAY_ROUTES_2_URI
+          value: http://notification-service:8082
+        - name: SPRING_CLOUD_GATEWAY_ROUTES_2_PREDICATES_0
+          value: Path=/api/notification-settings/**,/debug/**,/api/seed/notifications/**,/notifications/**
+        - name: SPRING_CLOUD_GATEWAY_ROUTES_2_FILTERS_0
+          value: StripPrefix=0
+
+        - name: SPRING_CLOUD_GATEWAY_ROUTES_3_ID
+          value: groupChatService
+        - name: SPRING_CLOUD_GATEWAY_ROUTES_3_URI
+          value: http://groupChatService:8083
+        - name: SPRING_CLOUD_GATEWAY_ROUTES_3_PREDICATES_0
+          value: Path=/groupChat/**,/groupMessage/**
+        - name: SPRING_CLOUD_GATEWAY_ROUTES_3_FILTERS_0
+          value: StripPrefix=0
+
+        - name: SPRING_DATA_REDIS_HOST
+          value: "redis-service"
+        - name: SPRING_DATA_REDIS_PORT
+          value: "6379"
+        - name: USER_SERVICE_URL
+          value: http://user-service:8086
+
+#        resources:
+#          limits:
+#            cpu: "500m"
+#            memory: "512Mi"
+#          requests:
+#            cpu: "200m"
+#            memory: "256Mi"
