@@ -19,11 +19,11 @@ public class AuthController {
     @Autowired
     private UserService userService;
     @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody User user){
+    public ResponseEntity<?> register(@RequestBody User user){
         try {
             return ResponseEntity.ok(userService.register(user));
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
