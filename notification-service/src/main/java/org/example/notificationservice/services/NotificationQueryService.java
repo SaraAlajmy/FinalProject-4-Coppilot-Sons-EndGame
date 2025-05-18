@@ -1,8 +1,10 @@
 package org.example.notificationservice.services;
 
+import lombok.extern.slf4j.Slf4j;
 import org.example.notificationservice.models.MessageNotification;
 import org.example.notificationservice.models.Notification;
 import org.example.notificationservice.repositories.NotificationRepository;
+import org.example.shared.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -11,8 +13,9 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
-
+@Slf4j
 @Service
 public class NotificationQueryService {
 
@@ -75,19 +78,19 @@ public class NotificationQueryService {
     }
 
     public Notification updateNotification(String id, Notification updated) {
-        Optional<Notification> existingOpt = notificationRepository.findById(id);
+        log.info ("Updating notification with id: {} ", id );
+        Notification existingOpt = notificationRepository.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Notification not found"));
+            Utils.copyPropertiesWithReflection(updated, existingOpt);
+            return notificationRepository.save(existingOpt);
 
-        if (existingOpt.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Notification not found");
-        }
-
-        return notificationRepository.save(updated);
     }
 
-    public void deleteNotification(String id) {
-        if (!notificationRepository.existsById(id)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Notification not found");
-        }
+    public void deleteNotification(String id, String userId) {
+        Notification notification=notificationRepository.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Notification not found"));
+        if(!notification.getRecipientUserId().equals(userId))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to delete this notification");
         notificationRepository.deleteById(id);
     }
 }
