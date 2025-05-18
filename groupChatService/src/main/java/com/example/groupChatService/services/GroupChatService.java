@@ -58,10 +58,14 @@ public class GroupChatService {
         return groupChatRepo.findAll();
     }
 
-    public GroupChat getGroupChatById(String id) {
+    public GroupChat getGroupChatById(String id, String userId) {
+
         GroupChat groupChat = groupChatRepo.findById(id).orElse(null);
         if (groupChat == null) {
             throw new RuntimeException("Group chat not found with id: " + id);
+        }
+        if(!groupChat.getMembers().contains(userId)){
+            throw new RuntimeException("You are not a member of this group chat");
         }
         return groupChat;
     }
