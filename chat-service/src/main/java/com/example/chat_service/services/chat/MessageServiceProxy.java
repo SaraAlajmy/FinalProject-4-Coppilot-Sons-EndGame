@@ -46,8 +46,8 @@ public class MessageServiceProxy implements MessageService {
                 logger.error("Sender {} is blocked by receiver {}", senderId, dto.getReceiverId());
                 throw new UserBlockedException("Messaging is restricted since either you or the user has blocked the other.", e);
             }
-            logger.error("Sender {} is blocked by receiver {}", senderId, dto.getReceiverId());
-            throw e;
+            logger.error("unexpected error while sending message from {} to {}: {}", senderId, dto.getReceiverId(), e.getMessage());
+            throw new RuntimeException("Unexpected error while sending message", e);
         }
 
     }
