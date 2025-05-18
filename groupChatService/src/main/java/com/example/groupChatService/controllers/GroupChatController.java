@@ -32,9 +32,9 @@ public class GroupChatController {
         }
     }
     @GetMapping("/{id}")
-    public ResponseEntity<?> getGroupChatById(@PathVariable String id) {
+    public ResponseEntity<?> getGroupChatById(@PathVariable String id,@RequestHeader("userId") String userId) {
         try {
-            GroupChat groupChat = groupChatService.getGroupChatById(id);
+            GroupChat groupChat = groupChatService.getGroupChatById(id,userId);
             return ResponseEntity.ok(groupChat); // 200 OK
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
