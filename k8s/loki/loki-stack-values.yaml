@@ -1,0 +1,14 @@
+loki:
+  enabled: true
+
+promtail:
+  enabled: true
+
+grafana:
+  enabled: true
+  service:
+    type: NodePort
+  adminPassword: "admin"  # Replace with a secure password
+  persistence:
+    enabled: true
+    size: 1Gi

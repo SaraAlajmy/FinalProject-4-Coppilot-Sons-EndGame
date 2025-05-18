@@ -11,8 +11,8 @@ services:
     image: rabbitmq:3-management
     container_name: rabbitmq
     ports:
-      - "5672:5672"     
-      - "15672:15672"   
+      - "5672:5672"
+      - "15672:15672"
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
@@ -25,10 +25,72 @@ services:
     environment:
       ME_CONFIG_MONGODB_URL: mongodb://mongo:27017/
       ME_CONFIG_BASIC_AUTH: false
-      ME_CONFIG_BASICAUTH: false 
+      ME_CONFIG_BASICAUTH: false
 
     depends_on:
       - mongo
 
+# Initializing Loki with the config file  
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - loki
+
+# Initializing Promtail with the config file
+# and mounting the log files
+  promtail:
+    image: grafana/promtail:latest
+    volumes:
+      - ./promtail:/etc/promtail
+      - ./chat-service/logs:/var/log/chat-service
+      - ./userService/logs:/var/log/user-service
+      - ./gateway/logs:/var/log/gateway
+      - ./notification-service/logs:/var/log/notification-service
+    command: -config.file=/etc/promtail/promtail-config.yml
+    networks:
+      - loki
+
+# Initializing Grafana with the config file
+# declaring the Loki datasource
+# and mounting the Grafana storage
+  grafana:
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_FEATURE_TOGGLES_ENABLE=alertingSimplifiedRouting,alertingQueryAndExpressionsStepMode
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        mkdir -p /etc/grafana/provisioning/datasources
+        cat <<EOF > /etc/grafana/provisioning/datasources/ds.yaml
+        apiVersion: 1
+        datasources:
+        - name: Loki
+          type: loki
+          access: proxy 
+          orgId: 1
+          url: http://loki:3100
+          basicAuth: false
+          isDefault: true
+          version: 1
+          editable: false
+        EOF
+        /run.sh
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    networks:
+      - loki
+
 volumes:
   mongodb_data:
+  grafana-storage:
+
+
+networks:
+  loki:

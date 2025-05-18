@@ -1,0 +1,60 @@
+# This is a sample configuration file for Loki.
+auth_enabled: false
+
+server:
+  http_listen_port: 3100
+
+# The ingester is the component that receives logs and writes them to the storage backend.
+# It is responsible for managing the lifecycle of log entries
+ingester:
+  lifecycler:
+    ring:
+      kvstore:
+        store: inmemory
+      replication_factor: 1
+    final_sleep: 0s
+  chunk_idle_period: 5m
+  max_chunk_age: 1h
+  chunk_retain_period: 30s
+  max_transfer_retries: 0
+
+
+# The schema configuration defines how the logs are stored in the storage backend.
+# It includes the schema version, the object store, and the index configuration.
+schema_config:
+  configs:
+    - from: 2022-01-01
+      store: boltdb-shipper
+      object_store: filesystem
+      schema: v11
+      index:
+        prefix: index_
+        period: 24h
+
+# The storage configuration defines how the logs are stored in the storage backend.
+# It includes the storage type, the directory for storing chunks, and the index configuration.
+storage_config:
+  boltdb_shipper:
+    active_index_directory: /tmp/loki/index
+    cache_location: /tmp/loki/boltdb-cache
+    shared_store: filesystem
+  filesystem:
+    directory: /tmp/loki/chunks
+
+# The limits configuration defines the limits for the ingester and the storage backend.
+# It includes the maximum size of the chunks, the maximum number of chunks, and the maximum age of the chunks.
+limits_config:
+  enforce_metric_name: false
+  reject_old_samples: true
+  reject_old_samples_max_age: 168h
+
+# the chunk store configuration defines how the chunks are stored in the storage backend.
+# It includes the maximum look back period for the chunks and the maximum size of the chunks.
+chunk_store_config:
+  max_look_back_period: 0s
+
+# The table manager is responsible for managing the lifecycle of the tables in the storage backend.
+# It includes the retention period for the tables and the retention deletes configuration.
+table_manager:
+  retention_deletes_enabled: false
+  retention_period: 0s

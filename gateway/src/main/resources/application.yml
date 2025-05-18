@@ -51,5 +51,3 @@ jwt:
     expiration-time: 600
 userService:
   url: http://localhost:8086
-
-
