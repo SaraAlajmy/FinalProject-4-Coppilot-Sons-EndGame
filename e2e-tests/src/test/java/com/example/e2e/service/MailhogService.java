@@ -66,7 +66,22 @@ public class MailhogService {
         String subjectContains,
         String contentContains
     ) {
+       var matchingMails = getMatchingMails(email, subjectContains, contentContains);
+
+        if (matchingMails.isEmpty()) {
+            return null;
+        }
+
+        return matchingMails.getFirst();
+    }
+
+    public ArrayList<Map<String, Object>> getMatchingMails(
+        String email,
+        String subjectContains,
+        String contentContains
+    ) {
         var messages = getMailboxMessages(email);
+        var matchingMessages = new ArrayList<Map<String, Object>>();
 
         for (var message : messages) {
             var content = (Map<String, Object>) message.get("Content");
@@ -77,11 +92,11 @@ public class MailhogService {
             var body = raw.get("Data").toString().replaceAll("=\r\n", "").replaceAll("\r\n", "");
 
             if (to.equals(email) && subject.contains(subjectContains) && body.contains(contentContains)) {
-                return message;
+                matchingMessages.add(message);
             }
         }
 
-        return null;
+        return matchingMessages;
     }
 
     /**

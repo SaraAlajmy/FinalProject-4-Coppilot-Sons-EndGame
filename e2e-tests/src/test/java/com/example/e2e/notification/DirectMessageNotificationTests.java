@@ -6,6 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -211,11 +213,188 @@ public class DirectMessageNotificationTests extends BaseApiTest {
         assertNotificationReceivedInEmail(recipientEmail);
     }
 
-    private void sendDirectMessage() {
+    @Test
+    @DisplayName("When 3 direct messages are sent to the same recipient, they should be received as separate notifications")
+    public void shouldReceiveSeparateNotificationsForMultipleMessages() {
+        // Enable inbox and email notifications
+        notificationTestService.enableNotification("direct_message", "inbox");
+        notificationTestService.enableNotification("direct_message", "email");
+
+        for (int i = 0; i < 3; i++) {
+            sendDirectMessage();
+        }
+
+        var unreadNotifications = notificationTestService.getUnreadNotifications();
+        assertThat(unreadNotifications).hasSize(3);
+        for (var notification : unreadNotifications) {
+            assertNotificationFields(notification);
+        }
+
+        var emailNotifications = mailhogService.getMatchingMails(
+            recipientEmail,
+            "New direct message from " + senderUsername,
+            messageContent
+        );
+
+        assertThat(emailNotifications).hasSize(3);
+    }
+
+    @Test
+    @DisplayName("When multiple users send direct messages, get unread notifications grouped by sender should work")
+    public void shouldGroupUnreadNotificationsBySender() {
+        var sender2 = userTestService.registerUser();
+        var sender3 = userTestService.registerUser();
+
+        var senders = List.of(sender, sender2, sender3);
+        var messages = Map.of(
+            sender.get("id").toString(), sendDirectMessage(sender),
+            sender2.get("id").toString(), sendDirectMessage(sender2),
+            sender3.get("id").toString(), sendDirectMessage(sender3)
+        );
+
+        sendDirectMessage(sender);
+        sendDirectMessage(sender2);
+        sendDirectMessage(sender3);
+
+        // Send another message from the first sender
+        sendDirectMessage(sender);
+
+        var unreadNotificationsCount = notificationTestService.getUnreadNotificationCount();
+        assertThat(unreadNotificationsCount).isEqualTo(7);
+
+        var unreadNotifications = notificationTestService.getUnreadNotificationsGroupedBySender();
+        assertThat(unreadNotifications).hasSize(3);
+        assertThat(unreadNotifications.get(senderId)).hasSize(3);
+        assertThat(unreadNotifications.get(sender2.get("id").toString())).hasSize(2);
+        assertThat(unreadNotifications.get(sender3.get("id").toString())).hasSize(2);
+
+        // Assert notification contents for each sender
+        for (var sender : senders) {
+            var senderId = sender.get("id").toString();
+            var notifications = unreadNotifications.get(senderId);
+            var expected = new HashMap<>(expectedNotification);
+            expected.put("chatId", messages.get(senderId).get("chatId"));
+            expected.put("senderUserId", senderId);
+            expected.put("senderUsername", sender.get("username"));
+
+
+            assertThat(notifications).allSatisfy(notification -> {
+                assertThat(notification).containsAllEntriesOf(expected);
+                assertThat(notification).containsKeys("id", "timestamp", "messageId");
+            });
+        }
+
+        // Read one notification from the first sender and one from the third sender
+        var notificationId1 = unreadNotifications.get(senderId).getFirst().get("id").toString();
+        var notificationId2 = unreadNotifications.get(sender3.get("id").toString()).getFirst().get("id").toString();
+
+        notificationTestService.markNotificationAsRead(notificationId1);
+        notificationTestService.markNotificationAsRead(notificationId2);
+
+        // Assert that the unread count is updated
+        var unreadCountAfter = notificationTestService.getUnreadNotificationCount();
+        assertThat(unreadCountAfter).isEqualTo(unreadNotificationsCount - 2);
+
+        // Assert that the notifications are marked as read
+        var unreadNotificationsAfterMarking2 = notificationTestService.getUnreadNotifications();
+        assertThat(unreadNotificationsAfterMarking2).hasSize(unreadNotificationsCount - 2);
+
+        // Assert that the notifications are removed from grouped notifications
+        var unreadNotificationsAfterMarking = notificationTestService.getUnreadNotificationsGroupedBySender();
+        assertThat(unreadNotificationsAfterMarking.get(senderId)).hasSize(2);
+        assertThat(unreadNotificationsAfterMarking.get(sender3.get("id").toString())).hasSize(1);
+        assertThat(unreadNotificationsAfterMarking.get(sender2.get("id").toString())).hasSize(2);
+
+        // Assert that the notifications are not removed from the original list
+        var allNotificationAfterMarking2 = notificationTestService.getAllNotifications();
+        assertThat(allNotificationAfterMarking2).hasSize(7);
+
+        var readNotificationsIds = List.of(notificationId1, notificationId2);
+
+        // Assert that notification has read equal to true
+        for (var notification : allNotificationAfterMarking2) {
+            if (readNotificationsIds.contains(notification.get("id").toString())) {
+                assertThat(notification).containsEntry("read", true);
+            } else {
+                assertThat(notification).containsEntry("read", false);
+            }
+        }
+
+        // Mark all notifications as read
+        notificationTestService.markAllNotificationsAsRead();
+
+        // Assert that all notifications are marked as read
+        var unreadNotificationsAfterMarkingAll = notificationTestService.getUnreadNotifications();
+        assertThat(unreadNotificationsAfterMarkingAll).isEmpty();
+
+        var unreadNotificationCountAfterMarkingAll = notificationTestService.getUnreadNotificationCount();
+        assertThat(unreadNotificationCountAfterMarkingAll).isEqualTo(0);
+
+        // Assert that all notifications are marked as read
+        var allNotificationsAfterMarkingAll = notificationTestService.getAllNotifications();
+        assertThat(allNotificationsAfterMarkingAll).hasSize(7);
+        for (var notification : allNotificationsAfterMarkingAll) {
+            assertThat(notification).containsEntry("read", true);
+        }
+
+        // Assert that the notifications are removed from grouped notifications
+        var unreadGroupedNotificationsAfterMarkingAll = notificationTestService.getUnreadNotificationsGroupedBySender();
+        assertThat(unreadGroupedNotificationsAfterMarkingAll).isEmpty();
+    }
+
+    @Test
+    @DisplayName("When a user sends a direct message and then we update the notification it, it should be reflected in the notification")
+    public void shouldReflectUpdatedMessageInNotification() {
+        sendDirectMessage();
+
+        // Notification should be received
+        var unreadNotification = getNotificationFromUnread();
+        assertThat(unreadNotification).isNotNull();
+
+        // Update notification
+        var notificationId = unreadNotification.get("id").toString();
+        var newNotification = new HashMap<>(Map.copyOf(unreadNotification));
+        newNotification.put("messageText", "Updated message content");
+        newNotification.put("recipientEmail", "updated_" + recipientEmail);
+
+        notificationTestService.updateNotification(notificationId, newNotification);
+
+        // Assert that the notification is updated
+        var updatedNotification = getNotificationFromUnread();
+        assertThat(updatedNotification).isNotNull();
+        assertThat(updatedNotification).containsAllEntriesOf(newNotification);
+    }
+
+    @Test
+    @DisplayName("When a user sends a direct message, and the recipient deletes it from their inbox, it should be removed from the inbox")
+    public void shouldRemoveNotificationFromInboxWhenDeleted() {
+        sendDirectMessage();
+
+        // Notification should be received
+        var unreadNotification = getNotificationFromUnread();
+        assertThat(unreadNotification).isNotNull();
+
+        // Delete notification
+        var notificationId = unreadNotification.get("id").toString();
+        notificationTestService.deleteNotification(notificationId);
+
+        // Assert that the notification is deleted
+        var deletedNotification = getNotificationFromUnread();
+        assertThat(deletedNotification).isNull();
+    }
+
+    private Map<String, Object> sendDirectMessage() {
+        return sendDirectMessage(sender);
+    }
+
+
+    private Map<String, Object> sendDirectMessage(Map<String, Object> sender) {
+        Map<String, Object>[] messages = new Map[1];
+
         loggedAs(
             sender, () -> {
-                var message = messageTestService.sendDirectMessage(
-                    senderId,
+                messages[0] = messageTestService.sendDirectMessage(
+                    sender.get("id").toString(),
                     recipientId,
                     messageContent
                 );
@@ -223,6 +402,8 @@ public class DirectMessageNotificationTests extends BaseApiTest {
         );
 
         waitFor(500);
+
+        return messages[0];
     }
 
     private void assertNotificationReceivedInInbox(Map<String, Object> user) {
