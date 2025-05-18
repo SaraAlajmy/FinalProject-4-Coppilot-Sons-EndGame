@@ -36,8 +36,8 @@ spring:
           filters:
             - StripPrefix=0
       httpclient:
-        connect-timeout: 1000
-        response-timeout: 5s
+        connect-timeout: 10000       # 10 seconds (connection timeout)
+        response-timeout: 60s
 
   cache:
     type: redis
