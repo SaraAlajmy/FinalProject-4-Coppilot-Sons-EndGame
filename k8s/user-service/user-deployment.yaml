@@ -38,6 +38,13 @@ spec:
               value: "6379"
             - name: NOTIFICATION_SERVICE_URL
               value: "http://notification-service:8082"
+            - name: JWT_BLACKLIST_EXPIRATION_TIME
+              value: "600"
+            - name: JWT_ACCESS_TOKEN_VALIDITY
+              value: "600000"
+            - name: JWT_REFRESH_TOKEN_VALIDITY
+              value: "518400000"
+
 
 
 

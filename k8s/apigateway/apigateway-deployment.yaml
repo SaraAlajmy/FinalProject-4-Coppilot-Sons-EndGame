@@ -66,6 +66,13 @@ spec:
           value: "6379"
         - name: USERSERVICE_URL
           value: http://user-service:8086
+        - name: SPRING_CLOUD_GATEWAY_HTTPCLIENT_CONNECT_TIMEOUT
+          value: "10000"
+        - name: SPRING_CLOUD_GATEWAY_HTTPCLIENT_RESPONSE_TIMEOUT
+          value: 60s
+        - name: JWT_BLACKLIST_EXPIRATION_TIME
+          value: "600"
+
 
 
 #        resources:
