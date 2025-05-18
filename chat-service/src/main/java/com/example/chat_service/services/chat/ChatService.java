@@ -1,6 +1,5 @@
 package com.example.chat_service.services.chat;
 
-import com.example.chat_service.controllers.ChatController;
 import com.example.chat_service.exceptions.UnauthorizedOperationException;
 import com.example.chat_service.models.Chat;
 import com.example.chat_service.models.Message;

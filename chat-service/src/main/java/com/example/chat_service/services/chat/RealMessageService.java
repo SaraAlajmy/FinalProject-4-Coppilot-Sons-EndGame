@@ -1,6 +1,5 @@
 package com.example.chat_service.services.chat;
 
-import com.example.chat_service.controllers.MessageController;
 import com.example.chat_service.dto.MessageRequestDTO;
 import com.example.chat_service.models.Message;
 import com.example.chat_service.models.Chat;
