@@ -82,6 +82,7 @@ public class MessageController {
         return favoriteMessages;
     }
 
+    @ResponseBody
     @GetMapping("/filter")
     public List<Message> filterByDate(
             @RequestHeader("userId") String userId,
@@ -91,7 +92,7 @@ public class MessageController {
         LocalDateTime start = LocalDateTime.parse(startDate);
         LocalDateTime end = LocalDateTime.parse(endDate);
         List<Message> messages = messageService.filterByDate(userId, start, end);
-        logger.info("Filtering messages for user {} between {} and {}", userId, start, end);
+        logger.info("Filtering messages for user {} between {} and {}: {}", userId, start, end, messages);
         return messages;
     }
 
