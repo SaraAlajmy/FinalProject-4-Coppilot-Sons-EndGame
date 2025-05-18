@@ -67,6 +67,9 @@ public class GroupMessageService {
             .orElseThrow(() -> new RuntimeException(
                     "Group message not found with id:" +
                         id));
+        if(!existingGroupMessage.getSenderId().equals(userId)) {
+            throw new RuntimeException("User is not the sender of the message");
+        }
         existingGroupMessage.setContent(content);
         return groupMessageRepo.save(existingGroupMessage);
     }
