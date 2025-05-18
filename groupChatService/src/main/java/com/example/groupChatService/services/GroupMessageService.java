@@ -73,24 +73,22 @@ public class GroupMessageService {
         return "Group message with id: " + id + " deleted successfully";
     }
 
-    public String archiveGroupMessage(String id) {
+    public GroupMessage archiveGroupMessage(String id) {
         GroupMessage groupMessage = groupMessageRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException(
                         "Group message not found with id:" + id));
-        // TODO: validate user is in this group
         groupMessage.setArchived(true);
         groupMessageRepo.save(groupMessage);
-        return "Group message with id: " + id + " archived successfully";
+        return groupMessage;
     }
 
-    public String unarchiveGroupMessage(String id) {
+    public GroupMessage unarchiveGroupMessage(String id) {
         GroupMessage groupMessage = groupMessageRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException(
                         "Group message not found with id:" + id));
-        // TODO: validate user is in this group
         groupMessage.setArchived(false);
         groupMessageRepo.save(groupMessage);
-        return "Group message with id: " + id + " unarchived successfully";
+        return groupMessage;
     }
 
     public List<GroupMessage> getArchivedGroupMessages(String groupId) {

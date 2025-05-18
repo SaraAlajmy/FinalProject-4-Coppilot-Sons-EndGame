@@ -44,13 +44,13 @@ public class GroupMessageController {
     }
 
     @PutMapping("/archive/{id}")
-    public void archiveGroupMessage(@PathVariable String id) {
-        groupMessageService.archiveGroupMessage(id);
+    public GroupMessage archiveGroupMessage(@PathVariable String id) {
+        return groupMessageService.archiveGroupMessage(id);
     }
 
     @PutMapping("/unarchive/{id}")
-    public void unarchiveGroupMessage(@PathVariable String id) {
-        groupMessageService.unarchiveGroupMessage(id);
+    public GroupMessage unarchiveGroupMessage(@PathVariable String id) {
+        return groupMessageService.unarchiveGroupMessage(id);
     }
 
     @GetMapping("/archived/{groupId}")
