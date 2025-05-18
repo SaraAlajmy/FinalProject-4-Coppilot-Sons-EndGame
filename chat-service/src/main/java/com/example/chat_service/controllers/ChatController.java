@@ -57,8 +57,8 @@ public class ChatController {
 
     @GetMapping("/{chatId}/messages/{lastMessageId}")
     @ResponseBody
-    public ResponseEntity<List<Message>> getLatestMessages(@PathVariable String chatId, @PathVariable String lastMessageId) {
-        List<Message> messages = chatService.getLatestMessages(chatId, lastMessageId);
+    public ResponseEntity<List<Message>> getLatestMessages(@RequestHeader("userId") String userId, @PathVariable String chatId, @PathVariable String lastMessageId) {
+        List<Message> messages = chatService.getLatestMessages(userId, chatId, lastMessageId);
         logger.info("Retrieved {} latest messages for chat {} after message {}", messages.size(), chatId, lastMessageId);
         return ResponseEntity.ok(messages);
     }
