@@ -1,9 +1,13 @@
 package org.example.shared;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.lang.reflect.Field;
+import java.util.Map;
 
 import static org.springframework.util.StringUtils.capitalize;
 
+@Slf4j
 public class Utils {
     /**
      * Copies properties from one object to another using reflection.
@@ -32,6 +36,35 @@ public class Utils {
                 );
             } finally {
                 field.setAccessible(false);
+            }
+        }
+    }
+
+    public static <DestinationClass> void copyPropertiesFromMapWithReflection(
+        Map<String, Object> source,
+        DestinationClass destination
+    ) {
+        var destinationClass = destination.getClass();
+
+        for (Map.Entry<String, Object> entry : source.entrySet()) {
+            String fieldName = entry.getKey();
+            Object value = entry.getValue();
+            if (value == null) continue;
+            String methodName = "set" + capitalize(fieldName);
+            try {
+                destinationClass.getMethod(methodName, value.getClass()).invoke(destination, value);
+            } catch (Exception e) {
+                log.error(
+                    "Error while setting field: {} in class: {}",
+                    fieldName,
+                    destinationClass.getName(),
+                    e
+                );
+
+                throw new RuntimeException(
+                    "Error while setting field: " + fieldName + " in class: " +
+                    destinationClass.getName(), e
+                );
             }
         }
     }

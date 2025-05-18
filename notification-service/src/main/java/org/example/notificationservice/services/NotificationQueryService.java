@@ -77,13 +77,12 @@ public class NotificationQueryService {
         return "All unread notifications marked as read successfully";
     }
 
-    public Notification updateNotification(String id, Notification updated) {
+    public Notification updateNotification(String id, Map<String, Object> updated) {
         log.info ("Updating notification with id: {} ", id );
         Notification existingOpt = notificationRepository.findById(id)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Notification not found"));
-            Utils.copyPropertiesWithReflection(updated, existingOpt);
-            return notificationRepository.save(existingOpt);
-
+        Utils.copyPropertiesFromMapWithReflection(updated, existingOpt);
+        return notificationRepository.save(existingOpt);
     }
 
     public void deleteNotification(String id, String userId) {

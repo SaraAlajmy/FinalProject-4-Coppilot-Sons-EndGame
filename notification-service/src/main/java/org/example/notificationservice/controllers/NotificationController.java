@@ -96,7 +96,7 @@ public class NotificationController {
     @PutMapping()
     public ResponseEntity<Notification> updateNotification(
         @RequestParam String notificationId,
-        @RequestBody Notification newNotification
+        @RequestBody Map<String, Object> newNotification
     ) {
 
         Notification updatedNotfication =
