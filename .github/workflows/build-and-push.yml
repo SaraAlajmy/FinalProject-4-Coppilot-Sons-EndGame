@@ -1,0 +1,75 @@
+name: Build and Push Docker Images
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened] # Triggers on PR creation, new commits to PR, and PR reopening
+  workflow_dispatch: # Allows manual triggering
+
+env:
+  # Strongly recommend replacing these with GitHub secrets:
+  # DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+  # DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+  REGISTRY_USERNAME: copilotandsons # If using secrets, change to ${{ secrets.DOCKERHUB_USERNAME }}
+  REGISTRY_PASSWORD: dckr_pat_IQTvVI_STef4y2fNf_-5cImmy-E # If using secrets, change to ${{ secrets.DOCKERHUB_TOKEN }}
+  
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up JDK 23
+      uses: actions/setup-java@v3
+      with:
+        java-version: '23'
+        distribution: 'temurin'
+        cache: maven
+
+    - name: Build with Maven
+      run: |
+        mvn clean install -DskipTests
+        mvn package -DskipTests
+
+    - name: Determine Image Tag
+      id: image_tag
+      run: |
+        if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+          echo "tag=pr-${{ github.event.number }}" >> $GITHUB_OUTPUT
+        else
+          # For manual dispatch or other future triggers, you might want 'latest' or another scheme
+          echo "tag=latest-manual" >> $GITHUB_OUTPUT 
+        fi
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ env.REGISTRY_USERNAME }} # Or ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ env.REGISTRY_PASSWORD }} # Or ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Build and push chat-service
+      run: |
+        docker build -t ${{ env.REGISTRY_USERNAME }}/chat-service:${{ steps.image_tag.outputs.tag }} ./chat-service
+        docker push ${{ env.REGISTRY_USERNAME }}/chat-service:${{ steps.image_tag.outputs.tag }}
+
+    - name: Build and push gateway
+      run: |
+        docker build -t ${{ env.REGISTRY_USERNAME }}/api-gateway-service:${{ steps.image_tag.outputs.tag }} ./gateway
+        docker push ${{ env.REGISTRY_USERNAME }}/api-gateway-service:${{ steps.image_tag.outputs.tag }}
+
+    - name: Build and push group-chat-service
+      run: |
+        docker build -t ${{ env.REGISTRY_USERNAME }}/group-chat-service:${{ steps.image_tag.outputs.tag }} ./groupChatService
+        docker push ${{ env.REGISTRY_USERNAME }}/group-chat-service:${{ steps.image_tag.outputs.tag }}
+
+    - name: Build and push notification-service
+      run: |
+        docker build -t ${{ env.REGISTRY_USERNAME }}/notification-service:${{ steps.image_tag.outputs.tag }} ./notification-service
+        docker push ${{ env.REGISTRY_USERNAME }}/notification-service:${{ steps.image_tag.outputs.tag }}
+
+    - name: Build and push user-service
+      run: |
+        docker build -t ${{ env.REGISTRY_USERNAME }}/user-service:${{ steps.image_tag.outputs.tag }} ./userService
+        docker push ${{ env.REGISTRY_USERNAME }}/user-service:${{ steps.image_tag.outputs.tag }}
