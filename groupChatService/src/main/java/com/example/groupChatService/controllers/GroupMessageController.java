@@ -23,8 +23,10 @@ public class GroupMessageController {
     }
 
     @GetMapping("/{groupId}")
-    public List<GroupMessage> getGroupMessageById(@PathVariable String groupId) {
-        return groupMessageService.getUnarchivedGroupMessages(groupId);
+    public List<GroupMessage> getGroupMessageById(
+        @PathVariable String groupId,
+        @RequestHeader("userId") String userId) {
+        return groupMessageService.getUnarchivedGroupMessages(groupId, userId);
     }
 
     @PostMapping("/")
@@ -33,34 +35,50 @@ public class GroupMessageController {
     }
 
     @PutMapping("/{id}")
-    public GroupMessage editGroupMessage(@PathVariable String id, @RequestBody Map<String, String> body) {
+    public GroupMessage editGroupMessage(
+        @PathVariable String id, 
+        @RequestBody Map<String, String> body,
+        @RequestHeader("userId") String userId
+    ) {
         String content = body.get("content");
-        return groupMessageService.editGroupMessage(id, content);
+        return groupMessageService.editGroupMessage(id, content, userId);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteGroupMessage(@PathVariable String id) {
-        groupMessageService.deleteGroupMessage(id);
+    public void deleteGroupMessage(@PathVariable String id,
+        @RequestHeader("userId") String userId
+    ) {
+        groupMessageService.deleteGroupMessage(id, userId);
     }
 
     @PutMapping("/archive/{id}")
-    public GroupMessage archiveGroupMessage(@PathVariable String id) {
-        return groupMessageService.archiveGroupMessage(id);
+    public GroupMessage archiveGroupMessage(
+        @PathVariable String id,
+        @RequestHeader("userId") String userId
+    ) {
+        return groupMessageService.archiveGroupMessage(id, userId);
     }
 
     @PutMapping("/unarchive/{id}")
-    public GroupMessage unarchiveGroupMessage(@PathVariable String id) {
-        return groupMessageService.unarchiveGroupMessage(id);
+    public GroupMessage unarchiveGroupMessage(
+        @PathVariable String id,
+        @RequestHeader("userId") String userId
+    ) {
+        return groupMessageService.unarchiveGroupMessage(id, userId);
     }
 
     @GetMapping("/archived/{groupId}")
-    public List<GroupMessage> getArchivedGroupMessages(@PathVariable String groupId) {
-        return groupMessageService.getArchivedGroupMessages(groupId);
+    public List<GroupMessage> getArchivedGroupMessages(
+        @PathVariable String groupId,
+        @RequestHeader("userId") String userId
+        ) {
+        return groupMessageService.getArchivedGroupMessages(groupId, userId);
     }
 
     @GetMapping("/filter/{groupId}/{senderId}")
-    public List<GroupMessage> filterGroupMessagesBySenderId(@PathVariable String groupId, @PathVariable String senderId) {
-        return groupMessageService.filterGroupMessagesBySenderId(groupId, senderId);
+    public List<GroupMessage> filterGroupMessagesBySenderId(@PathVariable String groupId, @PathVariable String senderId,
+        @RequestHeader("userId") String userId) {
+        return groupMessageService.filterGroupMessagesBySenderId(groupId, senderId, userId);
     }
 
     @PostMapping("/send/{groupId}")
