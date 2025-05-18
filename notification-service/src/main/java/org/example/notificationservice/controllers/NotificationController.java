@@ -68,13 +68,14 @@ public ResponseEntity<String> sendResetPasswordNotification(@RequestParam String
        return ResponseEntity.ok(notificationQueryService.markAllNotificationsAsRead(userId));
     }
     @DeleteMapping()
-    public ResponseEntity<String> deleteNotification(@RequestParam String notificationId) {
-        notificationQueryService.deleteNotification(notificationId);
+    public ResponseEntity<String> deleteNotification(@RequestHeader String userId, @RequestParam String notificationId) {
+        notificationQueryService.deleteNotification(notificationId, userId);
         return ResponseEntity.status(200).body("Notification deleted successfully");
     }
     @PutMapping()
     public ResponseEntity<Notification> updateNotification(@RequestParam String notificationId,
-                                                     @RequestParam Notification newNotification) {
+                                                     @RequestBody Notification newNotification) {
+
         Notification updatedNotfication=notificationQueryService.updateNotification(notificationId, newNotification);
         return ResponseEntity.status(200).body(updatedNotfication);
     }
