@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type", visible = true)
 @JsonSubTypes({
     @JsonSubTypes.Type(value = GroupMessageNotificationDTO.class, name = NotificationType.GROUP_MESSAGE),
@@ -21,4 +21,8 @@ import lombok.NoArgsConstructor;
 public abstract class NotificationDTO {
     private String recipientUserId;
     private String type;
+    public NotificationDTO(String recipientUserId, String type) {
+        this.recipientUserId = recipientUserId;
+        this.type = type;
+    }
 }
