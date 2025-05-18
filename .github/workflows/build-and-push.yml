@@ -1,22 +1,22 @@
 name: Build and Push Docker Images
 
 on:
-  workflow_run:
-    workflows: ["End-to-End Tests"]
-    types:
-      - completed
-  workflow_dispatch:
+  pull_request:
+    types: [opened, synchronize, reopened] # Triggers on PR creation, new commits to PR, and PR reopening
+  workflow_dispatch: # Allows manual triggering
 
 env:
-  REGISTRY_USERNAME: copilotandsons
-  REGISTRY_PASSWORD: dckr_pat_IQTvVI_STef4y2fNf_-5cImmy-E # Really bad idea, but since I don't have access to the settings, let's just hard code it.
+  # Strongly recommend replacing these with GitHub secrets:
+  # DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+  # DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+  REGISTRY_USERNAME: copilotandsons # If using secrets, change to ${{ secrets.DOCKERHUB_USERNAME }}
+  REGISTRY_PASSWORD: dckr_pat_IQTvVI_STef4y2fNf_-5cImmy-E # If using secrets, change to ${{ secrets.DOCKERHUB_TOKEN }}
   
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: write
 
     steps:
     - uses: actions/checkout@v3
@@ -33,33 +33,43 @@ jobs:
         mvn clean install -DskipTests
         mvn package -DskipTests
 
-    - name: Login to GitHub Container Registry
+    - name: Determine Image Tag
+      id: image_tag
+      run: |
+        if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+          echo "tag=pr-${{ github.event.number }}" >> $GITHUB_OUTPUT
+        else
+          # For manual dispatch or other future triggers, you might want 'latest' or another scheme
+          echo "tag=latest-manual" >> $GITHUB_OUTPUT 
+        fi
+
+    - name: Login to Docker Hub
       uses: docker/login-action@v2
       with:
-        username: ${{ env.REGISTRY_USERNAME }}
-        password: ${{ env.REGISTRY_PASSWORD }}
+        username: ${{ env.REGISTRY_USERNAME }} # Or ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ env.REGISTRY_PASSWORD }} # Or ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Build and push chat-service
       run: |
-        docker build -t ${{ env.REGISTRY_USERNAME }}/chat-service:latest ./chat-service
-        docker push ${{ env.REGISTRY_USERNAME }}/chat-service:latest
+        docker build -t ${{ env.REGISTRY_USERNAME }}/chat-service:${{ steps.image_tag.outputs.tag }} ./chat-service
+        docker push ${{ env.REGISTRY_USERNAME }}/chat-service:${{ steps.image_tag.outputs.tag }}
 
     - name: Build and push gateway
       run: |
-        docker build -t ${{ env.REGISTRY_USERNAME }}/api-gateway-service:latest ./gateway
-        docker push ${{ env.REGISTRY_USERNAME }}/api-gateway-service:latest
+        docker build -t ${{ env.REGISTRY_USERNAME }}/api-gateway-service:${{ steps.image_tag.outputs.tag }} ./gateway
+        docker push ${{ env.REGISTRY_USERNAME }}/api-gateway-service:${{ steps.image_tag.outputs.tag }}
 
     - name: Build and push group-chat-service
       run: |
-        docker build -t ${{ env.REGISTRY_USERNAME }}/group-chat-service:latest ./groupChatService
-        docker push ${{ env.REGISTRY_USERNAME }}/group-chat-service:latest
+        docker build -t ${{ env.REGISTRY_USERNAME }}/group-chat-service:${{ steps.image_tag.outputs.tag }} ./groupChatService
+        docker push ${{ env.REGISTRY_USERNAME }}/group-chat-service:${{ steps.image_tag.outputs.tag }}
 
     - name: Build and push notification-service
       run: |
-        docker build -t ${{ env.REGISTRY_USERNAME }}/notification-service:latest ./notification-service
-        docker push ${{ env.REGISTRY_USERNAME }}/notification-service:latest
+        docker build -t ${{ env.REGISTRY_USERNAME }}/notification-service:${{ steps.image_tag.outputs.tag }} ./notification-service
+        docker push ${{ env.REGISTRY_USERNAME }}/notification-service:${{ steps.image_tag.outputs.tag }}
 
     - name: Build and push user-service
       run: |
-        docker build -t ${{ env.REGISTRY_USERNAME }}/user-service:latest ./userService
-        docker push ${{ env.REGISTRY_USERNAME }}/user-service:latest 
+        docker build -t ${{ env.REGISTRY_USERNAME }}/user-service:${{ steps.image_tag.outputs.tag }} ./userService
+        docker push ${{ env.REGISTRY_USERNAME }}/user-service:${{ steps.image_tag.outputs.tag }}
