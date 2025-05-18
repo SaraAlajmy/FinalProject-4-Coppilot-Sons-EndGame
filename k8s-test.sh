@@ -1,4 +1,12 @@
-kubectl apply -R -f ./k8s/
+#!/bin/bash
+
+PR_NUMBER=$1
+
+if [ -n "$PR_NUMBER" ]; then
+  ./deploy.sh "$PR_NUMBER"
+else
+  kubectl apply -R -f ./k8s/
+fi
 
 cd e2e-tests
 
@@ -16,4 +24,8 @@ docker compose down
 
 cd ../
 
-kubectl apply -R -f ./k8s/
+if [ -n "$PR_NUMBER" ]; then
+  ./deploy.sh "$PR_NUMBER"
+else
+  kubectl apply -R -f ./k8s/
+fi
