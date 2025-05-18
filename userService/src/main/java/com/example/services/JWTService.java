@@ -17,11 +17,14 @@ import java.util.function.Function;
 @Service
 public class JWTService {
 
+
     @Value("${jwt.secret}")
     private String secretKey;
-    private static final long ACCESS_TOKEN_VALIDITY = 1000 * 60 * 5;  // 5 minutes
-    private static final long REFRESH_TOKEN_VALIDITY = 1000 * 60 * 60 * 24 * 6L;  // 6 days
+    @Value("${jwt.access-token-validity}")
+    private long ACCESS_TOKEN_VALIDITY;
 
+    @Value("${jwt.refresh-token-validity}")
+    private long REFRESH_TOKEN_VALIDITY;
     public JWTService() {}
 
     public String generateToken(String username, UUID id) {
