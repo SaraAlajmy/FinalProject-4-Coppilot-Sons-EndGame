@@ -2,6 +2,8 @@ package com.example.groupChatService.controllers;
 import com.example.groupChatService.dto.SendMessageRequest;
 import com.example.groupChatService.models.GroupMessage;
 import com.example.groupChatService.services.GroupMessageService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -11,6 +13,7 @@ import java.util.Map;
 @RequestMapping("/groupMessage")
 public class GroupMessageController {
     private final GroupMessageService groupMessageService;
+    private static final Logger logger = LoggerFactory.getLogger(GroupMessageController.class);
 
     @Autowired
     public GroupMessageController(GroupMessageService groupMessageService) {
@@ -45,10 +48,10 @@ public class GroupMessageController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteGroupMessage(@PathVariable String id,
+    public String deleteGroupMessage(@PathVariable String id,
         @RequestHeader("userId") String userId
     ) {
-        groupMessageService.deleteGroupMessage(id, userId);
+        return groupMessageService.deleteGroupMessage(id, userId);
     }
 
     @PutMapping("/archive/{id}")
@@ -88,7 +91,10 @@ public class GroupMessageController {
         @RequestHeader("userId") String senderId,
         @PathVariable String groupId
     ) {
-        return groupMessageService.sendMessage(request, userName, senderId, groupId);
+        logger.info("Received group message send request from user {} to group {}", senderId, groupId);
+        GroupMessage createdMessage= groupMessageService.sendMessage(request, userName, senderId, groupId);
+        logger.info("Message sent successfully from user {} to group {}", senderId, groupId);
+        return createdMessage;
     }
     
     
