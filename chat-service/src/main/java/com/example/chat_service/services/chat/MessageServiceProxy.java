@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+
 @Slf4j
 @Service
 public class MessageServiceProxy implements MessageService {
@@ -26,21 +27,20 @@ public class MessageServiceProxy implements MessageService {
     }
 
     @Override
-    public Message sendMessage(MessageRequestDTO dto, String senderUserName) {
+    public Message sendMessage(MessageRequestDTO dto, String senderId, String senderUserName) {
         try {
-            boolean areBlocking=Boolean.TRUE.equals(userClient.areBlocking(UUID.fromString(dto.getReceiverId()), UUID.fromString(dto.getSenderId())).getBody());
-            if(areBlocking) {
+            boolean areBlocking = Boolean.TRUE.equals(userClient.areBlocking(UUID.fromString(dto.getReceiverId()), UUID.fromString(senderId)).getBody());
+            if (areBlocking) {
                 throw new UserBlockedException("Sender is blocked by the receiver");
             }
-            Message message = realMessageService.sendMessage(dto, senderUserName);
-            return message;
+            return realMessageService.sendMessage(dto, senderId, senderUserName);
         } catch (Exception e) {
             if (e instanceof UserBlockedException) {
-                throw e;
+                throw new UserBlockedException("Error checking user block status", e);
             }
-            throw new UserBlockedException("Error checking user block status", e);
+            throw e;
         }
-        
+
     }
 
     @Override
@@ -90,7 +90,6 @@ public class MessageServiceProxy implements MessageService {
     public List<Message> filterByDate(String receiverId, LocalDateTime startDate, LocalDateTime endDate) {
         return realMessageService.filterByDate(receiverId, startDate, endDate);
     }
-
 
 
     @Override

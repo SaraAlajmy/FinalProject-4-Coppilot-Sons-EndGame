@@ -26,15 +26,10 @@ public class MessageController {
 
     @PostMapping("/send")
     public ResponseEntity<?> sendMessage(@RequestBody MessageRequestDTO dto, @RequestHeader("userId") String userId, @RequestHeader("userName") String userName) {
-        logger.info("Received message send request from user {} to user {}", dto.getSenderId(), dto.getReceiverId());
-        
-        if (!dto.getSenderId().equals(userId)) {
-            logger.warn("Unauthorized attempt: Sender ID {} does not match authenticated user ID {}", dto.getSenderId(), userId);
-            throw new UnauthorizedOperationException("Sender ID does not match the authenticated user ID.");
-        }
-        
-        Message message = messageService.sendMessage(dto, userName);
-        logger.info("Message sent successfully from {} to {}", dto.getSenderId(), dto.getReceiverId());
+        logger.info("Received message send request from user {} to user {}", userId, dto.getReceiverId());
+
+        Message message = messageService.sendMessage(dto, userId, userName);
+        logger.info("Message sent successfully from {} to {}", userId, dto.getReceiverId());
         return new ResponseEntity<>(message, HttpStatus.CREATED);
     }
 

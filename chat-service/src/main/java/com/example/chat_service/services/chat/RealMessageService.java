@@ -34,11 +34,11 @@ public class RealMessageService implements MessageService, MessageSubject {
     }
 
     @Override
-    public Message sendMessage(MessageRequestDTO dto, String senderUserName) {
-        String chatId = chatService.createOrGetChat(dto.getSenderId(), dto.getReceiverId()).getChatId();
+    public Message sendMessage(MessageRequestDTO dto, String senderId, String senderUserName) {
+        String chatId = chatService.createOrGetChat(senderId, dto.getReceiverId()).getChatId();
         Message message = new Message(
                 chatId,
-                dto.getSenderId(),
+                senderId,
                 senderUserName,
                 dto.getReceiverId(),
                 dto.getContent()

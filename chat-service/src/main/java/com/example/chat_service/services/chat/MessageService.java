@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface MessageService {
-    Message sendMessage(MessageRequestDTO dto, String senderUserName);
+    Message sendMessage(MessageRequestDTO dto, String senderId, String senderUserName);
 
     void deleteMessage(String messageId, String userId);
 
