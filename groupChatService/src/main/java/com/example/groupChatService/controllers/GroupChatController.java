@@ -162,8 +162,8 @@ public class GroupChatController {
         }
     }
 
-    @GetMapping("/getGroupChatByMemberId/{id}")
-    public ResponseEntity<?> getGroupChatByMemberId(@PathVariable String id) {
+    @GetMapping("/getGroupChatByMemberId")
+    public ResponseEntity<?> getGroupChatByMemberId(@RequestHeader("userId") String id) {
         try {
             List<GroupChat> groupChats = groupChatService.getMemberGroupChats(id);
             return ResponseEntity.ok(groupChats);  // 200 OK with the list

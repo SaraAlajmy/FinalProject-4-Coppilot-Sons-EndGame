@@ -23,6 +23,8 @@ public class GroupMessage {
     private boolean archived;
     private List<String> mentionedUserIds;
 
+    public GroupMessage() {
+    }
     public GroupMessage(String groupId, String senderId, String content) {
         this.groupId = groupId;
         this.senderId = senderId;
