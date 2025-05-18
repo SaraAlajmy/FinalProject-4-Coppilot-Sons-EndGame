@@ -37,12 +37,3 @@ debug:
 
 user-service:
   url: http://localhost:8086
-
-# logging configuration to create the file and unify log format
-logging:
-  file:
-    name: logs/app.log
-  pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
-  level:
-    root: INFO
