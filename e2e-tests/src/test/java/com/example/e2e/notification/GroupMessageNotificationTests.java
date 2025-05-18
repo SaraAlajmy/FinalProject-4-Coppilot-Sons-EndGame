@@ -84,7 +84,7 @@ public class GroupMessageNotificationTests extends BaseApiTest {
 
     @AfterEach
     public void cleanup() {
-        userTestService.cleanup();
+//        userTestService.cleanup();
         notificationTestService.cleanup();
         mailhogService.emptyMailbox();
     }

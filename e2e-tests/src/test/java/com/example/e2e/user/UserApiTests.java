@@ -24,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class UserApiTests extends BaseApiTest {
     @AfterAll
     public void cleanupTestData() {
-        userTestService.deleteAllCreatedUsers();
+//        userTestService.deleteAllCreatedUsers();
     }
 
 //    @Test

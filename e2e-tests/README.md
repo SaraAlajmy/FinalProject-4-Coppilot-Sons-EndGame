@@ -2,25 +2,22 @@
 
 ## Run against compose cluster
 
-1. Build the jars
+Use the following command in root directory to run the end-to-end tests against a compose cluster:
 
 ```bash
-mvn clean install -DskipTests
-mvn package -DskipTests
+./test.sh
 ```
 
-2. Make sure you are in the `e2e-tests` directory.
-3. Run the following command to start the environment:
+## Run against a minikube cluster
+
+Make sure you have a minikube cluster running. You can use the following command to start a minikube cluster:
 
 ```bash
-docker-compose up -d
+minikube start
 ```
 
-4. Wait for the containers to be up and running.
-
-5. Run the tests using the following command:
+Then, you can run the end-to-end tests against the minikube cluster using the following command:
 
 ```bash
-mvn install
-mvn verify
+./k8s-test.sh
 ```

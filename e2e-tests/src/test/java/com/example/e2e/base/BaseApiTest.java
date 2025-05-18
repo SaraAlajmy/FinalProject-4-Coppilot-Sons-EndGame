@@ -54,9 +54,16 @@ public abstract class BaseApiTest {
     public void setup() {
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
 
+        // Get the base URL from the environment variable or use the default
+        String baseUrl = System.getenv("BASE_URL");
+
+        if (baseUrl == null || baseUrl.isEmpty()) {
+            baseUrl = BASE_URI + ":" + API_GATEWAY_PORT;
+        }
+
         // Base request specification with common settings
         requestSpec = new RequestSpecBuilder()
-            .setBaseUri(BASE_URI)
+            .setBaseUri(baseUrl)
             .setContentType(ContentType.JSON)
             .addFilter(new RequestLoggingFilter())
             .addFilter(new ResponseLoggingFilter())

@@ -77,7 +77,7 @@ public class DirectMessageNotificationTests extends BaseApiTest {
 
     @AfterEach
     public void cleanup() {
-        userTestService.cleanup();
+//        userTestService.cleanup();
         notificationTestService.cleanup();
         mailhogService.emptyMailbox();
     }
