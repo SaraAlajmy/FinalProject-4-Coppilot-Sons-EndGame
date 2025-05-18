@@ -38,36 +38,48 @@ public class MessageController {
         return new ResponseEntity<>(message, HttpStatus.CREATED);
     }
 
+    @PostMapping("/edit/{messageId}")
+    public ResponseEntity<?> editMessage(@PathVariable String messageId, @RequestBody String newContent, @RequestHeader("userId") String userId) {
+        messageService.editMessage(messageId, userId, newContent);
+        logger.info("Message with ID {} edited successfully by user {}", messageId, userId);
+        return new ResponseEntity<>("Message edited successfully", HttpStatus.OK);
+    }
+
     @DeleteMapping("/{messageId}")
     public ResponseEntity<?> deleteMessage(@PathVariable String messageId, @RequestHeader("userId") String userId) {
         messageService.deleteMessage(messageId, userId);
+        logger.info("Message with ID {} deleted successfully by user {}", messageId, userId);
         return new ResponseEntity<>("Message deleted successfully", HttpStatus.OK);
     }
 
     @PostMapping("/{messageId}/favorite")
     public ResponseEntity<?> markAsFavorite(@PathVariable String messageId, @RequestHeader("userId") String userId) {
         messageService.markAsFavorite(messageId, userId);
+        logger.info("Message with ID {} marked as favorite by user {}", messageId, userId);
         return new ResponseEntity<>("Message marked as favorite successfully", HttpStatus.OK);
     }
 
     @DeleteMapping("/{messageId}/favorite")
     public ResponseEntity<?> unmarkAsFavorite(@PathVariable String messageId, @RequestHeader("userId") String userId) {
         messageService.unmarkAsFavorite(messageId, userId);
+        logger.info("Message with ID {} unmarked as favorite by user {}", messageId, userId);
         return new ResponseEntity<>("Message unmarked as favorite successfully", HttpStatus.OK);
     }
 
     @ResponseBody
     @GetMapping("/by-chat/{chatId}")
     public List<Message> getMessagesByChat(@PathVariable String chatId, @RequestHeader("userId") String userId) {
-        logger.info("Getting all messages for chat {}", chatId);
-        return messageService.getMessages(chatId, userId);
-       
+        List<Message> messages = messageService.getMessages(chatId, userId);
+        logger.info("Getting messages for chat {} for user {}", chatId, userId);
+        return messages;
     }
 
     @ResponseBody
     @GetMapping("/favorites")
     public List<Message> getFavoriteMessages(@RequestHeader("userId") String userId) {
-        return messageService.getFavoriteMessages(userId);
+        List<Message> favoriteMessages = messageService.getFavoriteMessages(userId);
+        logger.info("Getting favorite messages for user {}", userId);
+        return favoriteMessages;
     }
 
     @GetMapping("/filter")
@@ -78,7 +90,9 @@ public class MessageController {
 
         LocalDateTime start = LocalDateTime.parse(startDate);
         LocalDateTime end = LocalDateTime.parse(endDate);
-        return messageService.filterByDate(userId, start, end);
+        List<Message> messages = messageService.filterByDate(userId, start, end);
+        logger.info("Filtering messages for user {} between {} and {}", userId, start, end);
+        return messages;
     }
 
     @ResponseBody
@@ -86,6 +100,8 @@ public class MessageController {
     public List<Message> searchMessages(
             @RequestHeader("userId") String userId,
             @RequestParam String keyword) {
-        return messageService.searchMessages(userId, keyword);
+        List<Message> messages = messageService.searchMessages(userId, keyword);
+        logger.info("Searching messages for user {} with keyword {}", userId, keyword);
+        return messages;
     }
 }
