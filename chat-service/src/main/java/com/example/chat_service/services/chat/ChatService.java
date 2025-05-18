@@ -1,9 +1,12 @@
 package com.example.chat_service.services.chat;
 
+import com.example.chat_service.controllers.ChatController;
 import com.example.chat_service.models.Chat;
 import com.example.chat_service.models.Message;
 import com.example.chat_service.repositories.ChatRepository;
 import com.example.chat_service.repositories.MessageRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +18,8 @@ public class ChatService {
     private final ChatRepository chatRepository;
 
     private final MessageRepository messageRepository;
+
+    private static final Logger logger = LoggerFactory.getLogger(ChatService.class);
 
     @Autowired
     public ChatService(ChatRepository chatRepository, MessageRepository messageRepository) {
@@ -31,26 +36,34 @@ public class ChatService {
      */
     public Chat createOrGetChat(String userId1, String userId2) {
         Optional<Chat> chat = chatRepository.findByParticipantOneIdAndParticipantTwoId(userId1, userId2);
-        if (chat.isPresent()) return chat.get();
+        if (chat.isPresent()) {
+            logger.info("Chat already exists between {} and {}", userId1, userId2);
+            return chat.get();
+        }
 
         // Create new chat if no block exists
         Chat newChat = new Chat(null, userId1, userId2);
+        logger.info("Creating new chat between {} and {}", userId1, userId2);
         return chatRepository.save(newChat);
     }
 
     public List<Chat> getChatsForUser(String userId) {
+        logger.info("Retrieving chats for user {}", userId);
         return chatRepository.findByParticipantOneIdOrParticipantTwoId(userId, userId);
     }
 
     public List<Message> getLatestMessages(String chatId, String lastMessageId) {
         Optional<Message> lastMessage = messageRepository.findById(lastMessageId);
         if (lastMessage.isEmpty()) {
+            logger.error("Last message with ID {} not found in chat {}", lastMessageId, chatId);
             throw new RuntimeException("Last message not found");
         }
+        logger.info("Retrieving messages for chat {} after message {}", chatId, lastMessageId);
         return messageRepository.findByChatIdAndCreatedAtAfter(chatId, lastMessage.get().getCreatedAt());
     }
 
     public Chat getChatById(String chatId) {
+        logger.info("Retrieving chat with ID {}", chatId);
         return chatRepository.findById(chatId).orElseThrow(() -> new RuntimeException("Chat not found"));
     }
 }
