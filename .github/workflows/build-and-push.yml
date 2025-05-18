@@ -8,7 +8,6 @@ on:
   workflow_dispatch:
 
 env:
-  REGISTRY: ghcr.io
   REGISTRY_USERNAME: copilotandsons
   REGISTRY_PASSWORD: dckr_pat_IQTvVI_STef4y2fNf_-5cImmy-E # Really bad idea, but since I don't have access to the settings, let's just hard code it.
   
@@ -37,31 +36,30 @@ jobs:
     - name: Login to GitHub Container Registry
       uses: docker/login-action@v2
       with:
-        registry: ${{ env.REGISTRY }}
         username: ${{ env.REGISTRY_USERNAME }}
         password: ${{ env.REGISTRY_PASSWORD }}
 
     - name: Build and push chat-service
       run: |
-        docker build -t ${{ env.REGISTRY }}/${{ env.REGISTRY_USERNAME }}/chat-service:latest ./chat-service
-        docker push ${{ env.REGISTRY }}/${{ env.REGISTRY_USERNAME }}/chat-service:latest
+        docker build -t ${{ env.REGISTRY_USERNAME }}/chat-service:latest ./chat-service
+        docker push ${{ env.REGISTRY_USERNAME }}/chat-service:latest
 
     - name: Build and push gateway
       run: |
-        docker build -t ${{ env.REGISTRY }}/${{ env.REGISTRY_USERNAME }}/api-gateway-service:latest ./gateway
-        docker push ${{ env.REGISTRY }}/${{ env.REGISTRY_USERNAME }}/api-gateway-service:latest
+        docker build -t ${{ env.REGISTRY_USERNAME }}/api-gateway-service:latest ./gateway
+        docker push ${{ env.REGISTRY_USERNAME }}/api-gateway-service:latest
 
     - name: Build and push group-chat-service
       run: |
-        docker build -t ${{ env.REGISTRY }}/${{ env.REGISTRY_USERNAME }}/group-chat-service:latest ./groupChatService
-        docker push ${{ env.REGISTRY }}/${{ env.REGISTRY_USERNAME }}/group-chat-service:latest
+        docker build -t ${{ env.REGISTRY_USERNAME }}/group-chat-service:latest ./groupChatService
+        docker push ${{ env.REGISTRY_USERNAME }}/group-chat-service:latest
 
     - name: Build and push notification-service
       run: |
-        docker build -t ${{ env.REGISTRY }}/${{ env.REGISTRY_USERNAME }}/notification-service:latest ./notification-service
-        docker push ${{ env.REGISTRY }}/${{ env.REGISTRY_USERNAME }}/notification-service:latest
+        docker build -t ${{ env.REGISTRY_USERNAME }}/notification-service:latest ./notification-service
+        docker push ${{ env.REGISTRY_USERNAME }}/notification-service:latest
 
     - name: Build and push user-service
       run: |
-        docker build -t ${{ env.REGISTRY }}/${{ env.REGISTRY_USERNAME }}/user-service:latest ./userService
-        docker push ${{ env.REGISTRY }}/${{ env.REGISTRY_USERNAME }}/user-service:latest 
+        docker build -t ${{ env.REGISTRY_USERNAME }}/user-service:latest ./userService
+        docker push ${{ env.REGISTRY_USERNAME }}/user-service:latest 
