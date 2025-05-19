@@ -394,7 +394,6 @@ public class DirectMessageNotificationTests extends BaseApiTest {
         loggedAs(
             sender, () -> {
                 messages[0] = messageTestService.sendDirectMessage(
-                    sender.get("id").toString(),
                     recipientId,
                     messageContent
                 );

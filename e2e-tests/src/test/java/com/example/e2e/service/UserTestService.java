@@ -15,7 +15,7 @@ import java.util.UUID;
 import static io.restassured.RestAssured.given;
 
 public class UserTestService {
-    public static final String PASSWORD = "Password123!";
+    public static final String PASSWORD = "password";
 
     private static final Logger logger = LoggerFactory.getLogger(UserTestService.class);
     private final RequestSpecification authorizedSpec;

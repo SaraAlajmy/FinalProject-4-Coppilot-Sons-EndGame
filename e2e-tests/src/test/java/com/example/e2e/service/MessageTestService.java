@@ -23,14 +23,12 @@ public class MessageTestService {
 
     /**
      * Sends a direct message from one user to another, which should trigger a notification
-     * @param senderUserId The ID of the user sending the message
      * @param recipientUserId The ID of the user receiving the message
      * @param messageText The content of the message
      * @return Map containing the response details
      */
-    public Map<String, Object> sendDirectMessage(String senderUserId, String recipientUserId, String messageText) {
+    public Map<String, Object> sendDirectMessage(String recipientUserId, String messageText) {
         Map<String, Object> messageData = new HashMap<>();
-        messageData.put("senderId", senderUserId);
         messageData.put("receiverId", recipientUserId);
         messageData.put("content", messageText);
         
