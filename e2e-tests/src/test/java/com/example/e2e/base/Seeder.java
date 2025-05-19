@@ -8,6 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -44,9 +45,10 @@ public class Seeder extends BaseApiTest {
     }
 
     @Test
+    @Disabled("run manually only")
     public void seedData() {
         seedUsers();
-        muteNotificationsForAllUsers();
+        // muteNotificationsForAllUsers();
         seedDirectMessages();
         seedGroups();
         seedGroupMessages();
