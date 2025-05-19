@@ -102,13 +102,8 @@ fi
     # It uses extended regex (-E) and | as a delimiter for s command.
     sed -E \
       -e "s|(image:[[:space:]]*${DOCKERHUB_USERNAME}/[^:]+):latest|\\1:${RANDOM_TAG}|g" \
-      -e "/image:[[:space:]]*${DOCKERHUB_USERNAME}\/[^:]+:/{
-            n
-            s|^[[:space:]]*imagePullPolicy:.*|    imagePullPolicy: Never|
-            t
-            a\\
-    imagePullPolicy: Never
-       }" \
+      -e "/image:[[:space:]]*${DOCKERHUB_USERNAME}\\/[^:]+/a\\
+          imagePullPolicy: Never" \
       "$K8S_FILE"
     echo # Add a newline for readability of the piped stream
   done
