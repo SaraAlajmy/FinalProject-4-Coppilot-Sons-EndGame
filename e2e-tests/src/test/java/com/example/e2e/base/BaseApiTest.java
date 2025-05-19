@@ -1,10 +1,12 @@
 package com.example.e2e.base;
 
 import com.example.e2e.service.*;
+import com.github.javafaker.Faker;
+
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.Filter;
-import io.restassured.filter.FilterContext;
+import io.restassured.filter    .FilterContext;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
@@ -26,6 +28,8 @@ import java.util.function.Consumer;
  */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public abstract class BaseApiTest {
+    protected Faker faker = new Faker();
+    
     protected UserTestService userTestService;
     protected ChatTestService chatTestService;
     protected MessageTestService messageTestService;
@@ -92,7 +96,7 @@ public abstract class BaseApiTest {
     }
 
     @BeforeEach
-    public void login() {
+    public void login() {        
         loggedInUser = userTestService.registerUserWithEmail(LOGGED_IN_EMAIL);
         var username = (String) loggedInUser.get("username");
         accessToken = userTestService.loginUser(username);
@@ -112,6 +116,12 @@ public abstract class BaseApiTest {
     }
 
     protected void loginAs(Map<String, Object> userData) {
+        if (userData == null) {
+            loggedInUser = null;
+            accessToken = null;
+            return;
+        }
+        
         loggedInUser = userData;
         var userName = (String) userData.get("username");
         accessToken = userTestService.loginUser(userName);
