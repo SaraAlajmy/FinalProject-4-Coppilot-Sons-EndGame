@@ -6,6 +6,8 @@ import com.example.groupChatService.models.GroupMessage;
 import com.example.groupChatService.repositories.GroupChatRepo;
 import com.example.groupChatService.repositories.GroupMessageRepo;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.groupChatService.dto.SendMessageRequest;
@@ -23,7 +25,7 @@ public class GroupMessageService {
     private final GroupChatRepo groupChatRepo;
     private final List<MessageListener> listeners = new ArrayList<>();
     private final UserClient userClient;
-
+    private static final Logger logger = LoggerFactory.getLogger(GroupMessageService.class);
     @Autowired
     public GroupMessageService(GroupMessageRepo groupMessageRepo, GroupChatRepo groupChatRepo,
                                UserClient userClient
@@ -77,6 +79,12 @@ public class GroupMessageService {
     public String deleteGroupMessage(String id, String userId) {
         if(!isGroupMember(id, userId)) {
             throw new RuntimeException("User is not a member of the group");
+        }
+        GroupMessage groupMessage = groupMessageRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException(
+                        "Group message not found with id:" + id));
+        if(!groupMessage.getSenderId().equals(userId)) {
+            throw new RuntimeException("Can not delete! User is not the sender of the message");
         }
         groupMessageRepo.deleteById(id);
         return "Group message with id: " + id + " deleted successfully";
@@ -142,16 +150,19 @@ public class GroupMessageService {
                 .orElseThrow(() -> new RuntimeException("Group not found"));
 
         if (!group.getMembers().contains(senderId)) {
+            logger.info("Sender {} is not a member of the requested group {}", senderId, groupId);
             throw new RuntimeException("Sender is not a member of the group");
         }
 
         if (group.isAdminOnlyMessages() && !group.getAdmins().contains(senderId)) {
+            logger.info("Only admins can send messages to group {} , sender {} is not an admin", groupId, senderId);
             throw new RuntimeException("Only admins can send messages in this group");
         }
 
         List<String> mentionedUserIds = extractMentions(request.getContent());
         for (String mentioned : mentionedUserIds) {
             if (!group.getMembers().contains(mentioned)) {
+                logger.info("Mentioned user {} is not in the group {}", mentioned, groupId);
                 throw new RuntimeException("Mentioned user with id " + mentioned + " is not in the group");
             }
         }
@@ -165,6 +176,7 @@ public class GroupMessageService {
         for (MessageListener listener : listeners) {
             listener.onNewMessage(saved, group, senderUsername);
         }
+        logger.info("Message sent successfully from user {} to group {}", senderId, groupId);
         return saved;
     }
 
