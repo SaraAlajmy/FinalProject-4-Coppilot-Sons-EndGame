@@ -44,6 +44,7 @@ public class GroupChatController {
                     .body("Unexpected error: " + e.getMessage()); // 500
         }
     }
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteGroupChatById(@PathVariable String id, @RequestHeader("userId") String userId) {
         try {
             String result = groupChatService.deleteGroupChat(id, userId);
